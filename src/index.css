@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
+
+@layer base {
+  html {
+    font-family: "Nanum Gothic", sans-serif;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .button {
+    @apply flex justify-center items-center rounded-lg text-base font-bold text-white h-12 w-10/12 max-w-2xl;
+  }
+  .input {
+    @apply flex relative items-center h-12 w-10/12 max-w-2xl p-4 border-2 border-border rounded-xl;
+  }
+  .input-label {
+    @apply absolute bottom-9 left-2 pl-2 pr-2 bg-white text-txt-placeholder;
+  }
+  .nav-bar {
+    @apply flex justify-between items-center w-3/4 max-w-xl h-16 px-10 pt-4 pb-2 rounded-3xl shadow-md bg-white fixed top-3/4 left-1/2 transform -translate-x-1/2;
+  }
+}
