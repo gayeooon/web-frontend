@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
-import Header from "../components/Header";
+import React, { useState } from "react";
+import { Progress } from "@/components/ui/progress";
 import BasicInfoSettings from "../components/BasicInfoSettings";
 import CategorySettings from "../components/CategorySettings";
 import UserDetailsSettings from "../components/UserDetailsSettings";
 
 const SignUp = () => {
-  const stepRef = useRef(1);
+  const [step, setStep] = useState(1);
+
   const [formData, setFormData] = useState({
     BasicInfoData: {},
     UserDetailsData: {},
@@ -14,7 +15,7 @@ const SignUp = () => {
 
   const handleNext = (data) => {
     setFormData((prevFormData) => {
-      switch (stepRef.current) {
+      switch (step) {
         case 1:
           return {
             ...prevFormData,
@@ -35,17 +36,15 @@ const SignUp = () => {
           return prevFormData;
       }
     });
-    stepRef.current += 1;
+    setStep((prevStep) => prevStep + 1);
   };
 
   const handleBack = () => {
-    if (stepRef.current > 1) {
-      stepRef.current -= 1;
-    }
+    setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
 
   const renderStep = () => {
-    switch (stepRef.current) {
+    switch (step) {
       case 1:
         return <BasicInfoSettings onNext={handleNext} />;
       case 2:
@@ -59,8 +58,12 @@ const SignUp = () => {
 
   return (
     <div>
-      <Header leftChild={"<"} title={"SignUp Page"} />
-      <div className="flex-center">{renderStep()}</div>
+      <div className="flex justify-between p-10">
+        <button onClick={handleBack}>back</button>
+        <Progress value={step * 20} />
+        <div>none</div>
+      </div>
+      <div className="flex-center pt-8">{renderStep()}</div>
     </div>
   );
 };

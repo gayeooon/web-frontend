@@ -24,39 +24,46 @@ const TopicSelection = () => {
 
   const isSelected = (topicId) => selectedTopics.includes(topicId);
 
+  const handleSubmit = () => {
+    if (!(selectedTopics.length < 3)) {
+      onNext(data);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white rounded-lg shadow-md p-6 w-80 text-center">
-        <h2 className="text-gray-600 mb-4">주제 선택</h2>
-        <p className="text-gray-700 mb-6">
-          관심있는 뉴스 주제를 선택해주세요.
-          <br />
-          최소 3개 주제를 선택하세요.
-        </p>
+    <div className="flex flex-col gap-6 w-10/12 max-w-2xl">
+      <h2 className="text-3xl font-extrabold mb-9">
+        관심있는 뉴스 주제를 선택해주세요.
+      </h2>
+      <div className="bg-white rounded-lg p-6 w-full text-center">
         <div className="grid grid-cols-3 gap-3 mb-6">
           {topics.map((topic) => (
             <div
               key={topic.id}
-              className={`cursor-pointer rounded-lg p-4 ${
-                isSelected(topic.id) ? "bg-blue-100" : "bg-gray-100"
+              className={`cursor-pointer rounded-lg p-4 border-2 ${
+                isSelected(topic.id)
+                  ? "bg-background border-my-purple"
+                  : "bg-none border-border"
               }`}
               onClick={() => toggleTopic(topic.id)}
             >
               <span className="text-4xl">{topic.emoji}</span>
-              <span className="block mt-2 text-sm text-gray-800">
+              <span className="block mt-2 text-sm font-bold ">
                 {topic.name}
               </span>
             </div>
           ))}
         </div>
-        <button
-          className="bg-gray-600 text-white py-2 px-4 rounded disabled:bg-gray-300 w-full"
-          disabled={selectedTopics.length < 3}
-          onClick={() => alert("계속하기 버튼 클릭됨")}
-        >
-          계속하기
-        </button>
       </div>
+      <button
+        className={`button fixed bottom-16 ${
+          selectedTopics.length < 3 ? "bg-bt-disabled" : "bg-bt-default"
+        }`}
+        onClick={handleSubmit}
+        disabled={!(selectedTopics.length < 3)}
+      >
+        계속하기
+      </button>
     </div>
   );
 };

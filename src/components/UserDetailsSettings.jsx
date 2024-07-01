@@ -14,8 +14,14 @@ const UserDetailsSettings = ({ onNext }) => {
     }));
   };
 
+  const isFormComplete = () => {
+    return data.gender && data.birthdate;
+  };
+
   const handleSubmit = () => {
-    onNext(data);
+    if (isFormComplete()) {
+      onNext(data);
+    }
   };
 
   return (
@@ -63,9 +69,11 @@ const UserDetailsSettings = ({ onNext }) => {
         />
       </div>
       <button
-        className="button bg-bt-default fixed bottom-16"
-        type="button"
+        className={`button fixed bottom-16 ${
+          isFormComplete() ? "bg-bt-default" : "bg-bt-disabled"
+        }`}
         onClick={handleSubmit}
+        disabled={!isFormComplete()}
       >
         계속하기
       </button>
