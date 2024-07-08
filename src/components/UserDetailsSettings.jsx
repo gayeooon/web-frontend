@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 
+/**
+ * 사용자의 상세 정보를 입력받는 컴포넌트
+ * @param {Object} props
+ * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
+ * @returns {JSX.Element}
+ */
 const UserDetailsSettings = ({ onNext }) => {
   const [data, setData] = useState({
     gender: "",
     birthdate: "",
   });
 
+  /**
+   * 입력 필드 변경 핸들러
+   * @param {React.ChangeEvent<HTMLInputElement>} e - 이벤트 객체
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -14,10 +24,17 @@ const UserDetailsSettings = ({ onNext }) => {
     }));
   };
 
+  /**
+   * 폼이 완성되었는지 확인하는 함수
+   * @returns {boolean}
+   */
   const isFormComplete = () => {
     return data.gender && data.birthdate;
   };
 
+  /**
+   * 폼 제출 핸들러
+   */
   const handleSubmit = () => {
     if (isFormComplete()) {
       onNext(data);

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+/**
+ * 사용자의 기본 정보를 입력받는 컴포넌트
+ * @param {Object} props
+ * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
+ * @returns {JSX.Element}
+ */
 const BasicInfoSettings = ({ onNext }) => {
   const [data, setData] = useState({
     username: "",
@@ -12,6 +18,11 @@ const BasicInfoSettings = ({ onNext }) => {
     tel: "",
   });
 
+  /**
+   * 입력 필드의 유효성을 검사하는 함수
+   * @param {string} name - 필드 이름
+   * @param {string} value - 필드 값
+   */
   const validateField = (name, value) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const telPattern = /^010-\d{4}-\d{4}$/;
@@ -37,6 +48,10 @@ const BasicInfoSettings = ({ onNext }) => {
     }));
   };
 
+  /**
+   * 입력 필드 변경 핸들러
+   * @param {React.ChangeEvent<HTMLInputElement>} e - 이벤트 객체
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -53,6 +68,11 @@ const BasicInfoSettings = ({ onNext }) => {
     validateField(name, formattedValue);
   };
 
+  /**
+   * 전화번호 형식을 포맷팅하는 함수
+   * @param {string} tel - 포맷팅할 전화번호
+   * @returns {string} 포맷팅된 전화번호
+   */
   const formatTel = (tel) => {
     const cleaned = tel.replace(/\D/g, "");
     let formatted = cleaned;
@@ -69,12 +89,19 @@ const BasicInfoSettings = ({ onNext }) => {
     return formatted;
   };
 
+  /**
+   * 폼이 완성되었는지 확인하는 함수
+   * @returns {boolean}
+   */
   const isFormComplete = () => {
     return (
       !errors.email && !errors.tel && data.username && data.email && data.tel
     );
   };
 
+  /**
+   * 폼 제출 핸들러
+   */
   const handleSubmit = () => {
     if (isFormComplete()) {
       onNext(data);
