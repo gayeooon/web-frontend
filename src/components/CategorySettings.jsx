@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "./ui/button";
 
 /**
  * 사용자의 관심 카테고리를 선택받는 컴포넌트
@@ -6,8 +7,8 @@ import React, { useState } from "react";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const CategorySettings = ({ onNext }) => {
-  const [selectedTopics, setSelectedTopics] = useState([]);
+const CategorySettings = ({ onNext, initialData }) => {
+  const [selectedTopics, setSelectedTopics] = useState(initialData);
 
   const topics = [
     { id: 1, name: "IT", emoji: "💻" },
@@ -18,6 +19,7 @@ const CategorySettings = ({ onNext }) => {
     { id: 6, name: "IT", emoji: "💻" },
     { id: 7, name: "IT", emoji: "💻" },
     { id: 8, name: "IT", emoji: "💻" },
+    { id: 9, name: "IT", emoji: "💻" },
   ];
 
   /**
@@ -58,8 +60,8 @@ const CategorySettings = ({ onNext }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-10/12 max-w-2xl">
-      <h2 className="text-3xl font-extrabold mb-3">
+    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+      <h2 className="text-3xl font-extrabold mb-3 break-keep">
         관심있는 뉴스 주제를 선택해주세요.
       </h2>
       {hasMinimumTopics() ? (
@@ -89,15 +91,11 @@ const CategorySettings = ({ onNext }) => {
           ))}
         </div>
       </div>
-      <button
-        className={`button fixed bottom-16 ${
-          hasMinimumTopics() ? "bg-bt-default" : "bg-bt-disabled"
-        }`}
-        onClick={handleSubmit}
-        disabled={!hasMinimumTopics()}
-      >
-        계속하기
-      </button>
+      {hasMinimumTopics() ? (
+        <Button onClick={handleSubmit}>계속하기</Button>
+      ) : (
+        <Button disabled>계속하기</Button>
+      )}
     </div>
   );
 };

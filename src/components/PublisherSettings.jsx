@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-const PublisherSettings = ({ onNext }) => {
-  const [subscribedPublisher, setSubscribedPublisher] = useState([]);
+/**
+ * 사용자의 관심 언론사를 선택받는 컴포넌트
+ * @param {Object} props
+ * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
+ * @returns {JSX.Element}
+ */
+const PublisherSettings = ({ onNext, initialData }) => {
+  const [subscribedPublisher, setSubscribedPublisher] = useState(initialData);
 
   const publishers = [
     { id: 1, name: "SBS 연예뉴스", img: "💻" },
@@ -11,7 +19,11 @@ const PublisherSettings = ({ onNext }) => {
     { id: 5, name: "SBS 연예뉴스", img: "💻" },
     { id: 6, name: "SBS 연예뉴스", img: "💻" },
     { id: 7, name: "SBS 연예뉴스", img: "💻" },
-    { id: 8, name: "SBS 연예뉴스", img: "💻" },
+    { id: 9, name: "SBS 연예뉴스", img: "💻" },
+    { id: 10, name: "SBS 연예뉴스", img: "💻" },
+    { id: 11, name: "SBS 연예뉴스", img: "💻" },
+    { id: 12, name: "SBS 연예뉴스", img: "💻" },
+    { id: 13, name: "SBS 연예뉴스", img: "💻" },
   ];
 
   const toggleSubscribe = (publisherId) => {
@@ -48,8 +60,8 @@ const PublisherSettings = ({ onNext }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-10/12 max-w-2xl">
-      <h2 className="text-3xl font-extrabold mb-3">
+    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+      <h2 className="text-3xl font-extrabold mb-3 break-keep">
         구독하고 싶은 언론사를 선택해주세요.
       </h2>
       {hasMinimumSubscribe() ? (
@@ -59,9 +71,9 @@ const PublisherSettings = ({ onNext }) => {
           최소 3개 언론사를 구독하세요.
         </h3>
       )}
-      <div className="flex flex-col gap-3">
+      <ScrollArea className="min-h-[350px] mb-20">
         {publishers.map((publisher) => (
-          <div key={publisher.id} className="flex justify-between w-full">
+          <div key={publisher.id} className="flex justify-between w-full mb-4">
             <div className="flex">
               <span className="text-4xl mr-8">{publisher.img}</span>
               <span className="block mt-2 font-bold">{publisher.name}</span>
@@ -76,16 +88,13 @@ const PublisherSettings = ({ onNext }) => {
             </button>
           </div>
         ))}
-      </div>
-      <button
-        className={`button fixed bottom-16 ${
-          hasMinimumSubscribe() ? "bg-bt-default" : "bg-bt-disabled"
-        }`}
-        onClick={handleSubmit}
-        disabled={!hasMinimumSubscribe()}
-      >
-        계속하기
-      </button>
+        <ScrollBar orientation="vertical" />
+      </ScrollArea>
+      {hasMinimumSubscribe() ? (
+        <Button onClick={handleSubmit}>계속하기</Button>
+      ) : (
+        <Button disabled>계속하기</Button>
+      )}
     </div>
   );
 };

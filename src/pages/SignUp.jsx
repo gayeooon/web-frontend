@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import BasicInfoSettings from "../components/BasicInfoSettings";
 import CategorySettings from "../components/CategorySettings";
 import UserDetailsSettings from "../components/UserDetailsSettings";
 import PublisherSettings from "../components/PublisherSettings";
 import SettingComplete from "@/components/SettingComplete";
+import backIcon from "../assets/back.svg";
 
 /**
  * 회원가입 프로세스를 관리하는 컴포넌트
@@ -14,10 +16,17 @@ const SignUp = () => {
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({
-    BasicInfoData: {},
-    UserDetailsData: {},
-    CategoryData: {},
-    PublisherData: {},
+    BasicInfoData: {
+      username: "",
+      email: "",
+      tel: "",
+    },
+    UserDetailsData: {
+      gender: "",
+      birthdate: "",
+    },
+    CategoryData: [],
+    PublisherData: [],
   });
 
   /**
@@ -71,28 +80,50 @@ const SignUp = () => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <BasicInfoSettings onNext={handleNext} />;
+        return (
+          <BasicInfoSettings
+            onNext={handleNext}
+            initialData={formData.BasicInfoData}
+          />
+        );
       case 2:
-        return <UserDetailsSettings onNext={handleNext} />;
+        return (
+          <UserDetailsSettings
+            onNext={handleNext}
+            initialData={formData.UserDetailsData}
+          />
+        );
       case 3:
-        return <CategorySettings onNext={handleNext} />;
+        return (
+          <CategorySettings
+            onNext={handleNext}
+            initialData={formData.CategoryData}
+          />
+        );
       case 4:
-        return <PublisherSettings onNext={handleNext} />;
+        return (
+          <PublisherSettings
+            onNext={handleNext}
+            initialData={formData.PublisherData}
+          />
+        );
       case 5:
-        return <SettingComplete onNext={handleNext} />;
+        return <SettingComplete />;
       default:
         return <BasicInfoSettings onNext={handleNext} />;
     }
   };
 
   return (
-    <div>
-      <div className="flex justify-between p-10">
-        <button onClick={handleBack}>back</button>
+    <div className="h-screen min-h-[800px]">
+      <div className="flex justify-between py-10 px-6">
+        <button className="w-4" onClick={handleBack}>
+          <img src={backIcon} alt="back" />
+        </button>
         <Progress value={step * 20} />
-        <div>none</div>
+        <div className="w-4"></div>
       </div>
-      <div className="flex-center pt-8">{renderStep()}</div>
+      <div className="flex justify-center pt-6 h-5/6">{renderStep()}</div>
     </div>
   );
 };

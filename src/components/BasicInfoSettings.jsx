@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 /**
  * 사용자의 기본 정보를 입력받는 컴포넌트
@@ -6,12 +7,8 @@ import React, { useState, useEffect } from "react";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const BasicInfoSettings = ({ onNext }) => {
-  const [data, setData] = useState({
-    username: "",
-    email: "",
-    tel: "",
-  });
+const BasicInfoSettings = ({ onNext, initialData }) => {
+  const [data, setData] = useState(initialData);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -108,7 +105,7 @@ const BasicInfoSettings = ({ onNext }) => {
     }
   };
   return (
-    <div className="flex flex-col gap-6 w-10/12 max-w-2xl">
+    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
       <h2 className="text-3xl font-extrabold mb-9">
         뉴스핏이 처음인가요?
         <br />
@@ -149,15 +146,11 @@ const BasicInfoSettings = ({ onNext }) => {
       </div>
       {errors.tel && <p className="text-red-500 ml-4">{errors.tel}</p>}
 
-      <button
-        className={`button fixed bottom-16 ${
-          isFormComplete() ? "bg-bt-default" : "bg-bt-disabled"
-        }`}
-        onClick={handleSubmit}
-        disabled={!isFormComplete()}
-      >
-        계속하기
-      </button>
+      {isFormComplete() ? (
+        <Button onClick={handleSubmit}>계속하기</Button>
+      ) : (
+        <Button disabled>계속하기</Button>
+      )}
     </div>
   );
 };

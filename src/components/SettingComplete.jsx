@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import successmark from "../assets/successmark.svg";
-const SettingComplete = ({ onNext }) => {
-  const handleSubmit = () => {
-    onNext();
+import { Button } from "./ui/button";
+
+const SettingComplete = () => {
+  const navigate = useNavigate();
+  const onClickStart = () => {
+    navigate("/");
   };
   return (
-    <div className="flex flex-col items-center gap-6 w-10/12 max-w-2xl">
+    <div className="flex flex-col relative items-center gap-6 w-10/12 max-w-2xl h-full min-h-96">
       <img
         className="w-1/3 max-w-40 mt-16"
         src={successmark}
@@ -16,12 +20,7 @@ const SettingComplete = ({ onNext }) => {
         <br />
         지금 바로 맞춤 뉴스를 읽어보세요.
       </span>
-      <button
-        className="button fixed bottom-16 bg-bt-default"
-        onClick={handleSubmit}
-      >
-        시작하기
-      </button>
+      <Button onClick={onClickStart}>시작하기</Button>
     </div>
   );
 };

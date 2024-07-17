@@ -11,12 +11,6 @@
 }
 
 @layer utilities {
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-  .button {
-    @apply flex justify-center items-center rounded-lg text-base font-bold text-white h-14 w-10/12 max-w-2xl;
-  }
   .subs_button {
     @apply text-xs font-bold border border-border rounded-full w-16 h-8;
   }
