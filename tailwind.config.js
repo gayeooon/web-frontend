@@ -41,6 +41,7 @@ module.exports = {
         "ccbt-hover": "#C11E1E",
         "ccbt-disabled": "#EF7B7B",
         "txt-placeholder": "#767678",
+        black85: "rgba(0, 0, 0, 0.85)",
         background: "#E8ECF4",
         border: "#E6E6EA",
       },

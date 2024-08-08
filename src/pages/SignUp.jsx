@@ -8,6 +8,23 @@ import PublisherSettings from "../components/PublisherSettings";
 import SettingComplete from "@/components/SettingComplete";
 import backIcon from "../assets/back.svg";
 
+// app 컴포넌트에서 SignUP 컴포넌트로
+// { initialValues = INITIAL_VALUES }
+// prop 보낼 때 사용할 초기 값
+const INITIAL_VALUES = {
+  BasicInfoData: {
+    username: "",
+    email: "",
+    tel: "",
+  },
+  UserDetailsData: {
+    gender: "",
+    birthdate: "",
+  },
+  CategoryData: [],
+  PublisherData: [],
+};
+
 /**
  * 회원가입 프로세스를 관리하는 컴포넌트
  * @returns {JSX.Element}
