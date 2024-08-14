@@ -2,6 +2,8 @@ import like from "../assets/like.svg";
 import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import my from "../assets/my.svg";
+import { Button } from "@/components/ui/button";
+import NaverLogin from "@/components/NaverLogin";
 
 const Home = () => {
   return (
@@ -41,6 +43,11 @@ const Home = () => {
           <input type="text" name="username" placeholder="username" />
         </div>
       </div>
+      <Button>계속하기</Button>
+      <Button disabled variant="destructive">
+        계속하기
+      </Button>
+      <NaverLogin />
     </div>
   );
 };
