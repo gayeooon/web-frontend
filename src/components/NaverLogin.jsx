@@ -11,7 +11,16 @@ const NaverLogin = () => {
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&state=${state}&redirect_uri=${callbackUrl}`;
 
   const loginURL = () => {
-    window.location.href = NAVER_AUTH_URL;
+    const width = 450;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    window.open(
+      NAVER_AUTH_URL,
+      "NaverLogin",
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
   };
 
   // SDK 사용 코드

@@ -13,17 +13,15 @@ const buttonVariants = cva(
           "absolute bg-bt-default text-white hover:bg-dfbt-hover disabled:bg-dfbt-disabled bottom-0",
         destructive:
           "bg-bt-cancel text-white hover:bg-ccbt-hover disabled:bg-ccbt-disabled",
-        naver:
-          "justify-center items-center gap-4 bg-[#03c75a] text-white hover:bg-neutral-300",
+        naver: "justify-center items-center gap-4 bg-[#03c75a] text-white ",
         kakao:
-          "flex justify-center items-center gap-4 bg-[#fee500] text-black85 hover:bg-neutral-300",
-        apple:
-          "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+          "flex justify-center items-center gap-4 bg-[#fee500] text-black85 ",
+        apple: "flex justify-center items-center bg-[#000000] ",
         link: "text-slate-900 underline-offset-4 hover:underline ",
       },
       size: {
         default: "h-14 w-full",
-        sm: "h-9 rounded-md px-3",
+        sm: "h-14 w-full bg-white bg-[#eeefff] border",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },
