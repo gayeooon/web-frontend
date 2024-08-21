@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
 
 @layer base {
   html {
@@ -11,14 +11,11 @@
 }
 
 @layer utilities {
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-  .button {
-    @apply flex justify-center items-center rounded-lg text-base font-bold text-white h-14 w-10/12 max-w-2xl;
+  .subs_button {
+    @apply text-xs font-bold border border-border rounded-full w-16 h-8;
   }
   .input {
-    @apply flex relative items-center  p-4 border-2 border-border rounded-xl;
+    @apply flex relative items-center p-4 border-2 border-border rounded-xl;
   }
   .input-label {
     @apply absolute top-0 left-2 pl-2 pr-2 bg-white text-txt-placeholder transform -translate-y-1/2;

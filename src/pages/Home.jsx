@@ -2,12 +2,18 @@ import like from "../assets/like.svg";
 import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import my from "../assets/my.svg";
+import { Button } from "@/components/ui/button";
+import NaverLogin from "@/components/NaverLogin";
+import IsLoginContext from "@/components/contexts/IsLoginContext";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 
 const Home = () => {
+  const islogin = useContext(IsLoginContext);
+  if (!islogin) return <Navigate to="/login" />;
   return (
     <div>
       <img src={like} alt="like-icon" />
-
       <h2 className="text-3xl font-bold">Home Page</h2>
       <h4 className="text-xl font-bold text-my-purple">purple</h4>
       <h4 className="text-xl font-bold text-my-green">green</h4>
@@ -41,6 +47,11 @@ const Home = () => {
           <input type="text" name="username" placeholder="username" />
         </div>
       </div>
+      <Button>계속하기</Button>
+      <Button disabled variant="destructive">
+        계속하기
+      </Button>
+      <NaverLogin />
     </div>
   );
 };
