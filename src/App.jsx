@@ -1,6 +1,7 @@
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import User from "./pages/User";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./components/contexts/IsLoginContext";
 
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/user" element={<User />} />
       </Routes>
     </IsLoginContext.Provider>
   );
