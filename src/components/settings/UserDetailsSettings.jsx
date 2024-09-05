@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 /**
@@ -42,10 +42,7 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
 
   const today = new Date().toISOString().split("T")[0];
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-9 w-full break-keep">
-        맞춤 뉴스 제공을 위한 추가 정보를 알려주세요.
-      </h2>
+    <>
       <div className="input ">
         <div className="input-label">성별</div>
         <RadioGroup
@@ -86,7 +83,7 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
       ) : (
         <Button disabled>계속하기</Button>
       )}
-    </div>
+    </>
   );
 };
 export default UserDetailsSettings;

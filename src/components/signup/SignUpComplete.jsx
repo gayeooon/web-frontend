@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import successmark from "../assets/successmark.svg";
-import { Button } from "./ui/button";
+import successmark from "@/assets/successmark.svg";
+import { Button } from "../ui/button";
 
-const SettingComplete = () => {
+const SignUpComplete = () => {
   const navigate = useNavigate();
   const onClickStart = () => {
     navigate("/");
@@ -25,4 +25,4 @@ const SettingComplete = () => {
   );
 };
 
-export default SettingComplete;
+export default SignUpComplete;

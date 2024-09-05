@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 /**
@@ -60,10 +60,7 @@ const PublisherSettings = ({ onNext, initialData }) => {
   };
 
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-3 break-keep">
-        구독하고 싶은 언론사를 선택해주세요.
-      </h2>
+    <>
       {hasMinimumSubscribe() ? (
         <></>
       ) : (
@@ -95,7 +92,7 @@ const PublisherSettings = ({ onNext, initialData }) => {
       ) : (
         <Button disabled>계속하기</Button>
       )}
-    </div>
+    </>
   );
 };
 

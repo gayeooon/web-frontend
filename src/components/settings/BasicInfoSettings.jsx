@@ -105,12 +105,7 @@ const BasicInfoSettings = ({ onNext, initialData }) => {
     }
   };
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-9">
-        뉴스핏이 처음인가요?
-        <br />
-        기본 정보를 알려주세요.
-      </h2>
+    <>
       <div className="input">
         <input
           className="w-full m-1"
@@ -151,7 +146,7 @@ const BasicInfoSettings = ({ onNext, initialData }) => {
       ) : (
         <Button disabled>계속하기</Button>
       )}
-    </div>
+    </>
   );
 };
 export default BasicInfoSettings;

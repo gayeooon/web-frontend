@@ -4,6 +4,9 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./components/contexts/IsLoginContext";
+import Settings from "./pages/settings/Settings";
+import UserDetailsSettings from "./components/settings/UserDetailsSettings";
+import SettingComplete from "./components/signup/SignUpComplete";
 
 const App = () => {
   // App 컴포넌트에서 할 일
@@ -18,6 +21,10 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user" element={<User />} />
+        <Route path="/settings" element={<Settings />}>
+          <Route path="user-info" element={<SettingComplete />} />
+        </Route>
+        <Route path="*" element={<h3>없는 페이지</h3>} />
       </Routes>
     </IsLoginContext.Provider>
   );

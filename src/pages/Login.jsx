@@ -1,11 +1,11 @@
-import NaverLogin from "@/components/NaverLogin";
+import NaverLogin from "@/components/logins/NaverLogin";
 import { Button } from "@/components/ui/button";
 import favicon from "../assets/favicon.png";
 import naver from "../assets/naver_logo_white.svg";
 import kakao from "../assets/kakao_logo.svg";
 import apple from "../assets/apple_logo_black.png";
-import AppleLogin from "@/components/AppleLogin";
-import KakaoLogin from "@/components/KakaoLogin";
+import AppleLogin from "@/components/logins/AppleLogin";
+import KakaoLogin from "@/components/logins/KakaoLogin";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

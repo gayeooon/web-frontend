@@ -1,28 +1,41 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
-import BasicInfoSettings from "../components/BasicInfoSettings";
-import CategorySettings from "../components/CategorySettings";
-import UserDetailsSettings from "../components/UserDetailsSettings";
-import PublisherSettings from "../components/PublisherSettings";
-import SettingComplete from "@/components/SettingComplete";
-import backIcon from "../assets/back.svg";
+import BasicInfoSettings from "../components/settings/BasicInfoSettings";
+import CategorySettings from "../components/settings/CategorySettings";
+import UserDetailsSettings from "../components/settings/UserDetailsSettings";
+import PublisherSettings from "../components/settings/PublisherSettings";
+import SignUpComplete from "@/components/signup/SignUpComplete";
+import SignUpHeader from "@/components/signup/SignUpHeader";
 
 // app 컴포넌트에서 SignUP 컴포넌트로
 // { initialValues = INITIAL_VALUES }
 // prop 보낼 때 사용할 초기 값
-const INITIAL_VALUES = {
-  BasicInfoData: {
-    username: "",
-    email: "",
-    tel: "",
-  },
-  UserDetailsData: {
-    gender: "",
-    birthdate: "",
-  },
-  CategoryData: [],
-  PublisherData: [],
+// const INITIAL_VALUES = {
+//   BasicInfoData: {
+//     username: "",
+//     email: "",
+//     tel: "",
+//   },
+//   UserDetailsData: {
+//     gender: "",
+//     birthdate: "",
+//   },
+//   CategoryData: [],
+//   PublisherData: [],
+// };
+
+const STEPS = {
+  BASIC_INFO: 1,
+  USER_DETAILS: 2,
+  CATEGORY: 3,
+  PUBLISHER: 4,
+  COMPLETE: 5,
+};
+
+const STEP_TITLES = {
+  [STEPS.BASIC_INFO]: "뉴스핏이 처음인가요?\n기본 정보를 알려주세요.",
+  [STEPS.USER_DETAILS]: "맞춤 뉴스 제공을 위한 추가 정보를 알려주세요.",
+  [STEPS.CATEGORY]: "관심있는 뉴스 주제를 선택해주세요.",
+  [STEPS.PUBLISHER]: "구독하고 싶은 언론사를 선택해주세요.",
 };
 
 /**
@@ -30,7 +43,7 @@ const INITIAL_VALUES = {
  * @returns {JSX.Element}
  */
 const SignUp = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(STEPS.BASIC_INFO);
 
   const [formData, setFormData] = useState({
     BasicInfoData: {
@@ -53,30 +66,15 @@ const SignUp = () => {
   const handleNext = (data) => {
     setFormData((prevFormData) => {
       switch (step) {
-        case 1:
-          return {
-            ...prevFormData,
-            BasicInfoData: data,
-          };
-        case 2:
-          return {
-            ...prevFormData,
-            UserDetailsData: data,
-          };
-        case 3:
-          return {
-            ...prevFormData,
-            CategoryData: data,
-          };
-        case 4:
-          return {
-            ...prevFormData,
-            PublisherData: data,
-          };
-        case 5:
-          retrun;
+        case STEPS.BASIC_INFO:
+          return { ...prevFormData, BasicInfoData: data };
+        case STEPS.USER_DETAILS:
+          return { ...prevFormData, UserDetailsData: data };
+        case STEPS.CATEGORY:
+          return { ...prevFormData, CategoryData: data };
+        case STEPS.PUBLISHER:
+          return { ...prevFormData, PublisherData: data };
         default:
-          console.warn(`Unhandled step: ${stepRef.current}`);
           return prevFormData;
       }
     });
@@ -87,45 +85,47 @@ const SignUp = () => {
    * 이전 단계로 돌아가는 함수
    */
   const handleBack = () => {
-    setStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
+    setStep((prevStep) =>
+      prevStep > STEPS.BASIC_INFO ? prevStep - 1 : prevStep
+    );
   };
 
   /**
    * 현재 단계에 해당하는 컴포넌트를 렌더링하는 함수
    * @returns {JSX.Element}
    */
-  const renderStep = () => {
+  const renderStepContent = () => {
     switch (step) {
-      case 1:
+      case STEPS.BASIC_INFO:
         return (
           <BasicInfoSettings
             onNext={handleNext}
             initialData={formData.BasicInfoData}
           />
         );
-      case 2:
+      case STEPS.USER_DETAILS:
         return (
           <UserDetailsSettings
             onNext={handleNext}
             initialData={formData.UserDetailsData}
           />
         );
-      case 3:
+      case STEPS.CATEGORY:
         return (
           <CategorySettings
             onNext={handleNext}
             initialData={formData.CategoryData}
           />
         );
-      case 4:
+      case STEPS.PUBLISHER:
         return (
           <PublisherSettings
             onNext={handleNext}
             initialData={formData.PublisherData}
           />
         );
-      case 5:
-        return <SettingComplete />;
+      case STEPS.COMPLETE:
+        return <SignUpComplete />;
       default:
         return <BasicInfoSettings onNext={handleNext} />;
     }
@@ -133,14 +133,19 @@ const SignUp = () => {
 
   return (
     <div className="h-screen min-h-[800px]">
-      <div className="flex justify-between py-10 px-6">
-        <button className="w-4" onClick={handleBack}>
-          <img src={backIcon} alt="back" />
-        </button>
-        <Progress value={step * 20} />
-        <div className="w-4"></div>
+      <SignUpHeader handleBack={handleBack} step={step} />
+      <div className="flex justify-center pt-6 h-5/6">
+        {step !== STEPS.COMPLETE ? (
+          <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+            <h2 className="text-3xl font-extrabold mb-3 break-keep">
+              {STEP_TITLES[step]}
+            </h2>
+            {renderStepContent()}
+          </div>
+        ) : (
+          <>{renderStepContent()}</>
+        )}
       </div>
-      <div className="flex justify-center pt-6 h-5/6">{renderStep()}</div>
     </div>
   );
 };

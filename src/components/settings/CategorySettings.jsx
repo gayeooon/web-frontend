@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 /**
  * 사용자의 관심 카테고리를 선택받는 컴포넌트
@@ -60,10 +60,7 @@ const CategorySettings = ({ onNext, initialData }) => {
   };
 
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-3 break-keep">
-        관심있는 뉴스 주제를 선택해주세요.
-      </h2>
+    <>
       {hasMinimumTopics() ? (
         <></>
       ) : (
@@ -96,7 +93,7 @@ const CategorySettings = ({ onNext, initialData }) => {
       ) : (
         <Button disabled>계속하기</Button>
       )}
-    </div>
+    </>
   );
 };
 
