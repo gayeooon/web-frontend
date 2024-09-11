@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import IsLoginContext from "@/components/contexts/IsLoginContext";
 import successmark from "@/assets/successmark.svg";
 import { Button } from "../ui/button";
 
-const SignUpComplete = () => {
+const SignUpComplete = ({ formData }) => {
+  const { login } = useContext(IsLoginContext);
   const navigate = useNavigate();
   const onClickStart = () => {
-    navigate("/");
+    navigate("/user");
+    login(formData);
   };
+
   return (
     <div className="flex flex-col relative items-center gap-6 w-10/12 max-w-2xl h-full min-h-96">
       <img

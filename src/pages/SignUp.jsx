@@ -125,7 +125,7 @@ const SignUp = () => {
           />
         );
       case STEPS.COMPLETE:
-        return <SignUpComplete />;
+        return <SignUpComplete formData={formData} />;
       default:
         return <BasicInfoSettings onNext={handleNext} />;
     }

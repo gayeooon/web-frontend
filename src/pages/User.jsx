@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import my from "../assets/my.svg";
@@ -10,9 +11,12 @@ const User = () => {
           <h3 className="py-8 text-3xl font-extrabold">이름</h3>
         </div>
         <div className="border-b w-full ">
-          <button className="flex py-5 w-full font-bold transition-all hover:underline ">
+          <Link
+            to="/user/user-info"
+            className="flex py-5 w-full font-bold transition-all hover:underline"
+          >
             회원정보 수정
-          </button>
+          </Link>
         </div>
         <div className="border-b w-full ">
           <button className="flex py-5 w-full font-bold transition-all hover:underline ">

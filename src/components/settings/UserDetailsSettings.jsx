@@ -53,7 +53,6 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
               ...prev,
               gender: value,
             }));
-            console.log(value);
           }}
         >
           <div className="flex items-center space-x-4 mb-4">
