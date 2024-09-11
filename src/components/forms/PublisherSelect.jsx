@@ -8,7 +8,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const PublisherSettings = ({ onNext, initialData }) => {
+const PublisherSelect = ({ onNext, initialData, buttonText }) => {
   const [subscribedPublisher, setSubscribedPublisher] = useState(initialData);
 
   const publishers = [
@@ -88,12 +88,12 @@ const PublisherSettings = ({ onNext, initialData }) => {
         <ScrollBar orientation="vertical" />
       </ScrollArea>
       {hasMinimumSubscribe() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button onClick={handleSubmit}>{buttonText}</Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button disabled>{buttonText}</Button>
       )}
     </>
   );
 };
 
-export default PublisherSettings;
+export default PublisherSelect;

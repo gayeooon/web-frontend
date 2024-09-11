@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 const Home = () => {
-  const islogin = useContext(IsLoginContext);
+  const { islogin } = useContext(IsLoginContext);
   if (!islogin) return <Navigate to="/login" />;
   return (
     <div>

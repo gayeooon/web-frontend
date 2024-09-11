@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const CategorySettings = ({ onNext, initialData }) => {
+const CategorySelect = ({ onNext, initialData, buttonText }) => {
   const [selectedTopics, setSelectedTopics] = useState(initialData);
 
   const topics = [
@@ -89,12 +89,12 @@ const CategorySettings = ({ onNext, initialData }) => {
         </div>
       </div>
       {hasMinimumTopics() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button onClick={handleSubmit}>{buttonText}</Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button disabled>{buttonText}</Button>
       )}
     </>
   );
 };
 
-export default CategorySettings;
+export default CategorySelect;

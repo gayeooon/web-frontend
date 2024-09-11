@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import BasicInfoSettings from "../components/settings/BasicInfoSettings";
-import CategorySettings from "../components/settings/CategorySettings";
-import UserDetailsSettings from "../components/settings/UserDetailsSettings";
-import PublisherSettings from "../components/settings/PublisherSettings";
+import BasicInformation from "../components/forms/BasicInformation";
+import CategorySelect from "../components/forms/CategorySelect";
+import DetailInformation from "../components/forms/DetailInformation";
+import PublisherSelect from "../components/forms/PublisherSelect";
 import SignUpComplete from "@/components/signup/SignUpComplete";
 import SignUpHeader from "@/components/signup/SignUpHeader";
 
@@ -98,36 +98,39 @@ const SignUp = () => {
     switch (step) {
       case STEPS.BASIC_INFO:
         return (
-          <BasicInfoSettings
+          <BasicInformation
             onNext={handleNext}
             initialData={formData.BasicInfoData}
+            buttonText="계속하기"
           />
         );
       case STEPS.USER_DETAILS:
         return (
-          <UserDetailsSettings
+          <DetailInformation
             onNext={handleNext}
             initialData={formData.UserDetailsData}
           />
         );
       case STEPS.CATEGORY:
         return (
-          <CategorySettings
+          <CategorySelect
             onNext={handleNext}
             initialData={formData.CategoryData}
+            buttonText="계속하기"
           />
         );
       case STEPS.PUBLISHER:
         return (
-          <PublisherSettings
+          <PublisherSelect
             onNext={handleNext}
             initialData={formData.PublisherData}
+            buttonText="계속하기"
           />
         );
       case STEPS.COMPLETE:
         return <SignUpComplete formData={formData} />;
       default:
-        return <BasicInfoSettings onNext={handleNext} />;
+        return <BasicInformation onNext={handleNext} buttonText="계속하기" />;
     }
   };
 

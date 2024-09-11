@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const UserDetailsSettings = ({ onNext, initialData }) => {
+const DetailInformation = ({ onNext, initialData }) => {
   const [data, setData] = useState(initialData);
 
   /**
@@ -85,4 +85,4 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
     </>
   );
 };
-export default UserDetailsSettings;
+export default DetailInformation;

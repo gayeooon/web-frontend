@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
+import IsLoginContext from "../contexts/IsLoginContext";
 
 /**
  * 사용자의 기본 정보를 입력받는 컴포넌트
@@ -7,7 +8,9 @@ import { Button } from "@/components/ui/button";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const BasicInfoSettings = ({ onNext, initialData }) => {
+const BasicInformation = ({ onNext, initialData, buttonText }) => {
+  const { userInfo } = useContext(IsLoginContext);
+
   const [data, setData] = useState(initialData);
 
   const [errors, setErrors] = useState({
@@ -142,11 +145,11 @@ const BasicInfoSettings = ({ onNext, initialData }) => {
       {errors.tel && <p className="text-red-500 ml-4">{errors.tel}</p>}
 
       {isFormComplete() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button onClick={handleSubmit}>{buttonText}</Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button disabled>{buttonText}</Button>
       )}
     </>
   );
 };
-export default BasicInfoSettings;
+export default BasicInformation;
