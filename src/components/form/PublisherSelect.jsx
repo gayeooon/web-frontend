@@ -88,9 +88,13 @@ const PublisherSelect = ({ onNext, initialData, buttonText }) => {
         <ScrollBar orientation="vertical" />
       </ScrollArea>
       {hasMinimumSubscribe() ? (
-        <Button onClick={handleSubmit}>{buttonText}</Button>
+        <Button className="absolute bottom-0" onClick={handleSubmit}>
+          {buttonText}
+        </Button>
       ) : (
-        <Button disabled>{buttonText}</Button>
+        <Button className="absolute bottom-0" disabled>
+          {buttonText}
+        </Button>
       )}
     </>
   );

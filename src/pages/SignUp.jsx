@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import BasicInformation from "../components/forms/BasicInformation";
-import CategorySelect from "../components/forms/CategorySelect";
-import DetailInformation from "../components/forms/DetailInformation";
-import PublisherSelect from "../components/forms/PublisherSelect";
+import BasicInformation from "../components/form/BasicInformation";
+import CategorySelect from "../components/form/CategorySelect";
+import DetailInformation from "../components/form/DetailInformation";
+import PublisherSelect from "../components/form/PublisherSelect";
 import SignUpComplete from "@/components/signup/SignUpComplete";
 import SignUpHeader from "@/components/signup/SignUpHeader";
 
-// app 컴포넌트에서 SignUP 컴포넌트로
+// app 컴포넌트에서 SignUp 컴포넌트로
 // { initialValues = INITIAL_VALUES }
 // prop 보낼 때 사용할 초기 값
 // const INITIAL_VALUES = {

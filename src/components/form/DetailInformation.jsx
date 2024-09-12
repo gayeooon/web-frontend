@@ -78,9 +78,13 @@ const DetailInformation = ({ onNext, initialData }) => {
         />
       </div>
       {isFormComplete() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button className="absolute bottom-0" onClick={handleSubmit}>
+          계속하기
+        </Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button className="absolute bottom-0" disabled>
+          계속하기
+        </Button>
       )}
     </>
   );

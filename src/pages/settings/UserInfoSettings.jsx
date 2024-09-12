@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import BasicInformation from "@/components/forms/BasicInformation";
+import BasicInformation from "@/components/form/BasicInformation";
 import IsLoginContext from "@/components/contexts/IsLoginContext";
 import SettingsHeader from "./SettingsHeader";
 import { useNavigate } from "react-router-dom";

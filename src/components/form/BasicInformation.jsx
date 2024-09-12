@@ -145,9 +145,13 @@ const BasicInformation = ({ onNext, initialData, buttonText }) => {
       {errors.tel && <p className="text-red-500 ml-4">{errors.tel}</p>}
 
       {isFormComplete() ? (
-        <Button onClick={handleSubmit}>{buttonText}</Button>
+        <Button className="absolute bottom-0" onClick={handleSubmit}>
+          {buttonText}
+        </Button>
       ) : (
-        <Button disabled>{buttonText}</Button>
+        <Button className="absolute bottom-0" disabled>
+          {buttonText}
+        </Button>
       )}
     </>
   );

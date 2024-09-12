@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "absolute bg-bt-default text-white hover:bg-dfbt-hover disabled:bg-dfbt-disabled bottom-0",
+          "bg-bt-default text-white hover:bg-dfbt-hover disabled:bg-dfbt-disabled",
         destructive:
           "bg-bt-cancel text-white hover:bg-ccbt-hover disabled:bg-ccbt-disabled",
         naver: "justify-center items-center gap-4 bg-[#03c75a] text-white ",

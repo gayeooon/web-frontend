@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./components/contexts/IsLoginContext";
 import CategorySettings from "./pages/settings/CategorySettings";
 import PublisherSettings from "./pages/settings/PublisherSettings";
+import AccountDelete from "./pages/settings/AccountDelete";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="user-info" element={<UserInfoSettings />} />
           <Route path="category-select" element={<CategorySettings />} />
           <Route path="publisher-select" element={<PublisherSettings />} />
+          <Route path="account-delete" element={<AccountDelete />} />
         </Route>
 
         <Route path="*" element={<h3>없는 페이지</h3>} />

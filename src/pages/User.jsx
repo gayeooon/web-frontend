@@ -1,18 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import my from "../assets/my.svg";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 import { useContext } from "react";
 import IsLoginContext from "@/components/contexts/IsLoginContext";
 
 const User = () => {
-  const { userInfo } = useContext(IsLoginContext);
-  const userName = userInfo.BasicInfoData.username;
+  const { logout } = useContext(IsLoginContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <div className="flex justify-center h-screen min-h-[600px] bg-background">
       <div className="relative flex flex-col items-center box-content p-16 w-10/12 max-w-2xl h-full bg-white rounded-2xl">
         <div className="border-b w-full ">
-          <h3 className="py-8 text-3xl font-extrabold">{userName}</h3>
+          <h3 className="py-8 text-3xl font-extrabold">마이페이지</h3>
         </div>
         <div className="border-b w-full ">
           <Link
@@ -39,14 +55,47 @@ const User = () => {
           </Link>
         </div>
         <div className="border-b w-full ">
-          <button className="flex py-5 w-full font-bold transition-all hover:underline ">
-            로그아웃
-          </button>
+          <Drawer>
+            <DrawerTrigger>
+              <div className="flex py-5 w-full font-bold transition-all hover:underline ">
+                로그아웃
+              </div>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="mx-auto w-full max-w-xl">
+                <DrawerHeader className="mt-4 ">
+                  <DrawerTitle className="text-2xl font-bold mb-4">
+                    로그아웃을 하시겠습니까?
+                  </DrawerTitle>
+                  <DrawerDescription>
+                    새로운 소식을 받을 수 없게 됩니다.
+                  </DrawerDescription>
+                </DrawerHeader>
+                <DrawerFooter>
+                  <div className="flex gap-6">
+                    <Button
+                      onClick={handleLogout}
+                      variant="destructive"
+                      className="w-1/2"
+                    >
+                      로그아웃
+                    </Button>
+                    <DrawerClose className="w-1/2">
+                      <Button>취소</Button>
+                    </DrawerClose>
+                  </div>
+                </DrawerFooter>
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
         <div className="border-b w-full ">
-          <button className="flex py-5 w-full font-bold transition-all hover:underline ">
-            회원탈퇴
-          </button>
+          <Link
+            to="/user/account-delete"
+            className="flex py-5 w-full font-bold transition-all hover:underline"
+          >
+            회원 탈퇴
+          </Link>
         </div>
       </div>
       {/* 네비게이션 */}

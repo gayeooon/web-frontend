@@ -25,7 +25,9 @@ const SignUpComplete = ({ formData }) => {
         <br />
         지금 바로 맞춤 뉴스를 읽어보세요.
       </span>
-      <Button onClick={onClickStart}>시작하기</Button>
+      <Button className="absolute bottom-0" onClick={onClickStart}>
+        시작하기
+      </Button>
     </div>
   );
 };
