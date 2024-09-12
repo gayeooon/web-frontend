@@ -26,7 +26,7 @@ const User = () => {
   };
   return (
     <div className="flex justify-center h-screen min-h-[600px] bg-background">
-      <div className="relative flex flex-col items-center box-content p-16 w-10/12 max-w-2xl h-full bg-white rounded-2xl">
+      <div className="relative flex flex-col items-center p-14 w-10/12 max-w-2xl h-full bg-white rounded-2xl">
         <div className="border-b w-full ">
           <h3 className="py-8 text-3xl font-extrabold">마이페이지</h3>
         </div>

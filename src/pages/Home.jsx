@@ -9,8 +9,9 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 const Home = () => {
-  const { islogin } = useContext(IsLoginContext);
-  if (!islogin) return <Navigate to="/login" />;
+  const { isLogin } = useContext(IsLoginContext);
+  console.log(isLogin);
+  if (!isLogin) return <Navigate to="/login" />;
   return (
     <div>
       <img src={like} alt="like-icon" />
