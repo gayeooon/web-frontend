@@ -3,13 +3,13 @@ import home from "../assets/home.svg";
 import search from "../assets/search.svg";
 import my from "../assets/my.svg";
 import { Button } from "@/components/ui/button";
-import NaverLogin from "@/components/NaverLogin";
+import NaverLogin from "@/components/login/NaverLogin";
 import IsLoginContext from "@/components/contexts/IsLoginContext";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 const Home = () => {
-  const islogin = useContext(IsLoginContext);
+  const { islogin } = useContext(IsLoginContext);
   if (!islogin) return <Navigate to="/login" />;
   return (
     <div>

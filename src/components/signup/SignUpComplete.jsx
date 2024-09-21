@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import successmark from "../assets/successmark.svg";
-import { Button } from "./ui/button";
+import { useContext } from "react";
+import IsLoginContext from "@/components/contexts/IsLoginContext";
+import successmark from "@/assets/successmark.svg";
+import { Button } from "../ui/button";
 
-const SettingComplete = () => {
+const SignUpComplete = ({ formData }) => {
+  const { login } = useContext(IsLoginContext);
   const navigate = useNavigate();
   const onClickStart = () => {
-    navigate("/");
+    navigate("/user");
+    login(formData);
   };
+
   return (
     <div className="flex flex-col relative items-center gap-6 w-10/12 max-w-2xl h-full min-h-96">
       <img
@@ -20,9 +25,11 @@ const SettingComplete = () => {
         <br />
         지금 바로 맞춤 뉴스를 읽어보세요.
       </span>
-      <Button onClick={onClickStart}>시작하기</Button>
+      <Button className="absolute bottom-0" onClick={onClickStart}>
+        시작하기
+      </Button>
     </div>
   );
 };
 
-export default SettingComplete;
+export default SignUpComplete;

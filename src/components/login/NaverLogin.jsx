@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import naver from "../assets/naver_logo_white.svg";
+import naver from "@/assets/naver_logo_white.svg";
 import { Button } from "@/components/ui/button";
 
 const NaverLogin = () => {

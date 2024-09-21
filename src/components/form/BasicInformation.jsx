@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
+import IsLoginContext from "../contexts/IsLoginContext";
 
 /**
  * 사용자의 기본 정보를 입력받는 컴포넌트
@@ -7,7 +8,9 @@ import { Button } from "@/components/ui/button";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const BasicInfoSettings = ({ onNext, initialData }) => {
+const BasicInformation = ({ onNext, initialData, buttonText }) => {
+  const { userInfo } = useContext(IsLoginContext);
+
   const [data, setData] = useState(initialData);
 
   const [errors, setErrors] = useState({
@@ -105,12 +108,7 @@ const BasicInfoSettings = ({ onNext, initialData }) => {
     }
   };
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-9">
-        뉴스핏이 처음인가요?
-        <br />
-        기본 정보를 알려주세요.
-      </h2>
+    <>
       <div className="input">
         <input
           className="w-full m-1"
@@ -147,11 +145,15 @@ const BasicInfoSettings = ({ onNext, initialData }) => {
       {errors.tel && <p className="text-red-500 ml-4">{errors.tel}</p>}
 
       {isFormComplete() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button className="absolute bottom-0" onClick={handleSubmit}>
+          {buttonText}
+        </Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button className="absolute bottom-0" disabled>
+          {buttonText}
+        </Button>
       )}
-    </div>
+    </>
   );
 };
-export default BasicInfoSettings;
+export default BasicInformation;

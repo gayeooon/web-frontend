@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 /**
@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
  * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
  * @returns {JSX.Element}
  */
-const UserDetailsSettings = ({ onNext, initialData }) => {
+const DetailInformation = ({ onNext, initialData }) => {
   const [data, setData] = useState(initialData);
 
   /**
@@ -42,10 +42,7 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
 
   const today = new Date().toISOString().split("T")[0];
   return (
-    <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-      <h2 className="text-3xl font-extrabold mb-9 w-full break-keep">
-        맞춤 뉴스 제공을 위한 추가 정보를 알려주세요.
-      </h2>
+    <>
       <div className="input ">
         <div className="input-label">성별</div>
         <RadioGroup
@@ -56,7 +53,6 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
               ...prev,
               gender: value,
             }));
-            console.log(value);
           }}
         >
           <div className="flex items-center space-x-4 mb-4">
@@ -82,11 +78,15 @@ const UserDetailsSettings = ({ onNext, initialData }) => {
         />
       </div>
       {isFormComplete() ? (
-        <Button onClick={handleSubmit}>계속하기</Button>
+        <Button className="absolute bottom-0" onClick={handleSubmit}>
+          계속하기
+        </Button>
       ) : (
-        <Button disabled>계속하기</Button>
+        <Button className="absolute bottom-0" disabled>
+          계속하기
+        </Button>
       )}
-    </div>
+    </>
   );
 };
-export default UserDetailsSettings;
+export default DetailInformation;

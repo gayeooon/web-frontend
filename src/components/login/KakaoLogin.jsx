@@ -1,5 +1,5 @@
-import kakao from "../assets/kakao_logo.svg";
-import { Button } from "./ui/button";
+import kakao from "@/assets/kakao_logo.svg";
+import { Button } from "../ui/button";
 
 const KakaoLogin = () => {
   const kakaoClientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
