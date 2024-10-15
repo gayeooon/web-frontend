@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
-import IsLoginContext from "../contexts/IsLoginContext";
+import IsLoginContext from "../../contexts/IsLoginContext";
 
 /**
  * 사용자의 기본 정보를 입력받는 컴포넌트

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import CategorySelect from "@/components/form/CategorySelect";
-import IsLoginContext from "@/components/contexts/IsLoginContext";
+import IsLoginContext from "@/contexts/IsLoginContext";
 import SettingsHeader from "./SettingsHeader";
 import { useNavigate } from "react-router-dom";
 

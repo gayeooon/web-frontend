@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import PublisherSelect from "@/components/form/PublisherSelect";
-import IsLoginContext from "@/components/contexts/IsLoginContext";
+import IsLoginContext from "@/contexts/IsLoginContext";
 import SettingsHeader from "./SettingsHeader";
 import { useNavigate } from "react-router-dom";
 

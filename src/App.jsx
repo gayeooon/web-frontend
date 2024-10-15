@@ -5,7 +5,7 @@ import User from "./pages/User";
 import UserInfoSettings from "./pages/settings/UserInfoSettings";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import IsLoginContext from "./components/contexts/IsLoginContext";
+import IsLoginContext from "./contexts/IsLoginContext";
 import CategorySettings from "./pages/settings/CategorySettings";
 import PublisherSettings from "./pages/settings/PublisherSettings";
 import AccountDelete from "./pages/settings/AccountDelete";
