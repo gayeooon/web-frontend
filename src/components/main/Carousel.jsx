@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -46,10 +46,10 @@ const newsArray = [
   },
 ];
 
-export default function NewsCarousel() {
+const NewsCarousel = () => {
   return (
-    <div className="w-full max-w-3xl group">
-      <Carousel className="w-full relative bg-background rounded-lg border-2 border-border">
+    <div className="w-full max-w-2xl group mb-2">
+      <Carousel className="w-full relative bg-background/30 rounded-lg border-2 border-background">
         <CarouselContent>
           {newsArray.map((news, index) => (
             <CarouselItem key={index}>
@@ -94,4 +94,6 @@ export default function NewsCarousel() {
       </Carousel>
     </div>
   );
-}
+};
+
+export default NewsCarousel;

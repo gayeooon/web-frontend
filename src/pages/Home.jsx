@@ -5,13 +5,20 @@ import Carousel from "@/components/main/Carousel";
 import IsLoginContext from "@/contexts/IsLoginContext";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import CategoryList from "@/components/main/CategoryList";
+import Header from "@/components/main/Header";
 
 const Home = () => {
   // const { islogin } = useContext(IsLoginContext);
   // if (!islogin) return <Navigate to="/login" />;
   return (
-    <div className="w-full flex justify-center p-6">
+    <div className="flex flex-col">
+      <Header />
+      <CategoryList />
+      <h2 className="text-xl font-extrabold m-6">헤드라인 뉴스</h2>
       <Carousel />
+      <h2 className="text-xl font-extrabold m-6">구독한 언론사의 최신 뉴스</h2>
+
       <div className="nav-bar">
         <div className="flex flex-col justify-center items-center w-6 gap-1">
           <img src={home} alt="home-icon" />
