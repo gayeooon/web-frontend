@@ -48,8 +48,8 @@ const newsArray = [
 
 const NewsCarousel = () => {
   return (
-    <div className="w-full max-w-2xl group mb-2">
-      <Carousel className="w-full relative bg-background/30 rounded-lg border-2 border-background">
+    <div className="w-full max-w-2xl group">
+      <Carousel className="w-full relative bg-background/30 rounded-lg border-[1px] border-background">
         <CarouselContent>
           {newsArray.map((news, index) => (
             <CarouselItem key={index}>

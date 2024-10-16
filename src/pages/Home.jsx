@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import CategoryList from "@/components/main/CategoryList";
 import Header from "@/components/main/Header";
+import NewsList from "@/components/main/NewsList";
 
 const Home = () => {
   // const { islogin } = useContext(IsLoginContext);
@@ -18,7 +19,7 @@ const Home = () => {
       <h2 className="text-xl font-extrabold m-6">헤드라인 뉴스</h2>
       <Carousel />
       <h2 className="text-xl font-extrabold m-6">구독한 언론사의 최신 뉴스</h2>
-
+      <NewsList />
       <div className="nav-bar">
         <div className="flex flex-col justify-center items-center w-6 gap-1">
           <img src={home} alt="home-icon" />
