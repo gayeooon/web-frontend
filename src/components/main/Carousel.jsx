@@ -14,14 +14,15 @@ const newsArray = [
     content: "부상자 361명, 15만5천명 대피",
     publisher: "한겨래",
     date: "2024.10.15",
-    image: favicon,
+    image:
+      "https://filmphotographyproject.com/wp-content/uploads/2024/06/Newspaper_HeroMod_770x_.jpg",
   },
   {
     title: "Tech Update",
     content: "New gadget released this week.",
     publisher: "한겨래",
     date: "2024.10.15",
-    image: "/placeholder.svg?height=400&width=600",
+    image: favicon,
   },
   {
     title: "Sports Highlight",

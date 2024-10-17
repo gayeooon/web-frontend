@@ -4,7 +4,7 @@ export default function NewsItem({ news }) {
   return (
     <div className="flex gap-6 px-4 py-6 border-b border-border hover:cursor-pointer">
       {news.image && (
-        <div className="w-1/4 overflow-hidden rounded-lg">
+        <div className="w-1/4 aspect-square overflow-hidden rounded-lg">
           <img
             className="w-full h-full object-cover"
             src={news.image}
