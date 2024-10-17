@@ -8,8 +8,8 @@ const SignUpComplete = ({ formData }) => {
   const { login } = useContext(IsLoginContext);
   const navigate = useNavigate();
   const onClickStart = () => {
-    navigate("/user");
     login(formData);
+    navigate("/");
   };
 
   return (
