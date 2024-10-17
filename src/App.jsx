@@ -5,7 +5,7 @@ import User from "./pages/User";
 import Setting from "./pages/Setting";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import IsLoginContext from "./components/contexts/IsLoginContext";
+import IsLoginContext from "./contexts/IsLoginContext";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);

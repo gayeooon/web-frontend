@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import IsLoginContext from "@/components/contexts/IsLoginContext";
+import IsLoginContext from "@/contexts/IsLoginContext";
 import {
   Drawer,
   DrawerClose,
