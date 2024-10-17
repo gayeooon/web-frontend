@@ -2,13 +2,10 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import User from "./pages/User";
-import UserInfoSettings from "./pages/settings/UserInfoSettings";
+import Setting from "./pages/Setting";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./components/contexts/IsLoginContext";
-import CategorySettings from "./pages/settings/CategorySettings";
-import PublisherSettings from "./pages/settings/PublisherSettings";
-import AccountDelete from "./pages/settings/AccountDelete";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -56,12 +53,11 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user">
           <Route index element={<User />} />
-          <Route path="user-info" element={<UserInfoSettings />} />
-          <Route path="category-select" element={<CategorySettings />} />
-          <Route path="publisher-select" element={<PublisherSettings />} />
-          <Route path="account-delete" element={<AccountDelete />} />
+          <Route path="info" element={<Setting variant="info" />} />
+          <Route path="category" element={<Setting variant="category" />} />
+          <Route path="publisher" element={<Setting variant="publisher" />} />
+          <Route path="delete" element={<Setting variant="delete" />} />
         </Route>
-
         <Route path="*" element={<h3>없는 페이지</h3>} />
       </Routes>
     </IsLoginContext.Provider>
