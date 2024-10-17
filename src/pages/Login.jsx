@@ -4,6 +4,7 @@ import favicon from "../assets/favicon.png";
 import naver from "../assets/naver_logo_white.svg";
 import kakao from "../assets/kakao_logo.svg";
 import apple from "../assets/apple_logo_black.png";
+import logo from "@/assets/NewsFit.svg";
 import AppleLogin from "@/components/login/AppleLogin";
 import KakaoLogin from "@/components/login/KakaoLogin";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +25,9 @@ const Login = () => {
             src={favicon}
             alt="favicon"
           />
-          <h2 className="text-6xl font-extrabold mt-7">NewsFit</h2>
+          <div className="mt-7 w-60 h-20">
+            <img className="w-full h-full" src={logo} alt="NewsFit" />
+          </div>
         </div>
         <div className="absolute top-[50%] flex flex-col w-full gap-4">
           <NaverLogin />
