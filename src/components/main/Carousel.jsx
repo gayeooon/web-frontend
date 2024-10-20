@@ -6,7 +6,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useState } from "react";
 import favicon from "@/assets/favicon.png";
+import NewsDrawer from "./NewsDrawer";
 
 const newsArray = [
   {
@@ -48,14 +50,36 @@ const newsArray = [
 ];
 
 const NewsCarousel = () => {
+  const [selectedNews, setSelectedNews] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenChange = (open) => {
+    setIsOpen(open);
+    if (!open) setSelectedNews(null);
+  };
+
+  const handleNewsClick = (news) => {
+    setSelectedNews(news);
+    setIsOpen(true);
+  };
   return (
-    <div className="w-full max-w-2xl group">
-      <Carousel className="w-full relative bg-background/30 rounded-lg border-[1px] border-background">
+    <div className="w-full group">
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        className="w-full relative bg-background/30 rounded-lg border-[1px] border-background"
+      >
         <CarouselContent>
           {newsArray.map((news, index) => (
             <CarouselItem key={index}>
               <div className="p-6">
-                <Card className="w-full">
+                <Card
+                  className="w-full hover:cursor-pointer"
+                  onClick={() => {
+                    handleNewsClick(news);
+                  }}
+                >
                   <CardContent className="p-0">
                     <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
                       <img
@@ -86,13 +110,18 @@ const NewsCarousel = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute -left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <CarouselPrevious className="relative left-0" />
+        <div className="absolute -left-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full sm:opacity-100 sm:block md:opacity-0 md:group-hover:opacity-100">
+          <CarouselPrevious className="relative left-0 shadow-md bg-white/80 hover:bg-white transition-colors duration-200" />
         </div>
-        <div className="absolute -right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <CarouselNext className="relative right-0" />
+        <div className="absolute -right-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full sm:opacity-100 sm:block md:opacity-0 md:group-hover:opacity-100">
+          <CarouselNext className="relative right-0 shadow-md bg-white/80 hover:bg-white transition-colors duration-200" />
         </div>
       </Carousel>
+      <NewsDrawer
+        isOpen={isOpen}
+        selectedNews={selectedNews}
+        handleOpenChange={handleOpenChange}
+      />
     </div>
   );
 };

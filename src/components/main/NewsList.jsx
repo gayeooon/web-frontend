@@ -1,17 +1,7 @@
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import favicon from "@/assets/favicon.png";
 import NewsItem from "./NewsItem";
-import NewsDrawerContent from "./NewsDrawerContent";
+import NewsDrawer from "./NewsDrawer";
 
 const newsArray = [
   {
@@ -66,7 +56,7 @@ export default function NewsList() {
   };
 
   return (
-    <div className="w-full max-w-2xl mb-2">
+    <div className="w-full mb-2">
       <div className="flex flex-col w-full bg-background/30 rounded-lg border-[1px] px-4 border-background">
         {newsArray.map((news, idx) => (
           <div key={idx} onClick={() => handleNewsClick(news)}>
@@ -74,30 +64,11 @@ export default function NewsList() {
           </div>
         ))}
       </div>
-      <Drawer open={isOpen} onOpenChange={handleOpenChange}>
-        <DrawerContent className="bg-gradient-to-t from-white to-background ">
-          <div className="mx-auto px-6 w-full max-w-xl max-h-[90vh] overflow-y-auto">
-            <DrawerHeader>
-              <DrawerTitle className="bg-white text-2xl font-bold my-4 p-4 rounded-lg border-[1px]">
-                {selectedNews?.title}
-              </DrawerTitle>
-              <DrawerDescription asChild>
-                <div>
-                  <NewsDrawerContent />
-                </div>
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter>
-              <Button>기사 링크로 이동</Button>
-              <DrawerClose asChild>
-                <Button className="bg-white text-black hover:bg-black/5">
-                  닫기
-                </Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
+      <NewsDrawer
+        isOpen={isOpen}
+        selectedNews={selectedNews}
+        handleOpenChange={handleOpenChange}
+      />
     </div>
   );
 }
