@@ -5,7 +5,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useState } from "react";
+import Autoplay from "embla-carousel-autoplay"; // import 수정
+import { useRef, useState } from "react";
 import favicon from "@/assets/favicon.png";
 import NewsDrawer from "./NewsDrawer";
 
@@ -51,6 +52,7 @@ const newsArray = [
 const HeadlineNewsCarousel = () => {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
   const handleOpenChange = (open) => {
     setIsOpen(open);
@@ -61,9 +63,13 @@ const HeadlineNewsCarousel = () => {
     setSelectedNews(news);
     setIsOpen(true);
   };
+
   return (
     <div className="w-full group">
       <Carousel
+        plugins={[plugin.current]}
+        onMouseEnter={() => plugin.current.stop()}
+        onMouseLeave={() => plugin.current.play()}
         opts={{
           loop: true,
         }}
@@ -102,10 +108,10 @@ const HeadlineNewsCarousel = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="absolute -left-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full sm:opacity-100 sm:block md:opacity-0 md:group-hover:opacity-100">
+        <div className="absolute -left-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full opacity-0 block group-hover:opacity-100">
           <CarouselPrevious className="relative left-0 shadow-md bg-white/80 hover:bg-white transition-colors duration-200" />
         </div>
-        <div className="absolute -right-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full sm:opacity-100 sm:block md:opacity-0 md:group-hover:opacity-100">
+        <div className="absolute -right-0 top-1/2 -translate-y-1/2 transition-opacity duration-200 rounded-full opacity-0 block group-hover:opacity-100">
           <CarouselNext className="relative right-0 shadow-md bg-white/80 hover:bg-white transition-colors duration-200" />
         </div>
       </Carousel>
