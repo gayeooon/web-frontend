@@ -23,4 +23,11 @@
   .nav-bar {
     @apply flex justify-between items-center w-[80%] max-w-xl h-16 px-10 pt-4 pb-2 rounded-3xl shadow-md bg-white fixed bottom-16 left-1/2 transform -translate-x-1/2;
   }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

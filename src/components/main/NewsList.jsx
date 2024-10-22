@@ -39,6 +39,41 @@ const newsArray = [
     time: "3시간전",
     image: "",
   },
+  {
+    title: "Science Discovery",
+    content: "Researchers make breakthrough in quantum computing.",
+    publisher: "한겨래",
+    time: "3시간전",
+    image: "",
+  },
+  {
+    title: "Science Discovery",
+    content: "Researchers make breakthrough in quantum computing.",
+    publisher: "한겨래",
+    time: "3시간전",
+    image: "",
+  },
+  {
+    title: "Science Discovery",
+    content: "Researchers make breakthrough in quantum computing.",
+    publisher: "한겨래",
+    time: "3시간전",
+    image: "",
+  },
+  {
+    title: "Science Discovery",
+    content: "Researchers make breakthrough in quantum computing.",
+    publisher: "한겨래",
+    time: "3시간전",
+    image: "",
+  },
+  {
+    title: "Science Discovery",
+    content: "Researchers make breakthrough in quantum computing.",
+    publisher: "한겨래",
+    time: "3시간전",
+    image: "",
+  },
 ];
 
 export default function NewsList() {

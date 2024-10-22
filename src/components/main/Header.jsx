@@ -5,7 +5,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between py-8 px-6">
+    <div className="flex justify-between pt-8 px-6">
       <button
         onClick={() => {
           navigate("/");

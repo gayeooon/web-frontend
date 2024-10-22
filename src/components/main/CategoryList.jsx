@@ -14,39 +14,25 @@ const categories = [
 ];
 
 export default function CategoryList() {
-  const [selectedCategories, setSelectedCategories] = useState(["전체"]);
+  const [selectedCategory, setSelectedCategory] = useState("전체");
 
-  const toggleCategory = (category) => {
-    setSelectedCategories((prevSelected) => {
-      let newSelected = [...prevSelected];
-      if (category === "전체") {
-        return ["전체"];
-      } else {
-        if (newSelected.includes(category)) {
-          console.log(newSelected);
-          newSelected = newSelected.filter((cat) => cat !== category);
-          if (newSelected.length === 0) newSelected.push("전체");
-        } else {
-          newSelected.push(category);
-          newSelected = newSelected.filter((cat) => cat !== "전체");
-        }
-      }
-      return newSelected;
-    });
+  const handleCategorySelect = (category) => {
+    if (selectedCategory === category) return;
+    setSelectedCategory(category);
   };
 
   const buttonClass = (category) => {
     return `flex-shrink-0 whitespace-nowrap font-bold text-sm py-2 px-4 rounded-full border-[1px] border-border ${
-      selectedCategories.includes(category)
+      selectedCategory === category
         ? "bg-my-purple text-white"
         : "bg-white text-black"
     }`;
   };
 
   return (
-    <div className="flex gap-2 pl-6 w-full overflow-x-auto">
+    <div className="flex gap-2 pl-6 w-full overflow-x-auto scrollbar-hide">
       <button
-        onClick={() => toggleCategory("전체")}
+        onClick={() => handleCategorySelect("전체")}
         className={buttonClass("전체")}
       >
         전체
@@ -54,7 +40,7 @@ export default function CategoryList() {
       {categories.map((category) => (
         <button
           key={category}
-          onClick={() => toggleCategory(category)}
+          onClick={() => handleCategorySelect(category)}
           className={buttonClass(category)}
         >
           {category}
