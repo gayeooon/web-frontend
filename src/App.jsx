@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import User from "./pages/User";
 import Setting from "./pages/Setting";
+import Search from "./pages/Search";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./contexts/IsLoginContext";
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/user">
           <Route index element={<User />} />
           <Route path="info" element={<Setting variant="info" />} />

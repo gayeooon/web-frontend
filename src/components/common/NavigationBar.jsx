@@ -25,20 +25,22 @@ export default function NavigationBar() {
           </div>
         </div>
       </Link>
-      <div className="flex flex-col justify-center items-center w-6 gap-1">
-        <img
-          className="w-full h-full"
-          src={pathname === "/search" ? search_green : search_default}
-          alt="search-icon"
-        />
-        <div
-          className={`text-xs ${
-            pathname === "/search" || "text-txt-placeholder"
-          }`}
-        >
-          검색
+      <Link to="/search">
+        <div className="flex flex-col justify-center items-center w-6 gap-1">
+          <img
+            className="w-full h-full"
+            src={pathname === "/search" ? search_green : search_default}
+            alt="search-icon"
+          />
+          <div
+            className={`text-xs ${
+              pathname === "/search" || "text-txt-placeholder"
+            }`}
+          >
+            검색
+          </div>
         </div>
-      </div>
+      </Link>
       <Link to="/user">
         <div className="flex flex-col justify-center items-center w-6 gap-1">
           <img
