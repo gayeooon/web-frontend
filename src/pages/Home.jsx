@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import Header from "@/components/main/Header";
 import CategoryList from "@/components/main/CategoryList";
-import NewsCarousel from "@/components/main/NewsCarousel";
+import HeadlineNewsCarousel from "@/components/main/HeadlineNewsCarousel";
 import NewsList from "@/components/main/NewsList";
 import NavigationBar from "@/components/common/NavigationBar";
 
@@ -18,7 +18,7 @@ const Home = () => {
           <CategoryList />
         </div>
         <h2 className="text-xl font-extrabold m-6 mt-0">헤드라인 뉴스</h2>
-        <NewsCarousel className="z-0" />
+        <HeadlineNewsCarousel className="z-0" />
         <h2 className="text-xl font-extrabold m-6 ">
           구독한 언론사의 최신 뉴스
         </h2>
