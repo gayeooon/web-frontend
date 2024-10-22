@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import IsLoginContext from "@/components/contexts/IsLoginContext";
+import IsLoginContext from "@/contexts/IsLoginContext";
 import SettingsHeader from "@/components/setting/SettingsHeader";
 import BasicInformation from "@/components/form/BasicInformation";
 import CategorySelect from "@/components/form/CategorySelect";
@@ -58,11 +58,13 @@ const Setting = ({ variant }) => {
   };
 
   return (
-    <div className="h-screen min-h-[800px]">
-      <SettingsHeader title={variantConfig[variant].title} />
-      <div className="flex justify-center pt-6 h-5/6">
-        <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-          {renderComponent()}
+    <div className="flex justify-center h-screen min-h-[600px]">
+      <div className="h-full w-full max-w-2xl ">
+        <SettingsHeader title={variantConfig[variant].title} />
+        <div className="flex justify-center pt-6 h-5/6">
+          <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+            {renderComponent()}
+          </div>
         </div>
       </div>
     </div>
