@@ -72,7 +72,7 @@ export default function CategoryNewsCarousel({ category }) {
 
   return (
     <div className="mx-6 mb-6">
-      <div className="text-[15px] font-bold mb-6 md:text-[17px] ">
+      <div className="text-[15px] font-bold mb-6 sm:text-[17px] ">
         <span className="text-my-green mr-2">{category}</span>
         <span>카테고리 최신 뉴스</span>
       </div>
@@ -100,10 +100,10 @@ export default function CategoryNewsCarousel({ category }) {
                 />
                 <div className="absolute inset-0 w-full bg-gradient-to-t from-black/60 to-black/10">
                   <div className="absolute flex flex-col h-full w-full justify-between p-6">
-                    <h2 className="font-bold text-white mb-2 text-lg md:text-xl">
+                    <h2 className="font-bold text-white mb-2 text-lg sm:text-xl">
                       {news.title}
                     </h2>
-                    <div className="flex w-full gap-6 items-center font-bold text-white text-xs md:text-sm">
+                    <div className="flex w-full gap-6 items-center font-bold text-white text-xs sm:text-sm">
                       <span>{news.publisher}</span>
                       <span className="text-lg">·</span>
                       <span>{news.date}</span>

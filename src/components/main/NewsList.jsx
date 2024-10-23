@@ -76,7 +76,7 @@ const newsArray = [
   },
 ];
 
-export default function NewsList() {
+export default function NewsList({ search = "" }) {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -90,14 +90,26 @@ export default function NewsList() {
     setIsOpen(true);
   };
 
+  const getSearchedList = () => {
+    if (search === "") return newsArray;
+    return newsArray.filter((news) =>
+      news.title.toLowerCase().includes(search.toLowerCase())
+    );
+  };
+  const filteredList = getSearchedList();
+
   return (
     <div className="w-full mb-2">
       <div className="flex flex-col w-full bg-background/30 rounded-lg border-[1px] px-4 border-background">
-        {newsArray.map((news, idx) => (
-          <div key={idx} onClick={() => handleNewsClick(news)}>
-            <NewsItem news={news} />
-          </div>
-        ))}
+        {filteredList.length === 0 ? (
+          <div className="my-8 font-bold text-txt-placeholder">{`'${search}'에 대한 검색결과가 없습니다.`}</div>
+        ) : (
+          filteredList.map((news, idx) => (
+            <div key={idx} onClick={() => handleNewsClick(news)}>
+              <NewsItem news={news} />
+            </div>
+          ))
+        )}
       </div>
       <NewsDrawer
         isOpen={isOpen}
