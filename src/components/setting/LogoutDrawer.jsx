@@ -24,10 +24,8 @@ export default function LogoutDrawer() {
 
   return (
     <Drawer>
-      <DrawerTrigger>
-        <div className="flex py-5 w-full font-bold transition-all hover:underline ">
-          로그아웃
-        </div>
+      <DrawerTrigger className="w-full flex py-5 w-full font-bold hover:underline ">
+        로그아웃
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-xl">
