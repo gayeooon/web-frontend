@@ -81,7 +81,7 @@ export default function NewsComment() {
         </button>
       </div>
       <div className="h-0 border-[0.5px] border-border my-6"></div>
-      <div className="flex flex-col gap-2 max-h-[35vh] overflow-y-auto">
+      <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
         {commentsArray.map((comment) => (
           <div
             key={comment.commentId}

@@ -12,7 +12,8 @@ const newsArray = [
       "https://filmphotographyproject.com/wp-content/uploads/2024/06/Newspaper_HeroMod_770x_.jpg",
   },
   {
-    title: "Tech Update",
+    title:
+      "'이게 되겠냐' 로제도 놀란 브루노 마스 협업...강남스타일 뛰어넘나 [Y녹취록]",
     content: "New gadget released this week.",
     publisher: "한겨래",
     time: "3시간전",
