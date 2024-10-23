@@ -12,7 +12,7 @@ const User = () => {
         <div className="border-b w-full ">
           <Link
             to="/user/info"
-            className="flex py-5 w-full font-bold transition-all hover:underline"
+            className="flex py-5 w-full font-bold hover:underline"
           >
             회원정보 수정
           </Link>
@@ -20,7 +20,7 @@ const User = () => {
         <div className="border-b w-full ">
           <Link
             to="/user/category"
-            className="flex py-5 w-full font-bold transition-all hover:underline"
+            className="flex py-5 w-full font-bold hover:underline"
           >
             선호 주제 변경
           </Link>
@@ -28,7 +28,7 @@ const User = () => {
         <div className="border-b w-full ">
           <Link
             to="/user/publisher"
-            className="flex py-5 w-full font-bold transition-all hover:underline"
+            className="flex py-5 w-full font-bold hover:underline"
           >
             뉴스 구독 관리
           </Link>
@@ -39,7 +39,7 @@ const User = () => {
         <div className="border-b w-full ">
           <Link
             to="/user/delete"
-            className="flex py-5 w-full font-bold transition-all hover:underline"
+            className="flex py-5 w-full font-bold hover:underline"
           >
             회원 탈퇴
           </Link>
