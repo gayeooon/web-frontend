@@ -12,7 +12,7 @@ const Home = () => {
   // if (!islogin) return <Navigate to="/login" />;
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col w-full max-w-2xl mb-24 relative">
+      <div className="flex flex-col w-full max-w-2xl mb-32 relative">
         <Header />
         <div className="sticky top-0 bg-gradient-to-b from-white to-white/90 z-50 py-6">
           <CategoryList />
