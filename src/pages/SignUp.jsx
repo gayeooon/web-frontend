@@ -5,6 +5,7 @@ import DetailInformation from "../components/form/DetailInformation";
 import PublisherSelect from "../components/form/PublisherSelect";
 import SignUpComplete from "@/components/signup/SignUpComplete";
 import SignUpHeader from "@/components/signup/SignUpHeader";
+import { useNavigate } from "react-router-dom";
 
 // app 컴포넌트에서 SignUp 컴포넌트로
 // { initialValues = INITIAL_VALUES }
@@ -44,6 +45,8 @@ const STEP_TITLES = {
  */
 const SignUp = () => {
   const [step, setStep] = useState(STEPS.BASIC_INFO);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     BasicInfoData: {
@@ -85,9 +88,7 @@ const SignUp = () => {
    * 이전 단계로 돌아가는 함수
    */
   const handleBack = () => {
-    setStep((prevStep) =>
-      prevStep > STEPS.BASIC_INFO ? prevStep - 1 : prevStep
-    );
+    setStep(step - 1);
   };
 
   /**
@@ -130,12 +131,12 @@ const SignUp = () => {
       case STEPS.COMPLETE:
         return <SignUpComplete formData={formData} />;
       default:
-        return <BasicInformation onNext={handleNext} buttonText="계속하기" />;
+        return navigate("/login");
     }
   };
 
   return (
-    <div className="flex justify-center h-screen min-h-[600px]">
+    <div className="flex justify-center h-screen min-h-[750px]">
       <div className="h-full w-full max-w-2xl ">
         <SignUpHeader handleBack={handleBack} step={step} />
         <div className="flex justify-center pt-6 h-5/6">
