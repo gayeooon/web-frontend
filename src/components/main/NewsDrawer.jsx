@@ -35,6 +35,14 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    if (!selectedNews) {
+      setIsLiked(false);
+      return;
+    }
+    setLikeCount(selectedNews.likeCount);
+  }, [selectedNews]);
+
+  useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
@@ -101,7 +109,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
         {contentType === "ai" ? (
           renderAISummary()
         ) : contentType === "comment" ? (
-          <NewsComment />
+          <NewsComment comments={selectedNews?.comment ?? []} />
         ) : (
           <></>
         )}
