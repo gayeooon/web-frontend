@@ -1,12 +1,10 @@
-import kakao from "@/assets/kakao_logo.svg";
-import { Button } from "../ui/button";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const clientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
-// const redirectURI = "http://localhost:5173/member/oauth/kakao";
-const redirectURI = "https://www.newsfit.shop/member/oauth/kakao";
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectURI}&response_type=code`;
+const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+// const REDIRECT_URI = "http://localhost:5173/member/oauth/kakao";
+const REDIRECT_URI = "https://www.newsfit.shop/member/oauth/kakao";
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 export const handleKakaoClick = () => {
   window.location.href = KAKAO_AUTH_URL;
@@ -33,10 +31,11 @@ const authKakaoLogin = async (code) => {
 
 export const KakaoLogin = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    // const code = new URL(window.location.href).searchParams.get("code");
-    const code = import.meta.env.VITE_KAKAO_TOKEN;
+    // const code = searchParams.get("code");
+    const code = import.meta.env.VITE_KAKAO_CODE;
 
     const processLogin = async () => {
       try {

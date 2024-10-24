@@ -1,13 +1,14 @@
-import NaverLogin from "@/components/login/NaverLogin";
+import { useNavigate } from "react-router-dom";
+import { handleKakaoClick } from "@/components/login/KakaoLogin";
+import { handleNaverClick } from "@/components/login/NaverLogin";
 import { Button } from "@/components/ui/button";
 import favicon from "@/assets/favicon.png";
-import naver from "@/assets/naver_logo_green.svg";
+import naver_white from "@/assets/naver_logo_white.svg";
+import naver_green from "@/assets/naver_logo_green.svg";
 import kakao from "@/assets/kakao_logo.svg";
 import apple from "@/assets/apple_logo_white.png";
 import logo from "@/assets/NewsFit.svg";
 import AppleLogin from "@/components/login/AppleLogin";
-import { handleKakaoClick } from "@/components/login/KakaoLogin";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +31,12 @@ const Login = () => {
           </div>
         </div>
         <div className="absolute top-[50%] flex flex-col w-full gap-4">
-          <NaverLogin />
+          <div id="naverIdLogin" className="h-14 w-full">
+            <Button variant="naver" onClick={handleNaverClick}>
+              <img className="h-2/6" src={naver_white} alt="naver_icon" />
+              <span>네이버 로그인</span>
+            </Button>
+          </div>
           <div className="h-14 w-full">
             <Button variant="kakao" onClick={handleKakaoClick}>
               <img className="h-2/6" src={kakao} alt="kakao_icon" />
@@ -51,7 +57,7 @@ const Login = () => {
               variant="naver"
               onClick={handleSignupClick}
             >
-              <img className="h-2/6" src={naver} alt="naver_icon" />
+              <img className="h-2/6" src={naver_green} alt="naver_icon" />
             </Button>
             <Button
               className="bg-white border-[1px] border-border"
