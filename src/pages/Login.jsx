@@ -6,7 +6,7 @@ import kakao from "@/assets/kakao_logo.svg";
 import apple from "@/assets/apple_logo_white.png";
 import logo from "@/assets/NewsFit.svg";
 import AppleLogin from "@/components/login/AppleLogin";
-import KakaoLogin from "@/components/login/KakaoLogin";
+import { handleKakaoClick } from "@/components/login/KakaoLogin";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -31,7 +31,12 @@ const Login = () => {
         </div>
         <div className="absolute top-[50%] flex flex-col w-full gap-4">
           <NaverLogin />
-          <KakaoLogin />
+          <div className="h-14 w-full">
+            <Button variant="kakao" onClick={handleKakaoClick}>
+              <img className="h-2/6" src={kakao} alt="kakao_icon" />
+              <span>카카오 로그인</span>
+            </Button>
+          </div>
           <AppleLogin />
           <div className="flex items-center w-full mt-10">
             <div className="flex-grow border-t border-border"></div>

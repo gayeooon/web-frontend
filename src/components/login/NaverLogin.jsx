@@ -6,7 +6,7 @@ const NaverLogin = () => {
   // API 사용 코드
 
   const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-  const callbackUrl = "http://localhost:5173/";
+  const callbackUrl = "https://www.newsfit.shop/member/oauth/naver";
   const state = "true";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&state=${state}&redirect_uri=${callbackUrl}`;
 
