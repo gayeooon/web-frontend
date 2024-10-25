@@ -1,5 +1,6 @@
-import send from "@/assets/send.svg";
 import { useState, useRef } from "react";
+import send from "@/assets/send.svg";
+import deleteIcon from "@/assets/delete.svg";
 
 export default function NewsComment({ comments }) {
   const [commentList, setcommentList] = useState(comments);
@@ -29,12 +30,18 @@ export default function NewsComment({ comments }) {
   const formatDate = (date) => {
     const today = new Date();
     const createdDate = new Date(date);
-    let diffTime = (today - createdDate) / (1000 * 60 * 60);
-    if (diffTime < 1) return `${Math.floor(diffTime * 60)}분 전`;
-    if (diffTime < 24) return `${Math.floor(diffTime)}시간 전`;
-    // if (diffTime < 7)
-    return `${Math.ceil(diffTime)}일 전`;
-    // return `${createdDate.getMonth() + 1}월 ${createdDate.getDate()}일`;
+
+    const diffMs = today - createdDate;
+    const diffMin = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffMin < 1) return "방금 전";
+    if (diffMin < 60) return `${diffMin}분 전`;
+    if (diffHours < 24) return `${diffHours}시간 전`;
+    if (diffDays < 7) return `${diffDays}일 전`;
+
+    return `${createdDate.getMonth() + 1}월 ${createdDate.getDate()}일`;
   };
 
   return (
@@ -44,7 +51,6 @@ export default function NewsComment({ comments }) {
           placeholder="댓글을 입력해 주세요"
           className="rounded-lg w-[80%] pl-4 bg-background text-black focus:outline-my-purple/50"
           ref={inputRef}
-          onKeyDown={onEnterKeyDown}
         ></input>
         <button
           className="flex justify-center items-center w-[20%] h-full rounded-[20px] bg-my-purple"

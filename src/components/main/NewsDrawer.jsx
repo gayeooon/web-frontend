@@ -37,6 +37,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
   useEffect(() => {
     if (!selectedNews) {
       setIsLiked(false);
+      setContentType("");
       return;
     }
     setLikeCount(selectedNews.likeCount);
