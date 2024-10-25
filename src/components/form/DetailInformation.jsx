@@ -43,7 +43,7 @@ const DetailInformation = ({ onNext, initialData }) => {
   const today = new Date().toISOString().split("T")[0];
   return (
     <>
-      <div className="input ">
+      <div className="border-2 border-border rounded-xl flex relative m-1 p-4">
         <div className="input-label">성별</div>
         <RadioGroup
           className="m-4"
@@ -68,7 +68,6 @@ const DetailInformation = ({ onNext, initialData }) => {
       <div className="input">
         <div className="input-label">생년월일</div>
         <input
-          className="w-full m-1"
           type="date"
           name="birthdate"
           value={data.birthdate}
