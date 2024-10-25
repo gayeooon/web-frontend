@@ -27,6 +27,11 @@ export default function NewsComment({ comments }) {
     }
   };
 
+  const onClickDelete = (commentId) => {
+    console.log("click delete");
+    setcommentList(commentList.filter((it) => it.commentId !== commentId));
+  };
+
   const formatDate = (date) => {
     const today = new Date();
     const createdDate = new Date(date);
@@ -66,11 +71,18 @@ export default function NewsComment({ comments }) {
             key={comment.commentId}
             className="flex flex-col items-start gap-2 p-4 rounded-lg bg-white"
           >
-            <div>
-              <span className="mr-3 text-black font-bold">
-                {comment.nickName}
-              </span>
-              <span>{formatDate(comment.createdDate)}</span>
+            <div className="w-full flex justify-between items-center">
+              <div>
+                <span className="mr-3 text-black font-bold">
+                  {comment.nickName}
+                </span>
+                <span>{formatDate(comment.createdDate)}</span>
+              </div>
+              {comment.isDeleted && (
+                <button onClick={() => onClickDelete(comment.commentId)}>
+                  <img className="w-2.5 h-full" src={deleteIcon} alt="삭제" />
+                </button>
+              )}
             </div>
             <div className="text-black">{comment.content}</div>
           </div>
