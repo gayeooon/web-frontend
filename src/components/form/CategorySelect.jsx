@@ -11,15 +11,14 @@ const CategorySelect = ({ onNext, initialData, buttonText }) => {
   const [selectedTopics, setSelectedTopics] = useState(initialData);
 
   const topics = [
-    { id: 1, name: "IT", emoji: "💻" },
-    { id: 2, name: "스포츠", emoji: "⚽" },
-    { id: 3, name: "과학", emoji: "🔬" },
-    { id: 4, name: "금융", emoji: "💰" },
-    { id: 5, name: "IT", emoji: "💻" },
-    { id: 6, name: "IT", emoji: "💻" },
-    { id: 7, name: "IT", emoji: "💻" },
-    { id: 8, name: "IT", emoji: "💻" },
-    { id: 9, name: "IT", emoji: "💻" },
+    { id: 1, name: "정치", emoji: "🏛️" },
+    { id: 2, name: "경제", emoji: "💰" },
+    { id: 3, name: "사회", emoji: "👥" },
+    { id: 4, name: "생활/문화", emoji: "🏠" },
+    { id: 5, name: "세계", emoji: "🌏" },
+    { id: 6, name: "기술/IT", emoji: "💻" },
+    { id: 7, name: "연예", emoji: "🎤" },
+    { id: 8, name: "스포츠", emoji: "⚽" },
   ];
 
   /**
@@ -64,16 +63,16 @@ const CategorySelect = ({ onNext, initialData, buttonText }) => {
       {hasMinimumTopics() ? (
         <></>
       ) : (
-        <h3 className="mb-2 text-xl font-bold underline underline-offset-8 decoration-1">
+        <h3 className="mb-4 text-xl font-bold underline underline-offset-8 decoration-1">
           최소 3개 주제를 선택하세요.
         </h3>
       )}
       <div className="bg-white rounded-lg w-full text-center">
-        <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="flex flex-wrap gap-[3%] justify-center">
           {topics.map((topic) => (
             <div
               key={topic.id}
-              className={`cursor-pointer rounded-lg p-4 border-2 ${
+              className={`cursor-pointer rounded-2xl p-4 border-2 w-[31%] flex-shrink-0 mb-[3%] ${
                 isSelected(topic.id)
                   ? "bg-background border-my-purple"
                   : "bg-none border-border"
@@ -81,7 +80,7 @@ const CategorySelect = ({ onNext, initialData, buttonText }) => {
               onClick={() => toggleTopic(topic.id)}
             >
               <span className="text-4xl">{topic.emoji}</span>
-              <span className="block mt-2 text-sm font-bold ">
+              <span className="block mt-2 text-sm font-bold break-keep">
                 {topic.name}
               </span>
             </div>
