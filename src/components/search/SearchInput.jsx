@@ -13,7 +13,7 @@ export default function SearchInput({ setSearch }) {
       <div className="flex items-center border-[1px] border-border w-full h-12 px-4 rounded-full">
         <input
           className="w-full focus:outline-none"
-          placeholder="키워드 / 언론사 / 카테고리로 검색"
+          placeholder="뉴스 제목 / 카테고리로 검색"
           onKeyDown={onKeyDownSearch}
           ref={inputRef}
         />
