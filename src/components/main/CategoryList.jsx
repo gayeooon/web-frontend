@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getMemberCategories } from "@/utils/api";
 import logo from "@/assets/서찬혁.png";
 
 const categories = [
@@ -17,6 +18,20 @@ export default function CategoryList({
   selectedCategory,
   setSelectedCategory,
 }) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const { result } = await getMemberCategories();
+        setCategories(result.preferredCategories);
+      } catch (error) {
+        console.log("Category error:", error);
+      }
+    };
+    getCategories();
+  }, []);
+
   const handleCategorySelect = (category) => {
     if (selectedCategory === category) return;
     setSelectedCategory(category);
