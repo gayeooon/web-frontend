@@ -2,18 +2,6 @@ import { useState, useEffect } from "react";
 import { getMemberCategories } from "@/utils/api";
 import logo from "@/assets/서찬혁.png";
 
-const categories = [
-  "IT / 과학",
-  "경제",
-  "생활 / 문화",
-  "IT",
-  "WORLD",
-  "카테고리3",
-  "카테고리4",
-  "카테고리5",
-  "카테고리6",
-];
-
 export default function CategoryList({
   selectedCategory,
   setSelectedCategory,
@@ -21,7 +9,7 @@ export default function CategoryList({
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const getCategories = async () => {
+    const processGetCategories = async () => {
       try {
         const { result } = await getMemberCategories();
         setCategories(result.preferredCategories);
@@ -29,7 +17,7 @@ export default function CategoryList({
         console.log("Category error:", error);
       }
     };
-    getCategories();
+    processGetCategories();
   }, []);
 
   const handleCategorySelect = (category) => {

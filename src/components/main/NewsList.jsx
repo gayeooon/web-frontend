@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getArticles } from "@/utils/api";
 import favicon from "@/assets/favicon.png";
 import NewsItem from "./NewsItem";
 import NewsDrawer from "./NewsDrawer";
@@ -142,6 +143,22 @@ const newsArray = [
 export default function NewsList({ search = "", category = "전체" }) {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    const processGetArticles = async () => {
+      try {
+        const { result } = await getArticles({
+          category: category === "전체" ? "allCategory" : category,
+        });
+        console.log(result);
+        setArticles(result);
+      } catch (error) {
+        console.log("Article error:", error);
+      }
+    };
+    processGetArticles();
+  }, []);
 
   const handleOpenChange = (open) => {
     setIsOpen(open);
@@ -154,7 +171,7 @@ export default function NewsList({ search = "", category = "전체" }) {
   };
 
   const getFilteredList = () => {
-    let filtered = [...newsArray];
+    let filtered = [...articles];
     if (category !== "전체")
       filtered = filtered.filter((news) => news.category === category);
 

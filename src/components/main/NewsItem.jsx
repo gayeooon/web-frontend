@@ -3,11 +3,11 @@ import publisherImg from "@/assets/apple_logo_black.png";
 export default function NewsItem({ news }) {
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
-      {news.images.length !== 0 && (
+      {news.thumbnail && (
         <div className="w-1/4 h-28 min-w-28 ">
           <img
             className="w-full h-full object-cover rounded-lg"
-            src={news.images[0]}
+            src={news.thumbnail}
             alt={news.title}
           />
         </div>
@@ -26,7 +26,7 @@ export default function NewsItem({ news }) {
           </div>
           <span className="font-bold text-gray-600">{news.press}</span>
           <span className="mx-2">·</span>
-          <span className="text-gray-400">{news.time}</span>
+          <span className="text-gray-400">{news.publishDate}</span>
         </div>
       </div>
     </div>
