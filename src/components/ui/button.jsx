@@ -16,7 +16,8 @@ const buttonVariants = cva(
         naver: "justify-center items-center gap-4 bg-[#03c75a] text-white ",
         kakao:
           "flex justify-center items-center gap-4 bg-[#fee500] text-black85 ",
-        apple: "flex justify-center items-center bg-[#000000] ",
+        google:
+          "flex justify-center gap-3 items-center bg-[#f2f2f2] text-black85 ",
         link: "text-slate-900 underline-offset-4 hover:underline ",
       },
       size: {

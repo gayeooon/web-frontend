@@ -29,6 +29,7 @@ export default function NewsItem({ news }) {
           <span className="text-sm font-bold text-gray-600">
             {news.publisher}
           </span>
+          <span className="text-sm font-bold text-gray-600"></span>
           <span className="mx-2">·</span>
           <span className="text-sm text-gray-400">{news.time}</span>
         </div>

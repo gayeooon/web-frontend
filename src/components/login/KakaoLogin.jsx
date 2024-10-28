@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
-// const REDIRECT_URI = "http://localhost:5173/member/oauth/kakao";
-const REDIRECT_URI = "https://www.newsfit.shop/member/oauth/kakao";
+const REDIRECT_URI = "http://localhost:5173/member/oauth/kakao";
+// const REDIRECT_URI = "https://www.newsfit.shop/member/oauth/kakao";
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 export const handleKakaoClick = () => {
@@ -15,7 +15,6 @@ const authKakaoLogin = async (code) => {
     `https://www.newsfit.shop/member/oauth/kakao?code=${code}`,
     {
       method: "GET",
-      mode: "no-cors", // CORS 비활성화
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -34,8 +33,8 @@ export const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    // const code = searchParams.get("code");
-    const code = import.meta.env.VITE_KAKAO_CODE;
+    const code = searchParams.get("code");
+    // const code = import.meta.env.VITE_KAKAO_CODE;
 
     const processLogin = async () => {
       try {

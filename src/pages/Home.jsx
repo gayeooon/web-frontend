@@ -10,6 +10,7 @@ import NavigationBar from "@/components/common/NavigationBar";
 const Home = () => {
   // const { islogin } = useContext(IsLoginContext);
   // if (!islogin) return <Navigate to="/login" />;
+
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full max-w-2xl mb-32 relative">
