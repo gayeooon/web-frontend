@@ -1,11 +1,11 @@
 const BASE_URL = "https://www.newsfit.shop";
+const kakaoToken = import.meta.env.VITE_KAKAO_TOKEN;
 
 export async function getMemberInfo() {
   const response = await fetch(`${BASE_URL}/member/info`, {
     method: "GET",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWthbyBnYXllYW40MzBAa2FrYW8uY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3Mjk3NzQyOTgsImV4cCI6MTczODQxNDI5OH0.dvrfrnvhbW3wdfrpMs7eU5nlrKhT6C1xzXZy24LDRlk",
+      Authorization: `Bearer ${kakaoToken}`,
     },
   });
   if (!response.ok) {
@@ -20,8 +20,7 @@ export async function getMemberPress() {
   const response = await fetch(`${BASE_URL}/member/press`, {
     method: "GET",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWthbyBnYXllYW40MzBAa2FrYW8uY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3Mjk3NzQyOTgsImV4cCI6MTczODQxNDI5OH0.dvrfrnvhbW3wdfrpMs7eU5nlrKhT6C1xzXZy24LDRlk",
+      Authorization: `Bearer ${kakaoToken}`,
     },
   });
   if (!response.ok) {
@@ -36,8 +35,7 @@ export async function getMemberCategories() {
   const response = await fetch(`${BASE_URL}/member/categories`, {
     method: "GET",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWthbyBnYXllYW40MzBAa2FrYW8uY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3Mjk3NzQyOTgsImV4cCI6MTczODQxNDI5OH0.dvrfrnvhbW3wdfrpMs7eU5nlrKhT6C1xzXZy24LDRlk",
+      Authorization: `Bearer ${kakaoToken}`,
     },
   });
   if (!response.ok) {
@@ -57,8 +55,7 @@ export async function getArticles({
   const response = await fetch(`${BASE_URL}/articles?${query}`, {
     method: "GET",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYWthbyBnYXllYW40MzBAa2FrYW8uY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3Mjk3NzQyOTgsImV4cCI6MTczODQxNDI5OH0.dvrfrnvhbW3wdfrpMs7eU5nlrKhT6C1xzXZy24LDRlk",
+      Authorization: `Bearer ${kakaoToken}`,
     },
   });
   if (!response.ok) {
