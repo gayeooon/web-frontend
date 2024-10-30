@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getMemberCategories } from "@/utils/api";
-import logo from "@/assets/서찬혁.png";
 
 export default function CategoryList({
   selectedCategory,
@@ -50,7 +49,6 @@ export default function CategoryList({
           {category}
         </button>
       ))}
-      <img src={logo} className="w-8" />
     </div>
   );
 }

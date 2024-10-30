@@ -25,7 +25,7 @@ const Home = () => {
         </div>
         <h2 className="text-xl font-extrabold m-6 mt-0">헤드라인 뉴스</h2>
         <HeadlineNewsCarousel className="z-0" />
-        <h2 className="text-xl font-extrabold m-6 mt-8">
+        <h2 className="text-xl font-extrabold m-6 mt-10">
           구독한 언론사의 최신 뉴스
         </h2>
         <NewsList category={category} />
