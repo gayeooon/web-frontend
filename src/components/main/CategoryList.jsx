@@ -1,5 +1,4 @@
 import { useState } from "react";
-import logo from "@/assets/서찬혁.png";
 
 const categories = [
   "IT / 과학",
@@ -47,7 +46,6 @@ export default function CategoryList({
           {category}
         </button>
       ))}
-      <img src={logo} className="w-8" />
     </div>
   );
 }
