@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -8,6 +8,14 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import NewsComment from "./NewsComment";
 import ai_default from "@/assets/ai_default.svg";
@@ -24,6 +32,23 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
   const [contentType, setContentType] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (!selectedNews) {
+      setIsLiked(false);
+      setContentType("");
+      return;
+    }
+    setLikeCount(selectedNews.likeCount);
+  }, [selectedNews]);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth > 768);
+    const handleResize = () => setIsDesktop(window.innerWidth > 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleContentChange = (type) => {
     if (type === contentType) setContentType("");
@@ -49,64 +74,88 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
     );
   };
 
+  const renderDescription = () => (
+    <div>
+      <div className="flex justify-between">
+        <button
+          onClick={() => {
+            handleContentChange("ai");
+          }}
+          className={setButtonClass("ai")}
+        >
+          <img
+            className="w-5"
+            src={contentType === "ai" ? ai_white : ai_default}
+          />
+          AI 요약
+        </button>
+        <button
+          onClick={() => {
+            handleContentChange("comment");
+          }}
+          className={setButtonClass("comment")}
+        >
+          <img
+            className="w-5"
+            src={contentType === "comment" ? comment_white : comment_default}
+          />
+          댓글
+        </button>
+        <button onClick={toggleLike} className={setButtonClass()}>
+          <img className="w-5" src={isLiked ? like_green : like_default} />
+          {likeCount}
+        </button>
+      </div>
+      <div>
+        {contentType === "ai" ? (
+          renderAISummary()
+        ) : contentType === "comment" ? (
+          <NewsComment comments={selectedNews?.comment ?? []} />
+        ) : (
+          <></>
+        )}
+      </div>
+    </div>
+  );
+
+  if (isDesktop) {
+    return (
+      <>
+        <Sheet open={isOpen} onOpenChange={handleOpenChange}>
+          <SheetContent className="bg-gradient-to-t from-white to-background  md:max-w-sm lg:max-w-lg">
+            <div className="h-full relative">
+              <SheetHeader>
+                <SheetTitle className="bg-white text-2xl font-bold my-4 p-4 rounded-lg border-[1px]">
+                  {selectedNews?.title}
+                </SheetTitle>
+                <SheetDescription asChild>
+                  {renderDescription()}
+                </SheetDescription>
+              </SheetHeader>
+              <div className="absolute -bottom-3 flex flex-col mt-10 gap-2 w-full">
+                <Button>기사 링크로 이동</Button>
+                <SheetClose asChild>
+                  <Button className="bg-white text-black hover:bg-black/5">
+                    닫기
+                  </Button>
+                </SheetClose>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
+
   return (
     <Drawer open={isOpen} onOpenChange={handleOpenChange}>
       <DrawerContent className="bg-gradient-to-t from-white to-background w-full">
-        <div className="mx-auto px-6 w-full max-w-xl max-h-[90vh] overflow-y-auto">
+        <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] overflow-y-auto">
           <DrawerHeader>
-            <DrawerTitle className="bg-white text-2xl font-bold my-4 p-4 rounded-lg border-[1px]">
+            <DrawerTitle className="bg-white text-xl font-bold my-4 p-4 rounded-lg border-[1px] sm:text-2xl">
               {selectedNews?.title}
             </DrawerTitle>
-            <DrawerDescription asChild>
-              <div>
-                <div className="flex justify-between">
-                  <button
-                    onClick={() => {
-                      handleContentChange("ai");
-                    }}
-                    className={setButtonClass("ai")}
-                  >
-                    <img
-                      className="w-5"
-                      src={contentType === "ai" ? ai_white : ai_default}
-                    />
-                    AI 요약
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleContentChange("comment");
-                    }}
-                    className={setButtonClass("comment")}
-                  >
-                    <img
-                      className="w-5"
-                      src={
-                        contentType === "comment"
-                          ? comment_white
-                          : comment_default
-                      }
-                    />
-                    댓글
-                  </button>
-                  <button onClick={toggleLike} className={setButtonClass()}>
-                    <img
-                      className="w-5"
-                      src={isLiked ? like_green : like_default}
-                    />
-                    {likeCount}
-                  </button>
-                </div>
-                <div>
-                  {contentType === "ai" ? (
-                    renderAISummary()
-                  ) : contentType === "comment" ? (
-                    <NewsComment />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </DrawerDescription>
+            <DrawerDescription asChild>{renderDescription()}</DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
             <Button>기사 링크로 이동</Button>

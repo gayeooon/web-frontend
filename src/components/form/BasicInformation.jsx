@@ -111,7 +111,6 @@ const BasicInformation = ({ onNext, initialData, buttonText }) => {
     <>
       <div className="input">
         <input
-          className="w-full m-1"
           type="text"
           name="username"
           value={data.username}
@@ -122,7 +121,6 @@ const BasicInformation = ({ onNext, initialData, buttonText }) => {
       <div className="input">
         <div className="input-label">이메일</div>
         <input
-          className="w-full m-1"
           type="email"
           name="email"
           value={data.email}
@@ -134,7 +132,6 @@ const BasicInformation = ({ onNext, initialData, buttonText }) => {
       <div className="input">
         <div className="input-label">전화번호</div>
         <input
-          className="w-full m-1"
           type="tel"
           name="tel"
           value={data.tel}
