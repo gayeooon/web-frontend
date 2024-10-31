@@ -1,21 +1,21 @@
 import { useState } from "react";
-import logo from "@/assets/서찬혁.png";
 
 const categories = [
   "IT / 과학",
   "경제",
   "생활 / 문화",
-  "카테고리1",
-  "카테고리2",
+  "IT",
+  "WORLD",
   "카테고리3",
   "카테고리4",
   "카테고리5",
   "카테고리6",
 ];
 
-export default function CategoryList() {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
-
+export default function CategoryList({
+  selectedCategory,
+  setSelectedCategory,
+}) {
   const handleCategorySelect = (category) => {
     if (selectedCategory === category) return;
     setSelectedCategory(category);
@@ -46,7 +46,6 @@ export default function CategoryList() {
           {category}
         </button>
       ))}
-      <img src={logo} className="w-8" />
     </div>
   );
 }

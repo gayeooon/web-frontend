@@ -1,23 +1,41 @@
 import deleteIcon from "@/assets/delete.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const initialSearches = [
-  "검색어1",
-  "검색어2",
-  "검색어3",
-  "검색어4",
-  "검색어5",
-  "검색어6",
-  "검색어7",
-];
+const STORAGE_KEY = "search-history";
+const MAX_SEARCHES = 5;
 
-export default function RecentSearches() {
-  const [searches, setSearches] = useState(initialSearches);
+export default function RecentSearches({ keyword }) {
+  const [searches, setSearches] = useState(
+    () => JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
+  );
   const buttonClass = `flex flex-shrink-0 whitespace-nowrap font-bold text-xs py-2 px-4 rounded-full border-[1px] border-border bg-white text-black`;
 
-  const onClickDelete = (search) => {
-    setSearches(searches.filter((it) => it !== search));
+  const updateLocalStorage = (newSearches) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSearches));
+    setSearches(newSearches);
   };
+
+  const onClickDelete = (search) => {
+    const newSearches = searches.filter((it) => it !== search);
+    updateLocalStorage(newSearches);
+  };
+
+  const onClickDeleteAll = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setSearches([]);
+  };
+
+  useEffect(() => {
+    if (!keyword) return;
+
+    setSearches((prev) => {
+      const filteredSearches = prev.filter((search) => search !== keyword);
+      const newSearches = [keyword, ...filteredSearches].slice(0, MAX_SEARCHES);
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newSearches));
+      return newSearches;
+    });
+  }, [keyword]);
 
   return (
     <div className="ml-6 mt-8">
@@ -25,7 +43,7 @@ export default function RecentSearches() {
         <h3 className="text-lg font-bold">최근 검색어</h3>
         <button
           className="text-xs font-bold text-txt-placeholder"
-          onClick={() => setSearches([])}
+          onClick={onClickDeleteAll}
         >
           모두 지우기
         </button>

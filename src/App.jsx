@@ -7,6 +7,7 @@ import Search from "./pages/Search";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./contexts/IsLoginContext";
+import { KakaoLogin } from "./components/login/KakaoLogin";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/member/oauth/kakao" element={<KakaoLogin />} />
         <Route path="/user">
           <Route index element={<User />} />
           <Route path="info" element={<Setting variant="info" />} />
