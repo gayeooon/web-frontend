@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import IsLoginContext from "./contexts/IsLoginContext";
 import { KakaoLogin } from "./components/login/KakaoLogin";
+import { GoogleLogin } from "./components/login/GoogleLogin";
+import { NaverLogin } from "./components/login/NaverLogin";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -55,6 +57,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
         <Route path="/member/oauth/kakao" element={<KakaoLogin />} />
+        <Route path="/member/oauth/google" element={<GoogleLogin />} />
+        <Route path="/member/oauth/naver" element={<NaverLogin />} />
         <Route path="/user">
           <Route index element={<User />} />
           <Route path="info" element={<Setting variant="info" />} />
