@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"; // import 수정
 import { useRef, useState } from "react";
-import favicon from "@/assets/favicon.png";
+import favicon from "/favicon.png";
 import NewsDrawer from "./NewsDrawer";
 
 const newsArray = [

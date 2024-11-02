@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "@/utils/api";
-import favicon from "@/assets/favicon.png";
+import favicon from "/favicon.png";
 import NewsItem from "./NewsItem";
 import NewsDrawer from "./NewsDrawer";
 

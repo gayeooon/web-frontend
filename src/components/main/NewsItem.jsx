@@ -1,5 +1,3 @@
-import publisherImg from "@/assets/apple_logo_black.png";
-
 export default function NewsItem({ news }) {
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
