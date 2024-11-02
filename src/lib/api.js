@@ -16,7 +16,7 @@ export async function getMemberInfo() {
   return body;
 }
 
-export async function getMemberPress() {
+export async function getPublishers() {
   const response = await fetch(`${BASE_URL}/member/press`, {
     method: "GET",
     headers: {
@@ -31,7 +31,7 @@ export async function getMemberPress() {
   return body;
 }
 
-export async function getMemberCategories() {
+export async function getCategories() {
   const response = await fetch(`${BASE_URL}/member/categories`, {
     method: "GET",
     headers: {

@@ -1,12 +1,34 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { getMemberInfo } from "@/lib/api";
 
-const BasicInformation = ({ onNext, initialData, buttonText }) => {
-  const [data, setData] = useState({
-    name: initialData.name ?? "",
-    email: initialData.email ?? "",
-    phone: initialData.phone ?? "",
+const BasicInformation = ({ onNext, buttonText }) => {
+  const {
+    data: initialData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["memberInfo"],
+    queryFn: getMemberInfo,
+    select: (data) => ({
+      name: data.result.nickname,
+      email: data.result.email,
+      phone: data.result.phone,
+    }),
   });
+
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setData(initialData);
+    }
+  }, [initialData]);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -66,6 +88,29 @@ const BasicInformation = ({ onNext, initialData, buttonText }) => {
       !errors.email && !errors.phone && data.name && data.email && data.phone
     );
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="input">
+          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[20%] h-[50%] ml-5"></div>
+          <input onChange={handleChange} value="" />
+        </div>
+        <div className="input">
+          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[50%] h-[50%] ml-5"></div>
+          <input onChange={handleChange} value="" />
+        </div>
+        <div className="input">
+          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[30%] h-[50%] ml-5"></div>
+          <input onChange={handleChange} value="" />
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return <div>유저 데이터를 불러오는데 실패했습니다.</div>;
+  }
 
   return (
     <>

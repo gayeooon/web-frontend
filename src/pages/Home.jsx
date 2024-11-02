@@ -1,6 +1,4 @@
-import IsLoginContext from "@/contexts/IsLoginContext";
-import { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import Header from "@/components/main/Header";
 import CategoryList from "@/components/main/CategoryList";
 import HeadlineNewsCarousel from "@/components/main/HeadlineNewsCarousel";
@@ -8,9 +6,6 @@ import NewsList from "@/components/main/NewsList";
 import NavigationBar from "@/components/common/NavigationBar";
 
 const Home = () => {
-  // const { islogin } = useContext(IsLoginContext);
-  // if (!islogin) return <Navigate to="/login" />;
-
   const [category, setCategory] = useState("전체");
 
   return (
