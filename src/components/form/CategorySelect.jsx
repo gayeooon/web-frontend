@@ -11,14 +11,14 @@ const CategorySelect = ({ onNext, initialData, buttonText }) => {
   const [selectedTopics, setSelectedTopics] = useState(initialData);
 
   const topics = [
-    { id: 1, name: "정치", emoji: "🏛️" },
-    { id: 2, name: "경제", emoji: "💰" },
-    { id: 3, name: "사회", emoji: "👥" },
-    { id: 4, name: "생활/문화", emoji: "🏠" },
-    { id: 5, name: "세계", emoji: "🌏" },
-    { id: 6, name: "기술/IT", emoji: "💻" },
-    { id: 7, name: "연예", emoji: "🎤" },
-    { id: 8, name: "스포츠", emoji: "⚽" },
+    { id: "정치", name: "정치", emoji: "🏛️" },
+    { id: "경제", name: "경제", emoji: "💰" },
+    { id: "사회", name: "사회", emoji: "👥" },
+    { id: "생활_문화", name: "생활/문화", emoji: "🏠" },
+    { id: "세계", name: "세계", emoji: "🌏" },
+    { id: "기술_IT", name: "기술/IT", emoji: "💻" },
+    { id: "연예", name: "연예", emoji: "🎤" },
+    { id: "스포츠", name: "스포츠", emoji: "⚽" },
   ];
 
   /**

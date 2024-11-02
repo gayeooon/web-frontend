@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-import favicon from "@/assets/favicon.png";
+import favicon from "/favicon.png";
 import NewsDrawer from "@/components/main/NewsDrawer";
 
 const newsArray = [

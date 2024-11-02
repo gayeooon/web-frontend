@@ -1,5 +1,5 @@
 import { useState } from "react";
-import favicon from "@/assets/favicon.png";
+import favicon from "/favicon.png";
 import NewsItem from "./NewsItem";
 import NewsDrawer from "./NewsDrawer";
 

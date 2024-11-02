@@ -3,12 +3,11 @@ import { handleKakaoClick } from "@/components/login/KakaoLogin";
 import { handleNaverClick } from "@/components/login/NaverLogin";
 import { handleGoogleClick } from "@/components/login/GoogleLogin";
 import { Button } from "@/components/ui/button";
-import favicon from "@/assets/favicon.png";
+import favicon from "/favicon.png";
 import naver_white from "@/assets/naver_logo_white.svg";
 import naver_green from "@/assets/naver_logo_green.svg";
 import kakao from "@/assets/kakao_logo.svg";
 import google from "@/assets/google_logo.svg";
-import apple from "@/assets/apple_logo_white.png";
 import logo from "@/assets/NewsFit.svg";
 
 const Login = () => {
