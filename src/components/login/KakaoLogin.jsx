@@ -23,8 +23,9 @@ const authKakaoLogin = async (code) => {
   if (!response.ok) {
     throw new Error("Login failed");
   }
-  // return await response.json();
-  return response;
+
+  const data = response.json();
+  return data;
 };
 
 export const KakaoLogin = () => {
@@ -37,11 +38,14 @@ export const KakaoLogin = () => {
     const processLogin = async () => {
       try {
         const response = await authKakaoLogin(code);
-        if (response.status === 200) navigate("/user");
-        else if (response.status === 201) navigate("/signup");
+        if (response.status === 200) navigate("/user", { replace: true });
+        else if (response.status === 201)
+          navigate("/signup", { replace: true });
+
+        console.log(response);
       } catch (error) {
         console.log("Login error:", error);
-        navigate("/login"); // 에러 시 로그인 페이지로
+        navigate("/login", { replace: true });
       }
     };
 
