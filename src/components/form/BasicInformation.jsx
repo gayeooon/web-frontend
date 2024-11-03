@@ -11,12 +11,12 @@ const BasicInformation = ({ onNext, buttonText }) => {
   } = useQuery({
     queryKey: ["memberInfo"],
     queryFn: getMemberInfo,
-    select: ({ result: { nickname, email, phone, birth, gender } }) => ({
-      name: nickname,
-      email,
-      phone,
-      birth: birth.split("T")[0].replace(/-/g, "/"),
-      gender,
+    select: ({ result }) => ({
+      name: result?.nickname ?? "",
+      email: result?.email ?? "",
+      phone: result?.phone ?? "",
+      birth: result?.birth.split("T")[0] ?? "",
+      gender: result?.gender ?? "",
     }),
   });
 
@@ -25,7 +25,7 @@ const BasicInformation = ({ onNext, buttonText }) => {
     email: "",
     phone: "",
   });
-  console.log(data);
+
   useEffect(() => {
     if (initialData) {
       setData(initialData);

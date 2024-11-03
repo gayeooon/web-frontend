@@ -3,10 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const DetailInformation = ({ onNext, initialData }) => {
-  const [data, setData] = useState({
-    gender: initialData.gender ?? "Male",
-    birth: initialData.birth ?? "",
-  });
+  const [data, setData] = useState(initialData);
 
   const handleChange = (name, value) => {
     setData((prev) => ({
