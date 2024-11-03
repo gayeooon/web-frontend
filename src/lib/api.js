@@ -65,3 +65,60 @@ export async function getArticles({
   console.log(body);
   return body;
 }
+
+export async function updateMemberInfo(newInfo) {
+  console.log(JSON.stringify(newInfo));
+  const response = await fetch(`${BASE_URL}/member/info`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+    body: JSON.stringify(newInfo),
+  });
+  if (!response.ok) {
+    throw new Error("유저 데이터를 업데이트 하는데 실패했습니다");
+  }
+  const body = await response.json();
+  console.log(body);
+  return body;
+}
+
+export async function updatePublishers(newPublishers) {
+  const response = await fetch(`${BASE_URL}/member/press`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+    body: JSON.stringify({
+      preferredPress: newPublishers,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("언론사 데이터를 업데이트 하는데 실패했습니다");
+  }
+
+  const body = await response.json();
+  console.log(body);
+  return body;
+}
+
+export async function updateCategories(newCategories) {
+  const response = await fetch(`${BASE_URL}/member/categories`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+    body: JSON.stringify({
+      preferredCategories: newCategories,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("카테고리 데이터를 업데이트 하는데 실패했습니다");
+  }
+
+  const body = await response.json();
+  console.log(body);
+  return body;
+}

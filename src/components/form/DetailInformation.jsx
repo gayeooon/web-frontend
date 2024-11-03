@@ -28,12 +28,12 @@ const DetailInformation = ({ onNext, initialData }) => {
           }}
         >
           <div className="flex items-center space-x-4 mb-4">
-            <RadioGroupItem value="Male" id="Male" />
-            <label htmlFor="Male">남성</label>
+            <RadioGroupItem value="MALE" id="MALE" />
+            <label htmlFor="MALE">남성</label>
           </div>
           <div className="flex items-center space-x-4">
-            <RadioGroupItem value="Female" id="Female" />
-            <label htmlFor="Female">여성</label>
+            <RadioGroupItem value="FEMALE" id="FEMALE" />
+            <label htmlFor="FEMALE">여성</label>
           </div>
         </RadioGroup>
       </div>

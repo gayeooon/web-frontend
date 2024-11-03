@@ -146,8 +146,8 @@ const publishers = [
 const PublisherSelect = ({ onNext, buttonText }) => {
   const {
     data: initialData,
-    isLoading,
-    error,
+    isPending,
+    isError,
   } = useQuery({
     queryKey: ["publishers"],
     queryFn: getPublishers,
@@ -174,7 +174,7 @@ const PublisherSelect = ({ onNext, buttonText }) => {
 
   const isSelected = (publisher) => subscribedPublisher.includes(publisher);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <ScrollArea className="min-h-[350px] mb-20">
         {Array(5)
@@ -191,7 +191,7 @@ const PublisherSelect = ({ onNext, buttonText }) => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return <div>언론사 목록을 불러오는데 실패했습니다.</div>;
   }
 

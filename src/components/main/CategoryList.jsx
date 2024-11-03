@@ -7,8 +7,8 @@ export default function CategoryList({
 }) {
   const {
     data: categories = [],
-    isLoading,
-    error,
+    isPending,
+    isError,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -29,7 +29,7 @@ export default function CategoryList({
   };
 
   // 로딩 상태 처리
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="flex gap-2 pl-6 w-full overflow-x-auto scrollbar-hide">
         <div className="animate-pulse h-10 w-20 bg-gray-200 rounded-full"></div>
@@ -40,7 +40,7 @@ export default function CategoryList({
   }
 
   // 에러 상태 처리
-  if (error) {
+  if (isError) {
     return <div>카테고리를 불러오는데 실패했습니다.</div>;
   }
 

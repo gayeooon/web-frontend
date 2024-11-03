@@ -6,15 +6,17 @@ import { getMemberInfo } from "@/lib/api";
 const BasicInformation = ({ onNext, buttonText }) => {
   const {
     data: initialData,
-    isLoading,
-    error,
+    isPending,
+    isError,
   } = useQuery({
     queryKey: ["memberInfo"],
     queryFn: getMemberInfo,
-    select: (data) => ({
-      name: data.result.nickname,
-      email: data.result.email,
-      phone: data.result.phone,
+    select: ({ result: { nickname, email, phone, birth, gender } }) => ({
+      name: nickname,
+      email,
+      phone,
+      birth: birth.split("T")[0].replace(/-/g, "/"),
+      gender,
     }),
   });
 
@@ -23,7 +25,7 @@ const BasicInformation = ({ onNext, buttonText }) => {
     email: "",
     phone: "",
   });
-
+  console.log(data);
   useEffect(() => {
     if (initialData) {
       setData(initialData);
@@ -89,7 +91,7 @@ const BasicInformation = ({ onNext, buttonText }) => {
     );
   };
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <>
         <div className="input">
@@ -108,7 +110,7 @@ const BasicInformation = ({ onNext, buttonText }) => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return <div>유저 데이터를 불러오는데 실패했습니다.</div>;
   }
 

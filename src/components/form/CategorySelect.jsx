@@ -19,8 +19,8 @@ const topics = [
 const CategorySelect = ({ onNext, buttonText }) => {
   const {
     data: initialData,
-    isLoading,
-    error,
+    isPending,
+    isError,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -47,7 +47,7 @@ const CategorySelect = ({ onNext, buttonText }) => {
 
   const isSelected = (topicId) => selectedTopics.includes(topicId);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="flex flex-wrap gap-[3%] justify-center">
         {topics.map((topic) => (
@@ -60,7 +60,7 @@ const CategorySelect = ({ onNext, buttonText }) => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return <div>카테고리를 불러오는데 실패했습니다.</div>;
   }
 
