@@ -4,12 +4,13 @@ import BasicInformation from "@/components/user/BasicInformation";
 import CategorySelect from "@/components/user/CategorySelect";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import AccountDelete from "@/components/user/AccountDelete";
-import Header from "@/components/ui/Header";
+import Header from "@/components/ui/custom/Header";
 import {
   updateMemberInfo,
   updatePublishers,
   updateCategories,
 } from "@/lib/api";
+import PageLayout from "@/components/ui/custom/PageLayout";
 
 const Setting = ({ variant }) => {
   const navigate = useNavigate();
@@ -57,16 +58,14 @@ const Setting = ({ variant }) => {
   };
 
   return (
-    <div className="flex justify-center h-screen min-h-[600px]">
-      <div className="h-full w-full max-w-2xl ">
-        <Header title={variantConfig[variant].title} handleBack={handleBack} />
-        <div className="flex justify-center pt-6 h-5/6">
-          <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-            {renderComponent()}
-          </div>
+    <PageLayout page="setting">
+      <Header title={variantConfig[variant].title} handleBack={handleBack} />
+      <div className="flex justify-center pt-6 h-5/6">
+        <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+          {renderComponent()}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishers } from "@/lib/api";
 import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
+import { Button } from "@/components/ui/shadcn/button";
 
 const PublisherSelect = ({ onNext, buttonText }) => {
   const {

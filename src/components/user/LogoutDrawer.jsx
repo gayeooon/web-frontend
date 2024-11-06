@@ -8,8 +8,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/shadcn/drawer";
+import { Button } from "@/components/ui/shadcn/button";
 
 export default function LogoutDrawer() {
   const navigate = useNavigate();

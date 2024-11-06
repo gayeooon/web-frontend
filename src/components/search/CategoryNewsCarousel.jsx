@@ -4,7 +4,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@/components/ui/shadcn/carousel";
 import { useEffect, useState } from "react";
 import favicon from "/favicon.png";
 import NewsDrawer from "@/components/news/NewsDrawer";

@@ -1,4 +1,4 @@
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "@/components/ui/shadcn/progress";
 import backIcon from "@/assets/back.svg";
 
 const Header = ({ handleBack, step = null, title = null }) => (

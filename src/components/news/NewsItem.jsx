@@ -1,3 +1,5 @@
+import { formatDate } from "@/lib/utils";
+
 export default function NewsItem({ news }) {
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
@@ -17,7 +19,7 @@ export default function NewsItem({ news }) {
         <div className="flex items-center text-sm">
           <span className="font-bold text-gray-600">{news.press}</span>
           <span className="mx-2">·</span>
-          <span className="text-gray-400">{news.publishDate}</span>
+          <span className="text-gray-400">{formatDate(news.publishDate)}</span>
         </div>
       </div>
     </div>

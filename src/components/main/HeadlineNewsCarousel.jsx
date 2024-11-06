@@ -4,7 +4,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@/components/ui/shadcn/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState } from "react";
 import NewsDrawer from "@/components/news/NewsDrawer";
