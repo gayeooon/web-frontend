@@ -5,10 +5,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay"; // import 수정
+import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState } from "react";
-import favicon from "/favicon.png";
 import NewsDrawer from "@/components/news/NewsDrawer";
+import favicon from "/favicon.png";
 
 const newsArray = [
   {

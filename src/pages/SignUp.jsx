@@ -6,21 +6,7 @@ import DetailInformation from "@/components/user/DetailInformation";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import SignUpComplete from "@/components/user/SignUpComplete";
 import Header from "@/components/ui/Header";
-
-const STEPS = {
-  BASIC_INFO: 1,
-  USER_DETAILS: 2,
-  CATEGORY: 3,
-  PUBLISHER: 4,
-  COMPLETE: 5,
-};
-
-const STEP_TITLES = {
-  [STEPS.BASIC_INFO]: "뉴스핏이 처음인가요?\n기본 정보를 알려주세요.",
-  [STEPS.USER_DETAILS]: "맞춤 뉴스 제공을 위한 추가 정보를 알려주세요.",
-  [STEPS.CATEGORY]: "관심있는 뉴스 주제를 선택해주세요.",
-  [STEPS.PUBLISHER]: "구독하고 싶은 언론사를 선택해주세요.",
-};
+import { STEPS, STEP_TITLES } from "@/lib/constants";
 
 const SignUp = () => {
   const [step, setStep] = useState(STEPS.BASIC_INFO);

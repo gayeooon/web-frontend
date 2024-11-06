@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Header from "@/components/ui/Header";
+import { useMutation } from "@tanstack/react-query";
 import BasicInformation from "@/components/user/BasicInformation";
 import CategorySelect from "@/components/user/CategorySelect";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import AccountDelete from "@/components/user/AccountDelete";
-import { useMutation } from "@tanstack/react-query";
+import Header from "@/components/ui/Header";
 import {
   updateMemberInfo,
   updatePublishers,

@@ -1,16 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/lib/api";
-
-const topics = [
-  { id: "정치", name: "정치", emoji: "🏛️" },
-  { id: "경제", name: "경제", emoji: "💰" },
-  { id: "사회", name: "사회", emoji: "👥" },
-  { id: "생활_문화", name: "생활/문화", emoji: "🏠" },
-  { id: "세계", name: "세계", emoji: "🌏" },
-  { id: "기술_IT", name: "기술/IT", emoji: "💻" },
-  { id: "연예", name: "연예", emoji: "🎤" },
-  { id: "스포츠", name: "스포츠", emoji: "⚽" },
-];
+import { TOPICS } from "@/lib/constants";
 
 export default function CategoryList({
   selectedCategory,
@@ -69,7 +59,7 @@ export default function CategoryList({
           onClick={() => handleCategorySelect(category)}
           className={buttonClass(category)}
         >
-          {topics.find((topic) => topic.id === category).name}
+          {TOPICS.find((topic) => topic.id === category).name}
         </button>
       ))}
     </div>
