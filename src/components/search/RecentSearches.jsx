@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "search-history";
 const MAX_SEARCHES = 5;
 
-export default function RecentSearches({ keyword }) {
+export default function RecentSearches({ keyword, onClickRecents }) {
   const [searches, setSearches] = useState(
     () => JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
   );
-  const buttonClass = `flex flex-shrink-0 whitespace-nowrap font-bold text-xs py-2 px-4 rounded-full border-[1px] border-border bg-white text-black`;
 
   const updateLocalStorage = (newSearches) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newSearches));
@@ -55,10 +54,18 @@ export default function RecentSearches({ keyword }) {
           </span>
         ) : (
           searches.map((it) => (
-            <div key={it} className={buttonClass}>
-              {it}
+            <div
+              key={it}
+              className="flex flex-shrink-0 gap-3 whitespace-nowrap rounded-full border-[1px] border-border bg-white"
+            >
               <div
-                className="ml-3 w-2 hover:cursor-pointer"
+                className="my-2 ml-4 font-bold text-xs hover:cursor-pointer"
+                onClick={() => onClickRecents(it)}
+              >
+                {it}
+              </div>
+              <div
+                className="my-2 mr-4 w-2 hover:cursor-pointer"
                 onClick={() => onClickDelete(it)}
               >
                 <img className="w-full h-full" src={deleteIcon} alt="삭제" />
