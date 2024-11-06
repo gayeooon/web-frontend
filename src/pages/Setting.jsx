@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import SettingsHeader from "@/components/setting/SettingsHeader";
-import BasicInformation from "@/components/form/BasicInformation";
-import CategorySelect from "@/components/form/CategorySelect";
-import PublisherSelect from "@/components/form/PublisherSelect";
-import AccountDelete from "@/components/setting/AccountDelete";
+import Header from "@/components/ui/Header";
+import BasicInformation from "@/components/user/BasicInformation";
+import CategorySelect from "@/components/user/CategorySelect";
+import PublisherSelect from "@/components/user/PublisherSelect";
+import AccountDelete from "@/components/user/AccountDelete";
 import { useMutation } from "@tanstack/react-query";
 import {
   updateMemberInfo,
@@ -37,6 +37,10 @@ const Setting = ({ variant }) => {
     mutation.mutate(data);
   };
 
+  const handleBack = () => {
+    navigate("/user");
+  };
+
   const renderComponent = () => {
     switch (variant) {
       case "info":
@@ -55,7 +59,7 @@ const Setting = ({ variant }) => {
   return (
     <div className="flex justify-center h-screen min-h-[600px]">
       <div className="h-full w-full max-w-2xl ">
-        <SettingsHeader title={variantConfig[variant].title} />
+        <Header title={variantConfig[variant].title} handleBack={handleBack} />
         <div className="flex justify-center pt-6 h-5/6">
           <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
             {renderComponent()}

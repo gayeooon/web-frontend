@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import IsLoginContext from "@/contexts/IsLoginContext";
 import {
   Drawer,
   DrawerClose,
@@ -14,11 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function LogoutDrawer() {
-  const { logout } = useContext(IsLoginContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
     navigate("/");
   };
 

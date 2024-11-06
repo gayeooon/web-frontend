@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BasicInformation from "@/components/form/BasicInformation";
-import CategorySelect from "@/components/form/CategorySelect";
-import DetailInformation from "@/components/form/DetailInformation";
-import PublisherSelect from "@/components/form/PublisherSelect";
-import SignUpComplete from "@/components/signup/SignUpComplete";
-import SignUpHeader from "@/components/signup/SignUpHeader";
+import BasicInformation from "@/components/user/BasicInformation";
+import CategorySelect from "@/components/user/CategorySelect";
+import DetailInformation from "@/components/user/DetailInformation";
+import PublisherSelect from "@/components/user/PublisherSelect";
+import SignUpComplete from "@/components/user/SignUpComplete";
+import Header from "@/components/ui/Header";
 
 const STEPS = {
   BASIC_INFO: 1,
@@ -84,7 +84,7 @@ const SignUp = () => {
   return (
     <div className="flex justify-center h-screen min-h-[750px]">
       <div className="h-full w-full max-w-2xl ">
-        <SignUpHeader handleBack={() => setStep(step - 1)} step={step} />
+        <Header handleBack={() => setStep(step - 1)} step={step} />
         <div className="flex justify-center pt-6 h-5/6">
           {step !== STEPS.COMPLETE ? (
             <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">

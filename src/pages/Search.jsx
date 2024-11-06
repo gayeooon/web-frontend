@@ -1,5 +1,5 @@
-import NavigationBar from "@/components/common/NavigationBar";
-import NewsList from "@/components/main/NewsList";
+import NavigationBar from "@/components/ui/NavigationBar";
+import NewsList from "@/components/news/NewsList";
 import CategoryNewsCarousel from "@/components/search/CategoryNewsCarousel";
 import RecentSearches from "@/components/search/RecentSearches";
 import SearchInput from "@/components/search/SearchInput";

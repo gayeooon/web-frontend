@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import LogoutDrawer from "@/components/setting/LogoutDrawer";
-import NavigationBar from "@/components/common/NavigationBar";
+import LogoutDrawer from "@/components/user/LogoutDrawer";
+import NavigationBar from "@/components/ui/NavigationBar";
 
 const User = () => {
   return (

@@ -47,6 +47,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
     setIsDesktop(window.innerWidth > 768);
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

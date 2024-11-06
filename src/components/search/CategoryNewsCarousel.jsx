@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import favicon from "/favicon.png";
-import NewsDrawer from "@/components/main/NewsDrawer";
+import NewsDrawer from "@/components/news/NewsDrawer";
 
 const newsArray = [
   {

@@ -2,10 +2,10 @@ import { useState } from "react";
 import Header from "@/components/main/Header";
 import CategoryList from "@/components/main/CategoryList";
 import HeadlineNewsCarousel from "@/components/main/HeadlineNewsCarousel";
-import NewsList from "@/components/main/NewsList";
-import NavigationBar from "@/components/common/NavigationBar";
+import NewsList from "@/components/news/NewsList";
+import NavigationBar from "@/components/ui/NavigationBar";
 
-const Home = () => {
+const Main = () => {
   const [category, setCategory] = useState("allCategory");
 
   return (
@@ -30,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Main;

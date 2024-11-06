@@ -1,5 +1,5 @@
 import SignUp from "./pages/SignUp";
-import Home from "./pages/Home";
+import Main from "./pages/Main";
 import Login from "./pages/Login";
 import User from "./pages/User";
 import Setting from "./pages/Setting";
@@ -15,7 +15,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
