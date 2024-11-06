@@ -6,7 +6,7 @@ import NewsList from "@/components/main/NewsList";
 import NavigationBar from "@/components/common/NavigationBar";
 
 const Home = () => {
-  const [category, setCategory] = useState("전체");
+  const [category, setCategory] = useState("allCategory");
 
   return (
     <div className="flex justify-center">

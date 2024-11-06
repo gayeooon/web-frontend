@@ -1,6 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/lib/api";
 
+const topics = [
+  { id: "정치", name: "정치", emoji: "🏛️" },
+  { id: "경제", name: "경제", emoji: "💰" },
+  { id: "사회", name: "사회", emoji: "👥" },
+  { id: "생활_문화", name: "생활/문화", emoji: "🏠" },
+  { id: "세계", name: "세계", emoji: "🌏" },
+  { id: "기술_IT", name: "기술/IT", emoji: "💻" },
+  { id: "연예", name: "연예", emoji: "🎤" },
+  { id: "스포츠", name: "스포츠", emoji: "⚽" },
+];
+
 export default function CategoryList({
   selectedCategory,
   setSelectedCategory,
@@ -47,8 +58,8 @@ export default function CategoryList({
   return (
     <div className="flex gap-2 pl-6 w-full overflow-x-auto scrollbar-hide">
       <button
-        onClick={() => handleCategorySelect("전체")}
-        className={buttonClass("전체")}
+        onClick={() => handleCategorySelect("allCategory")}
+        className={buttonClass("allCategory")}
       >
         전체
       </button>
@@ -58,7 +69,7 @@ export default function CategoryList({
           onClick={() => handleCategorySelect(category)}
           className={buttonClass(category)}
         >
-          {category}
+          {topics.find((topic) => topic.id === category).name}
         </button>
       ))}
     </div>

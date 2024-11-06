@@ -51,13 +51,16 @@ export async function getArticles({
   articleCursor = "",
 }) {
   const query = `category=${category}&size=${size}&articleCursor=${articleCursor}`;
-  console.log(`${BASE_URL}/articles?${query}`);
-  const response = await fetch(`${BASE_URL}/articles?${query}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${kakaoToken}`,
-    },
-  });
+  console.log(`${query}`);
+  const response = await fetch(
+    `https://e93a34ed-2634-4c02-aab8-f4d1f77b76ba.mock.pstmn.io/articles?${query}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${kakaoToken}`,
+      },
+    }
+  );
   if (!response.ok) {
     throw new Error("기사 데이터를 불러오는데 실패했습니다");
   }
