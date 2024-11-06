@@ -1,43 +1,15 @@
 import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-/**
- * 사용자의 상세 정보를 입력받는 컴포넌트
- * @param {Object} props
- * @param {Function} props.onNext - 다음 단계로 넘어가는 함수
- * @returns {JSX.Element}
- */
 const DetailInformation = ({ onNext, initialData }) => {
   const [data, setData] = useState(initialData);
 
-  /**
-   * 입력 필드 변경 핸들러
-   * @param {React.ChangeEvent<HTMLInputElement>} e - 이벤트 객체
-   */
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  /**
-   * 폼이 완성되었는지 확인하는 함수
-   * @returns {boolean}
-   */
-  const isFormComplete = () => {
-    return data.gender && data.birthdate;
-  };
-
-  /**
-   * 폼 제출 핸들러
-   */
-  const handleSubmit = () => {
-    if (isFormComplete()) {
-      onNext(data);
-    }
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -49,19 +21,16 @@ const DetailInformation = ({ onNext, initialData }) => {
           className="m-4"
           value={data.gender}
           onValueChange={(value) => {
-            setData((prev) => ({
-              ...prev,
-              gender: value,
-            }));
+            handleChange("gender", value);
           }}
         >
           <div className="flex items-center space-x-4 mb-4">
-            <RadioGroupItem value="male" id="male" />
-            <label htmlFor="male">남성</label>
+            <RadioGroupItem value="MALE" id="MALE" />
+            <label htmlFor="MALE">남성</label>
           </div>
           <div className="flex items-center space-x-4">
-            <RadioGroupItem value="female" id="female" />
-            <label htmlFor="female">여성</label>
+            <RadioGroupItem value="FEMALE" id="FEMALE" />
+            <label htmlFor="FEMALE">여성</label>
           </div>
         </RadioGroup>
       </div>
@@ -69,22 +38,26 @@ const DetailInformation = ({ onNext, initialData }) => {
         <div className="input-label">생년월일</div>
         <input
           type="date"
-          name="birthdate"
-          value={data.birthdate}
-          onChange={handleChange}
+          name="birth"
+          value={data.birth}
+          onChange={(e) => handleChange("birth", e.target.value)}
           min="1900-01-01"
           max={today}
         />
       </div>
-      {isFormComplete() ? (
-        <Button className="absolute bottom-0" onClick={handleSubmit}>
-          계속하기
-        </Button>
-      ) : (
-        <Button className="absolute bottom-0" disabled>
-          계속하기
-        </Button>
-      )}
+
+      <Button
+        className="absolute bottom-0"
+        onClick={() =>
+          onNext({
+            ...data,
+            birth: data.birth.replace(/-/g, "/"),
+          })
+        }
+        disabled={!(data.gender && data.birth)}
+      >
+        계속하기
+      </Button>
     </>
   );
 };

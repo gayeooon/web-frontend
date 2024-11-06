@@ -1,15 +1,50 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import IsLoginContext from "@/contexts/IsLoginContext";
+import { useMutation } from "@tanstack/react-query";
+import {
+  updateMemberInfo,
+  updatePublishers,
+  updateCategories,
+} from "@/lib/api";
+import { Button } from "@/components/ui/button";
 import successmark from "@/assets/successmark.svg";
-import { Button } from "../ui/button";
 
 const SignUpComplete = ({ formData }) => {
-  const { login } = useContext(IsLoginContext);
   const navigate = useNavigate();
+
+  console.log(formData);
+
+  if (
+    !formData ||
+    !formData.memberInfo ||
+    !formData.categories ||
+    !formData.publishers
+  ) {
+    console.error("Invalid formData");
+    return <div>잘못된 데이터입니다.</div>;
+  }
+
+  const fetchFormData = () => {
+    try {
+      updateMemberInfo(formData.memberInfo);
+      updateCategories(formData.categories);
+      updatePublishers(formData.publishers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: fetchFormData,
+    onSuccess: () => {
+      navigate("/user");
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
   const onClickStart = () => {
-    login(formData);
-    navigate("/");
+    mutation.mutate();
   };
 
   return (

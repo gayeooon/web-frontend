@@ -4,51 +4,16 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import Setting from "./pages/Setting";
 import Search from "./pages/Search";
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import IsLoginContext from "./contexts/IsLoginContext";
 import { KakaoLogin } from "./components/login/KakaoLogin";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
 
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    BasicInfoData: {
-      username: "",
-      email: "",
-      tel: "",
-    },
-    UserDetailsData: {
-      gender: "",
-      birthdate: "",
-    },
-    CategoryData: [],
-    PublisherData: [],
-  });
-
-  const login = (userData) => {
-    setIsLogin(true);
-    setUserInfo(userData);
-  };
-
-  const logout = () => {
-    setIsLogin(false);
-    setUserInfo(null);
-  };
-
-  const updateUserInfo = (key, value) => {
-    setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [key]: value }));
-  };
-
-  const contextValue = {
-    isLogin,
-    userInfo,
-    login,
-    logout,
-    updateUserInfo,
-  };
-
   return (
-    <IsLoginContext.Provider value={contextValue}>
+    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -64,7 +29,8 @@ const App = () => {
         </Route>
         <Route path="*" element={<h3>없는 페이지</h3>} />
       </Routes>
-    </IsLoginContext.Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 };
 
