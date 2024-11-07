@@ -45,7 +45,7 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            dist s3://my-tcat.com
+            dist s3://newsfit.site
             
       - name: Invalidate files
         run: |
