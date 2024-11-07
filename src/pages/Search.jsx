@@ -17,7 +17,9 @@ const Search = () => {
 
   return (
     <PageLayout page="search">
-      <SearchInput setSearch={setSearch} />
+      <div className="sticky top-0 bg-white z-50 pb-2">
+        <SearchInput setSearch={setSearch} />
+      </div>
       <RecentSearches keyword={search} onClickRecents={onClickRecents} />
       <div className="h-0 w-full border-[0.5px] border-border my-8"></div>
       {!search ? (
