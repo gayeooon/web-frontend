@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/shadcn/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState } from "react";
-import NewsDrawer from "@/components/news/NewsDrawer";
+import NewsDrawer from "@/components/news/NewsDetail";
 import favicon from "/favicon.png";
 
 const newsArray = [

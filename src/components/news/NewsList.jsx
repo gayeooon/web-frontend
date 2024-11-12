@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getArticles } from "@/lib/api";
-import NewsItem from "./NewsItem";
-import NewsDrawer from "./NewsDrawer";
+import NewsListItem from "./NewsListItem";
+import NewsDetail from "./NewsDetail";
 
 const SIZE = 5;
 
@@ -107,12 +107,12 @@ export default function NewsList({ search = "", category = "allCategory" }) {
         ) : (
           filteredList.map((news, idx) => (
             <div key={idx} onClick={() => handleNewsClick(news)}>
-              <NewsItem news={news} />
+              <NewsListItem news={news} />
             </div>
           ))
         )}
       </div>
-      <NewsDrawer
+      <NewsDetail
         isOpen={isOpen}
         articleId={selectedNews}
         handleOpenChange={handleOpenChange}

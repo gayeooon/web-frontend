@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/shadcn/carousel";
 import { useEffect, useState } from "react";
 import favicon from "/favicon.png";
-import NewsDrawer from "@/components/news/NewsDrawer";
+import NewsDrawer from "@/components/news/NewsDetail";
 
 const newsArray = [
   {

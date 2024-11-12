@@ -75,6 +75,54 @@ export async function getArticle(articleId) {
   return body;
 }
 
+export async function addLike(articleId) {
+  const response = await fetch(`${BASE_URL}/articles/${articleId}/likes`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+  });
+  const body = await response.json();
+
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+
+  console.log(body);
+  return body;
+}
+
+export async function deleteLike(articleId) {
+  const response = await fetch(`${BASE_URL}/articles/${articleId}/likes`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+  });
+  if (!response.ok) {
+    console.log(response);
+    throw new Error(response.message);
+  }
+  const body = await response.json();
+  console.log(body);
+  return body;
+}
+
+export async function addComment(articleId) {
+  const response = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("뉴스 댓글을 추가하는데 실패했습니다.");
+  }
+  const body = await response.json();
+  console.log(body);
+  return body;
+}
+
 export async function updateMemberInfo(newInfo) {
   console.log(JSON.stringify(newInfo));
   const response = await fetch(`${BASE_URL}/member/info`, {
