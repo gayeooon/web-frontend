@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/shadcn/button";
 import { getCategories } from "@/lib/api";
-
-const MIN_SELECTIONS = 3;
-
-const topics = [
-  { id: "정치", name: "정치", emoji: "🏛️" },
-  { id: "경제", name: "경제", emoji: "💰" },
-  { id: "사회", name: "사회", emoji: "👥" },
-  { id: "생활_문화", name: "생활/문화", emoji: "🏠" },
-  { id: "세계", name: "세계", emoji: "🌏" },
-  { id: "기술_IT", name: "기술/IT", emoji: "💻" },
-  { id: "연예", name: "연예", emoji: "🎤" },
-  { id: "스포츠", name: "스포츠", emoji: "⚽" },
-];
+import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
 
 const CategorySelect = ({ onNext, buttonText }) => {
   const {
@@ -27,10 +15,8 @@ const CategorySelect = ({ onNext, buttonText }) => {
     select: (data) => data.result.preferredCategories,
   });
 
-  // 초기 상태는 빈 배열로 시작
   const [selectedTopics, setSelectedTopics] = useState([]);
 
-  // initialCategories가 로드되면 selectedTopics 업데이트
   useEffect(() => {
     if (initialData) {
       setSelectedTopics(initialData);
@@ -47,10 +33,11 @@ const CategorySelect = ({ onNext, buttonText }) => {
 
   const isSelected = (topicId) => selectedTopics.includes(topicId);
 
+  // 로딩 상태 처리
   if (isPending) {
     return (
       <div className="flex flex-wrap gap-[3%] justify-center">
-        {topics.map((topic) => (
+        {TOPICS.map((topic) => (
           <div
             key={topic.id}
             className="animate-pulse bg-gray-200 rounded-2xl p-4 w-[31%] h-32 flex-shrink-0 mb-[3%]"
@@ -60,6 +47,7 @@ const CategorySelect = ({ onNext, buttonText }) => {
     );
   }
 
+  // 에러 상태 처리
   if (isError) {
     return <div>카테고리를 불러오는데 실패했습니다.</div>;
   }
@@ -73,7 +61,7 @@ const CategorySelect = ({ onNext, buttonText }) => {
       )}
       <div className="bg-white rounded-lg w-full text-center">
         <div className="flex flex-wrap gap-[3%] justify-center">
-          {topics.map((topic) => (
+          {TOPICS.map((topic) => (
             <div
               key={topic.id}
               className={`cursor-pointer rounded-2xl p-4 border-2 w-[31%] flex-shrink-0 mb-[3%] ${

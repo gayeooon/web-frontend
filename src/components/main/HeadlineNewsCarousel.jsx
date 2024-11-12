@@ -4,11 +4,11 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay"; // import 수정
+} from "@/components/ui/shadcn/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState } from "react";
+import NewsDrawer from "@/components/news/NewsDrawer";
 import favicon from "/favicon.png";
-import NewsDrawer from "./NewsDrawer";
 
 const newsArray = [
   {

@@ -5,7 +5,7 @@ import {
   updatePublishers,
   updateCategories,
 } from "@/lib/api";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/shadcn/button";
 import successmark from "@/assets/successmark.svg";
 
 const SignUpComplete = ({ formData }) => {

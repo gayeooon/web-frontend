@@ -37,7 +37,7 @@ export default function RecentSearches({ keyword, onClickRecents }) {
   }, [keyword]);
 
   return (
-    <div className="ml-6 mt-8">
+    <div className="ml-6 mt-6">
       <div className="flex justify-between items-center mr-8 mb-4">
         <h3 className="text-lg font-bold">최근 검색어</h3>
         <button

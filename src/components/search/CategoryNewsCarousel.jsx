@@ -4,10 +4,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@/components/ui/shadcn/carousel";
 import { useEffect, useState } from "react";
 import favicon from "/favicon.png";
-import NewsDrawer from "@/components/main/NewsDrawer";
+import NewsDrawer from "@/components/news/NewsDrawer";
 
 const newsArray = [
   {
@@ -88,7 +88,7 @@ export default function CategoryNewsCarousel({ category }) {
           {newsArray.map((news, index) => (
             <CarouselItem key={index}>
               <div
-                className="relative aspect-[363/128] overflow-hidden rounded-lg hover:cursor-pointer"
+                className="relative aspect-[363/128] min-h-[128px] overflow-hidden rounded-lg hover:cursor-pointer"
                 onClick={() => {
                   handleNewsClick(news);
                 }}
@@ -99,8 +99,8 @@ export default function CategoryNewsCarousel({ category }) {
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 w-full bg-gradient-to-t from-black/60 to-black/10">
-                  <div className="absolute flex flex-col h-full w-full justify-between p-6">
-                    <h2 className="font-bold text-white mb-2 text-lg sm:text-xl">
+                  <div className="absolute flex flex-col h-full w-full justify-between p-4 sm:p-6">
+                    <h2 className="font-bold text-white mb-2 text-[15px] sm:text-xl">
                       {news.title}
                     </h2>
                     <div className="flex w-full gap-6 items-center font-bold text-white text-xs sm:text-sm">
