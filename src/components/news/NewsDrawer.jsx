@@ -9,7 +9,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
+} from "@/components/ui/shadcn/drawer";
 import {
   Sheet,
   SheetClose,
@@ -17,8 +17,8 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/shadcn/sheet";
+import { Button } from "@/components/ui/shadcn/button";
 import NewsComment from "./NewsComment";
 import ai_default from "@/assets/ai_default.svg";
 import ai_white from "@/assets/ai_white.svg";
@@ -68,6 +68,7 @@ export default function NewsDrawer({ isOpen, articleId, handleOpenChange }) {
     setIsDesktop(window.innerWidth > 768);
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
