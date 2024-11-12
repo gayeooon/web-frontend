@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getArticle } from "@/lib/api";
 import {
   Drawer,
   DrawerClose,
@@ -25,23 +27,42 @@ import comment_white from "@/assets/comment_white.svg";
 import like_default from "@/assets/like_default.svg";
 import like_green from "@/assets/like_green.svg";
 
-const AISummary =
-  "보고서 제출 기한인 7월1일까지는 네이버가 소프트뱅크에 라인야후 지주사 지분 조정 협의가 마무리되기 힘들다는 판단에서다. 다만 보고서 제출 이후에는 민간 기업 자율 영역인만큼 네이버가 지분 매각을 택할 가능성도 배제할 수는 없다.";
+const INITIAL_NEWS = {
+  title: "",
+  content: "",
+  images: [],
+  press: "",
+  category: "",
+  comment: [],
+  likeCount: 0,
+  likedArticle: false,
+};
 
-export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
+export default function NewsDrawer({ isOpen, articleId, handleOpenChange }) {
   const [contentType, setContentType] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
 
+  const {
+    data: news = INITIAL_NEWS,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["news", articleId],
+    queryFn: () => getArticle(articleId),
+    enabled: Boolean(articleId),
+    select: (data) => data.result,
+  });
+
   useEffect(() => {
-    if (!selectedNews) {
+    if (!articleId) {
       setIsLiked(false);
       setContentType("");
       return;
     }
-    setLikeCount(selectedNews.likeCount);
-  }, [selectedNews]);
+    setLikeCount(news.likeCount);
+  }, [articleId]);
 
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
@@ -66,10 +87,10 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
     }`;
   };
 
-  const renderAISummary = (news) => {
+  const renderAISummary = () => {
     return (
       <div className="bg-white text-base text-black mt-4 p-4 rounded-lg border-[1px] border-my-green">
-        {AISummary}
+        {news.content}
       </div>
     );
   };
@@ -78,6 +99,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
     <div>
       <div className="flex justify-between">
         <button
+          disabled={isPending}
           onClick={() => {
             handleContentChange("ai");
           }}
@@ -90,6 +112,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
           AI 요약
         </button>
         <button
+          disabled={isPending}
           onClick={() => {
             handleContentChange("comment");
           }}
@@ -101,7 +124,11 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
           />
           댓글
         </button>
-        <button onClick={toggleLike} className={setButtonClass()}>
+        <button
+          disabled={isPending}
+          onClick={toggleLike}
+          className={setButtonClass()}
+        >
           <img className="w-5" src={isLiked ? like_green : like_default} />
           {likeCount}
         </button>
@@ -110,7 +137,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
         {contentType === "ai" ? (
           renderAISummary()
         ) : contentType === "comment" ? (
-          <NewsComment comments={selectedNews?.comment ?? []} />
+          <NewsComment comments={news.comment} />
         ) : (
           <></>
         )}
@@ -126,7 +153,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
             <div className="h-full relative">
               <SheetHeader>
                 <SheetTitle className="bg-white text-2xl font-bold my-4 p-4 rounded-lg border-[1px]">
-                  {selectedNews?.title}
+                  {news.title}
                 </SheetTitle>
                 <SheetDescription asChild>
                   {renderDescription()}
@@ -153,7 +180,7 @@ export default function NewsDrawer({ isOpen, selectedNews, handleOpenChange }) {
         <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle className="bg-white text-xl font-bold my-4 p-4 rounded-lg border-[1px] sm:text-2xl">
-              {selectedNews?.title}
+              {news.title}
             </DrawerTitle>
             <DrawerDescription asChild>{renderDescription()}</DrawerDescription>
           </DrawerHeader>

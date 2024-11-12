@@ -9,10 +9,10 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [articles, setArticles] = useState([]);
-  const nextCursorRef = useRef(null);
+  const nextCursorRef = useRef(-1);
   const isLoadingRef = useRef(false);
 
-  const handleArticleLoad = async () => {
+  const handleArticlesLoad = async () => {
     try {
       const response = await getArticles({
         category,
@@ -32,6 +32,11 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   const handleLoadMore = async () => {
     if (nextCursorRef.current === -1) return;
     try {
+      console.log({
+        category,
+        articleCursor: nextCursorRef.current,
+        size: SIZE,
+      });
       const response = await getArticles({
         category,
         articleCursor: nextCursorRef.current,
@@ -48,7 +53,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   };
 
   useEffect(() => {
-    handleArticleLoad();
+    handleArticlesLoad();
   }, [category]);
 
   useEffect(() => {
@@ -75,7 +80,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   };
 
   const handleNewsClick = (news) => {
-    setSelectedNews(news);
+    setSelectedNews(news.articleId);
     setIsOpen(true);
   };
 
@@ -109,7 +114,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
       </div>
       <NewsDrawer
         isOpen={isOpen}
-        selectedNews={selectedNews}
+        articleId={selectedNews}
         handleOpenChange={handleOpenChange}
       />
     </div>
