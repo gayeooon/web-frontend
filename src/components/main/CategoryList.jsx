@@ -1,21 +1,21 @@
-import { useState } from "react";
-
-const categories = [
-  "IT / 과학",
-  "경제",
-  "생활 / 문화",
-  "IT",
-  "WORLD",
-  "카테고리3",
-  "카테고리4",
-  "카테고리5",
-  "카테고리6",
-];
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/lib/api";
+import { TOPICS } from "@/lib/constants";
 
 export default function CategoryList({
   selectedCategory,
   setSelectedCategory,
 }) {
+  const {
+    data: categories = [],
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+    select: (data) => data.result.preferredCategories,
+  });
+
   const handleCategorySelect = (category) => {
     if (selectedCategory === category) return;
     setSelectedCategory(category);
@@ -29,11 +29,27 @@ export default function CategoryList({
     }`;
   };
 
+  // 로딩 상태 처리
+  if (isPending) {
+    return (
+      <div className="flex gap-2 pl-6 w-full overflow-x-auto scrollbar-hide">
+        <div className="animate-pulse h-10 w-20 bg-gray-200 rounded-full"></div>
+        <div className="animate-pulse h-10 w-20 bg-gray-200 rounded-full"></div>
+        <div className="animate-pulse h-10 w-20 bg-gray-200 rounded-full"></div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (isError) {
+    return <div>카테고리를 불러오는데 실패했습니다.</div>;
+  }
+
   return (
     <div className="flex gap-2 pl-6 w-full overflow-x-auto scrollbar-hide">
       <button
-        onClick={() => handleCategorySelect("전체")}
-        className={buttonClass("전체")}
+        onClick={() => handleCategorySelect("allCategory")}
+        className={buttonClass("allCategory")}
       >
         전체
       </button>
@@ -43,7 +59,7 @@ export default function CategoryList({
           onClick={() => handleCategorySelect(category)}
           className={buttonClass(category)}
         >
-          {category}
+          {TOPICS.find((topic) => topic.id === category).name}
         </button>
       ))}
     </div>

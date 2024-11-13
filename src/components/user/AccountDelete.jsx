@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/shadcn/button";
 import {
   Drawer,
   DrawerClose,
@@ -8,17 +8,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from "@/components/ui/shadcn/drawer";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import IsLoginContext from "@/contexts/IsLoginContext";
 
 const AccountDelete = () => {
-  const { logout } = useContext(IsLoginContext);
   const navigate = useNavigate();
 
   const handleDelete = () => {
-    logout();
     navigate("/");
   };
   return (

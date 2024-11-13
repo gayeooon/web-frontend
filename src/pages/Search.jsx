@@ -1,37 +1,40 @@
-import NavigationBar from "@/components/common/NavigationBar";
-import NewsList from "@/components/main/NewsList";
+import NavigationBar from "@/components/ui/custom/NavigationBar";
+import NewsList from "@/components/news/NewsList";
 import CategoryNewsCarousel from "@/components/search/CategoryNewsCarousel";
 import RecentSearches from "@/components/search/RecentSearches";
 import SearchInput from "@/components/search/SearchInput";
 import { useState } from "react";
+import PageLayout from "@/components/ui/custom/PageLayout";
 
-const categoryList = ["IT / 과학", "경제", "생활 / 문화"];
+const categoryList = ["경제", "사회", "연예"];
 
 const Search = () => {
   const [search, setSearch] = useState("");
 
-  console.log(search);
+  const onClickRecents = (recent) => {
+    setSearch(recent);
+  };
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col w-full max-w-2xl mb-32">
+    <PageLayout page="search">
+      <div className="sticky top-0 bg-white z-50 pb-2">
         <SearchInput setSearch={setSearch} />
-        <RecentSearches keyword={search} />
-        <div className="h-0 w-full border-[0.5px] border-border my-8"></div>
-        {!search ? (
-          categoryList.map((category) => (
-            <CategoryNewsCarousel key={category} category={category} />
-          ))
-        ) : (
-          <>
-            <div className="m-6 mt-0 text-xl font-extrabold">{`"${search}"에 대한 뉴스`}</div>
-            <NewsList search={search} />
-          </>
-        )}
-
-        <NavigationBar />
       </div>
-    </div>
+      <RecentSearches keyword={search} onClickRecents={onClickRecents} />
+      <div className="h-0 w-full border-[0.5px] border-border my-8"></div>
+      {!search ? (
+        categoryList.map((category) => (
+          <CategoryNewsCarousel key={category} category={category} />
+        ))
+      ) : (
+        <>
+          <div className="m-6 mt-0 text-xl font-extrabold">{`"${search}"에 대한 뉴스`}</div>
+          <NewsList search={search} />
+        </>
+      )}
+
+      <NavigationBar />
+    </PageLayout>
   );
 };
 

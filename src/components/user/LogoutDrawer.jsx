@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import IsLoginContext from "@/contexts/IsLoginContext";
 import {
   Drawer,
   DrawerClose,
@@ -10,15 +8,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/shadcn/drawer";
+import { Button } from "@/components/ui/shadcn/button";
 
 export default function LogoutDrawer() {
-  const { logout } = useContext(IsLoginContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
     navigate("/");
   };
 
