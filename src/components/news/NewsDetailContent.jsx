@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addLike, deleteLike } from "@/lib/api";
 import NewsComment from "./NewsComment";
 import ai_default from "@/assets/ai_default.svg";
 import ai_white from "@/assets/ai_white.svg";
@@ -7,7 +8,6 @@ import comment_default from "@/assets/comment_default.svg";
 import comment_white from "@/assets/comment_white.svg";
 import like_default from "@/assets/like_default.svg";
 import like_green from "@/assets/like_green.svg";
-import { addLike, deleteLike } from "@/lib/api";
 
 const NewsDetailContent = ({ isPending, article, articleId }) => {
   const [contentType, setContentType] = useState("");

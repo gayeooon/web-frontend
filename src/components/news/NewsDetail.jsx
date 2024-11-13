@@ -79,7 +79,12 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
                 </SheetDescription>
               </SheetHeader>
               <div className="absolute -bottom-3 flex flex-col mt-10 gap-2 w-full">
-                <Button>기사 링크로 이동</Button>
+                <Button
+                  onClick={() => window.open(article.articleSource)}
+                  disabled={isPending}
+                >
+                  기사 링크로 이동
+                </Button>
                 <SheetClose asChild>
                   <Button className="bg-white text-black hover:bg-black/5">
                     닫기
