@@ -104,7 +104,10 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
             {article.content}
           </div>
         ) : contentType === "comment" ? (
-          <NewsComment commentList={article.comment} articleId={articleId} />
+          <NewsComment
+            commentList={article.comment.reverse()}
+            articleId={articleId}
+          />
         ) : (
           <></>
         )}

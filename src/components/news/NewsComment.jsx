@@ -10,7 +10,7 @@ export default function NewsComment({ commentList, articleId }) {
   const queryClient = useQueryClient();
 
   const addCommentMutation = useMutation({
-    mutationFn: () => addComment(articleId, comment),
+    mutationFn: (comment) => addComment(articleId, comment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
     },
@@ -31,7 +31,7 @@ export default function NewsComment({ commentList, articleId }) {
 
   const handleSendClick = () => {
     if (!comment.trim()) return;
-    addCommentMutation.mutate();
+    addCommentMutation.mutate(comment);
     setComment("");
   };
 
@@ -40,8 +40,10 @@ export default function NewsComment({ commentList, articleId }) {
     handleSendClick();
   };
 
-  const onClickDelete = (commentId) => {
-    deleteCommentMutation.mutate(commentId);
+  const formatCommentTime = (createdDate) => {
+    let date = new Date(createdDate);
+    date.setHours(date.getHours() + 9);
+    return date.toISOString();
   };
 
   return (
@@ -64,7 +66,7 @@ export default function NewsComment({ commentList, articleId }) {
         </button>
       </form>
       <div className="h-0 border-[0.5px] border-border my-6"></div>
-      <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
+      <div className="flex flex-col gap-2 max-h-[40vh] max-h-[40dvh] overflow-y-auto">
         {commentList.map((comment) => (
           <div
             key={comment.commentId}
@@ -75,10 +77,16 @@ export default function NewsComment({ commentList, articleId }) {
                 <span className="mr-3 text-black font-bold">
                   {comment.nickName}
                 </span>
-                <span>{formatDate(comment.createdDate)}</span>
+                <span>
+                  {formatDate(formatCommentTime(comment.createdDate))}
+                </span>
               </div>
               {comment.isMyComment && (
-                <button onClick={() => onClickDelete(comment.commentId)}>
+                <button
+                  onClick={() =>
+                    deleteCommentMutation.mutate(comment.commentId)
+                  }
+                >
                   <img className="w-2.5 h-full" src={deleteIcon} alt="삭제" />
                 </button>
               )}

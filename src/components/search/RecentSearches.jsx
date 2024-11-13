@@ -1,40 +1,40 @@
-import deleteIcon from "@/assets/delete.svg";
 import { useEffect, useState } from "react";
+import deleteIcon from "@/assets/delete.svg";
 
 const STORAGE_KEY = "search-history";
-const MAX_SEARCHES = 5;
+const MAX_HISTORY = 5;
 
-export default function RecentSearches({ keyword, onClickRecents }) {
-  const [searches, setSearches] = useState(
+export default function RecentSearches({ search, onClickRecents }) {
+  const [history, setHistory] = useState(
     () => JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
   );
 
-  const updateLocalStorage = (newSearches) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSearches));
-    setSearches(newSearches);
+  useEffect(() => {
+    if (!search) return;
+
+    setHistory((prev) => {
+      const filteredHistory = prev.filter((it) => it !== search);
+      const newHistory = [search, ...filteredHistory].slice(0, MAX_HISTORY);
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
+      return newHistory;
+    });
+  }, [search]);
+
+  const updateLocalStorage = (newHistory) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
+    setHistory(newHistory);
   };
 
-  const onClickDelete = (search) => {
-    const newSearches = searches.filter((it) => it !== search);
-    updateLocalStorage(newSearches);
+  const onClickDelete = (keyword) => {
+    const newHistory = history.filter((it) => it !== keyword);
+    updateLocalStorage(newHistory);
   };
 
   const onClickDeleteAll = () => {
     localStorage.removeItem(STORAGE_KEY);
-    setSearches([]);
+    setHistory([]);
   };
-
-  useEffect(() => {
-    if (!keyword) return;
-
-    setSearches((prev) => {
-      const filteredSearches = prev.filter((search) => search !== keyword);
-      const newSearches = [keyword, ...filteredSearches].slice(0, MAX_SEARCHES);
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newSearches));
-      return newSearches;
-    });
-  }, [keyword]);
 
   return (
     <div className="ml-6 mt-6">
@@ -48,12 +48,12 @@ export default function RecentSearches({ keyword, onClickRecents }) {
         </button>
       </div>
       <div className="flex gap-2 w-full h-8 overflow-x-auto scrollbar-hide">
-        {searches.length === 0 ? (
+        {history.length === 0 ? (
           <span className="text-sm font-bold text-black/40">
             최근 검색어가 없습니다.
           </span>
         ) : (
-          searches.map((it) => (
+          history.map((it) => (
             <div
               key={it}
               className="flex flex-shrink-0 gap-3 whitespace-nowrap rounded-full border-[1px] border-border bg-white"
