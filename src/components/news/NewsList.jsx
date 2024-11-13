@@ -1,23 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import { getArticles } from "@/lib/api";
-import NewsItem from "./NewsItem";
-import NewsDrawer from "./NewsDrawer";
+import { getArticleSearch, getArticles } from "@/lib/api";
+import NewsListItem from "./NewsListItem";
+import NewsDetail from "./NewsDetail";
 
-const SIZE = 5;
+const SIZE = 10;
 
 export default function NewsList({ search = "", category = "allCategory" }) {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [articles, setArticles] = useState([]);
-  const nextCursorRef = useRef(null);
+  const nextCursorRef = useRef(-1);
   const isLoadingRef = useRef(false);
 
-  const handleArticleLoad = async () => {
+  const handleArticlesLoad = async () => {
     try {
-      const response = await getArticles({
-        category,
-        size: SIZE,
-      });
+      let response;
+      if (search) {
+        response = await getArticleSearch({
+          keyword: search,
+          size: SIZE,
+        });
+      } else
+        response = await getArticles({
+          category,
+          size: SIZE,
+        });
 
       const { result } = response;
       if (result.length < SIZE) nextCursorRef.current = -1;
@@ -32,11 +39,20 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   const handleLoadMore = async () => {
     if (nextCursorRef.current === -1) return;
     try {
-      const response = await getArticles({
-        category,
-        articleCursor: nextCursorRef.current,
-        size: SIZE,
-      });
+      let response;
+      if (search) {
+        response = await getArticleSearch({
+          keyword: search,
+          articleCursor: nextCursorRef.current,
+          size: SIZE,
+        });
+      } else
+        response = await getArticles({
+          category,
+          articleCursor: nextCursorRef.current,
+          size: SIZE,
+        });
+
       const { result } = response;
       if (result.length < SIZE) nextCursorRef.current = -1;
       else nextCursorRef.current = result[SIZE - 1].articleId;
@@ -48,7 +64,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   };
 
   useEffect(() => {
-    handleArticleLoad();
+    handleArticlesLoad();
   }, [category]);
 
   useEffect(() => {
@@ -75,41 +91,28 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   };
 
   const handleNewsClick = (news) => {
-    setSelectedNews(news);
+    setSelectedNews(news.articleId);
     setIsOpen(true);
   };
-
-  const getFilteredList = () => {
-    let filtered = [...articles];
-    if (search)
-      filtered = filtered.filter(
-        (news) =>
-          news.title.toLowerCase().includes(search.toLowerCase()) ||
-          news.category.toLowerCase().includes(search.toLowerCase()) ||
-          news.press.toLowerCase().includes(search.toLowerCase())
-      );
-    return filtered;
-  };
-  const filteredList = getFilteredList();
 
   return (
     <div className="w-full mb-2">
       <div className="flex flex-col w-full bg-background/30 rounded-lg border-[1px] px-4 border-background">
-        {filteredList.length === 0 ? (
+        {articles.length === 0 ? (
           <div className="my-8 mx-2 font-bold text-txt-placeholder">
             등록된 기사가 없습니다.
           </div>
         ) : (
-          filteredList.map((news, idx) => (
+          articles.map((news, idx) => (
             <div key={idx} onClick={() => handleNewsClick(news)}>
-              <NewsItem news={news} />
+              <NewsListItem news={news} />
             </div>
           ))
         )}
       </div>
-      <NewsDrawer
+      <NewsDetail
         isOpen={isOpen}
-        selectedNews={selectedNews}
+        articleId={selectedNews}
         handleOpenChange={handleOpenChange}
       />
     </div>

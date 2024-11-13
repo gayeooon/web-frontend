@@ -1,53 +1,68 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatDate } from "@/lib/utils";
 import send from "@/assets/send.svg";
 import deleteIcon from "@/assets/delete.svg";
+import { addComment, deleteComment } from "@/lib/api";
 
-export default function NewsComment({ comments }) {
-  const [commentList, setcommentList] = useState(comments);
-  const inputRef = useRef();
+export default function NewsComment({ commentList, articleId }) {
+  const [comment, setComment] = useState("");
+  const queryClient = useQueryClient();
 
-  const setComment = (value) => {
-    if (!value || value.trim() === "") return;
+  const addCommentMutation = useMutation({
+    mutationFn: () => addComment(articleId, comment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["article", articleId] });
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
 
-    const comment = {
-      commentId: commentList.length + 1,
-      content: value,
-      nickName: "김성진",
-      createdDate: new Date().toISOString(),
-      isDeleted: true,
-    };
-    setcommentList((prev) => [comment, ...prev]);
-    inputRef.current.value = "";
+  const deleteCommentMutation = useMutation({
+    mutationFn: (commentId) => deleteComment(articleId, commentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["article", articleId] });
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
+  const handleSendClick = () => {
+    if (!comment.trim()) return;
+    addCommentMutation.mutate();
+    setComment("");
   };
 
-  const onEnterKeyDown = (e) => {
-    if (e.key === "Enter" && !e.repeat) {
-      setComment(e.target.value);
-      console.log("keydownevnet");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSendClick();
   };
 
   const onClickDelete = (commentId) => {
-    console.log("click delete");
-    setcommentList(commentList.filter((it) => it.commentId !== commentId));
+    deleteCommentMutation.mutate(commentId);
   };
 
   return (
     <div>
-      <div className="flex justify-between w-full h-12 mt-4 rounded-full bg-background">
+      <form
+        onSubmit={handleSubmit}
+        className="flex justify-between w-full h-12 mt-4 rounded-full bg-background"
+      >
         <input
           placeholder="댓글을 입력해 주세요"
           className="rounded-lg w-[80%] pl-4 bg-background text-black focus:outline-my-purple/50"
-          ref={inputRef}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         ></input>
         <button
           className="flex justify-center items-center w-[20%] h-full rounded-[20px] bg-my-purple"
-          onClick={() => setComment(inputRef.current.value)}
+          onClick={handleSendClick}
         >
           <img className="w-6" src={send} alt="send" />
         </button>
-      </div>
+      </form>
       <div className="h-0 border-[0.5px] border-border my-6"></div>
       <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto">
         {commentList.map((comment) => (
@@ -62,7 +77,7 @@ export default function NewsComment({ comments }) {
                 </span>
                 <span>{formatDate(comment.createdDate)}</span>
               </div>
-              {comment.isDeleted && (
+              {comment.isMyComment && (
                 <button onClick={() => onClickDelete(comment.commentId)}>
                   <img className="w-2.5 h-full" src={deleteIcon} alt="삭제" />
                 </button>

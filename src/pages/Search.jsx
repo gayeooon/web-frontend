@@ -6,7 +6,7 @@ import SearchInput from "@/components/search/SearchInput";
 import { useState } from "react";
 import PageLayout from "@/components/ui/custom/PageLayout";
 
-const categoryList = ["IT / 과학", "경제", "생활 / 문화"];
+const categoryList = ["경제", "사회", "연예"];
 
 const Search = () => {
   const [search, setSearch] = useState("");

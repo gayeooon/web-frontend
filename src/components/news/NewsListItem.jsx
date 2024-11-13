@@ -1,6 +1,6 @@
 import { formatDate } from "@/lib/utils";
 
-export default function NewsItem({ news }) {
+export default function NewsListItem({ news }) {
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
       {news.thumbnail && (
