@@ -38,8 +38,8 @@ export const KakaoLogin = () => {
     const processLogin = async () => {
       try {
         const response = await authKakaoLogin(code);
-        if (response.status === 200) navigate("/user", { replace: true });
-        else if (response.status === 201)
+        if (response.statusCode === 200) navigate("/user", { replace: true });
+        else if (response.statusCode === 201)
           navigate("/signup", { replace: true });
 
         console.log(response);
