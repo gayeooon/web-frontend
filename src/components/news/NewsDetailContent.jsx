@@ -10,14 +10,12 @@ import like_default from "@/assets/like_default.svg";
 import like_green from "@/assets/like_green.svg";
 
 const NewsDetailContent = ({ isPending, article, articleId }) => {
-  const [contentType, setContentType] = useState("");
-  const [isLiked, setIsLiked] = useState(article.likedArticle ?? false);
+  const [contentType, setContentType] = useState("ai");
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    setContentType("");
-  }, [article]);
-
-  const queryClient = useQueryClient();
+    setContentType("ai");
+  }, [articleId]);
 
   const addLikeMutation = useMutation({
     mutationFn: () => addLike(articleId),
@@ -25,9 +23,7 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
     },
     onError: (error) => {
-      if (error.message === "이미 좋아요를 누른 게시글입니다.")
-        setIsLiked(true);
-      else console.error("Error:", error);
+      console.error("Error:", error);
     },
   });
 
@@ -42,9 +38,8 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
   });
 
   const toggleLike = () => {
-    if (isLiked) deleteLikeMutation.mutate();
+    if (article.likedArticle) deleteLikeMutation.mutate();
     else addLikeMutation.mutate();
-    setIsLiked(!isLiked);
   };
 
   const handleContentChange = (type) => {
@@ -96,7 +91,10 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
           댓글
         </button>
         <button onClick={toggleLike} className={setButtonClass()}>
-          <img className="w-5" src={isLiked ? like_green : like_default} />
+          <img
+            className="w-5"
+            src={article.likedArticle ?? false ? like_green : like_default}
+          />
           {article.likeCount ?? 0}
         </button>
       </div>
@@ -106,7 +104,7 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
             {article.content}
           </div>
         ) : contentType === "comment" ? (
-          <NewsComment comments={article.comment} />
+          <NewsComment commentList={article.comment} articleId={articleId} />
         ) : (
           <></>
         )}

@@ -13,7 +13,6 @@ export async function getMemberInfo() {
     throw new Error("유저 데이터를 불러오는데 실패했습니다");
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -28,7 +27,6 @@ export async function getPublishers() {
     throw new Error("언론사 데이터를 불러오는데 실패했습니다");
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -47,7 +45,6 @@ export async function getCategories() {
 }
 
 export async function updateMemberInfo(newInfo) {
-  console.log(JSON.stringify(newInfo));
   const response = await fetch(`${BASE_URL}/member/info`, {
     method: "PUT",
     headers: {
@@ -56,10 +53,9 @@ export async function updateMemberInfo(newInfo) {
     body: JSON.stringify(newInfo),
   });
   if (!response.ok) {
-    throw new Error("유저 데이터를 업데이트 하는데 실패했습니다");
+    throw new Error("유저 데이터 업데이트에 실패했습니다");
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -75,11 +71,10 @@ export async function updatePublishers(newPublishers) {
   });
 
   if (!response.ok) {
-    throw new Error("언론사 데이터를 업데이트 하는데 실패했습니다");
+    throw new Error("언론사 데이터 업데이트에 실패했습니다");
   }
 
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -95,11 +90,10 @@ export async function updateCategories(newCategories) {
   });
 
   if (!response.ok) {
-    throw new Error("카테고리 데이터를 업데이트 하는데 실패했습니다");
+    throw new Error("카테고리 데이터 업데이트에 실패했습니다");
   }
 
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -120,7 +114,6 @@ export async function getArticles({
     throw new Error("기사 데이터를 불러오는데 실패했습니다");
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -133,13 +126,31 @@ export async function getHeadlines() {
   return body;
 }
 
+export async function getArticleSearch({
+  keyword = "",
+  size = 10,
+  articleCursor = "",
+}) {
+  const query = `keyword=${keyword}&size=${size}&articleCursor=${articleCursor}`;
+  const response = await fetch(`${BASE_URL}/articles/search?${query}`);
+  if (!response.ok) {
+    throw new Error("기사 검색 데이터를 불러오는데 실패했습니다");
+  }
+  const body = await response.json();
+  return body;
+}
+
 export async function getArticle(articleId) {
-  const response = await fetch(`${BASE_URL}/articles/${articleId}`);
+  const response = await fetch(`${BASE_URL}/articles/${articleId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${kakaoToken}`,
+    },
+  });
   if (!response.ok) {
     throw new Error("기사 데이터를 불러오는데 실패했습니다");
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
@@ -156,7 +167,6 @@ export async function addLike(articleId) {
     throw new Error(body.message);
   }
 
-  console.log(body);
   return body;
 }
 
@@ -168,25 +178,42 @@ export async function deleteLike(articleId) {
     },
   });
   if (!response.ok) {
-    console.log(response);
     throw new Error(response.message);
   }
   const body = await response.json();
-  console.log(body);
   return body;
 }
 
-export async function addComment(articleId) {
+export async function addComment(articleId, comment) {
   const response = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${kakaoToken}`,
     },
+    body: JSON.stringify({
+      comment: comment,
+    }),
   });
   if (!response.ok) {
-    throw new Error("뉴스 댓글을 추가하는데 실패했습니다.");
+    throw new Error("뉴스 댓글 추가에 실패했습니다.");
   }
   const body = await response.json();
-  console.log(body);
+  return body;
+}
+
+export async function deleteComment(articleId, commentId) {
+  const response = await fetch(
+    `${BASE_URL}/articles/${articleId}/comments/${commentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${kakaoToken}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("뉴스 댓글 삭제에 실패했습니다.");
+  }
+  const body = await response.json();
   return body;
 }

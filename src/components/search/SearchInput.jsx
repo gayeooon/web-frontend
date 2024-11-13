@@ -2,12 +2,12 @@ import searchIcon from "@/assets/search_input.svg";
 import { useState } from "react";
 
 export default function SearchInput({ setSearch }) {
-  const [inputValue, setState] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {
     if (!inputValue.trim()) return;
     setSearch(inputValue.trim());
-    setState("");
+    setInputValue("");
   };
 
   const handleSubmit = (e) => {
@@ -23,7 +23,7 @@ export default function SearchInput({ setSearch }) {
             className="w-full focus:outline-none"
             placeholder="뉴스 제목 / 카테고리로 검색"
             value={inputValue}
-            onChange={(e) => setState(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <div className="hover:cursor-pointer" onClick={handleSearch}>
             <img src={searchIcon} alt="검색" />

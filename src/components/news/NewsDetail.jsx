@@ -104,7 +104,11 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
         <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle className="bg-white text-xl font-bold my-4 p-4 rounded-lg border-[1px] sm:text-2xl">
-              {article.title}
+              {isPending ? (
+                <div className="animate-pulse h-10 w-full bg-gray-200 rounded-full"></div>
+              ) : (
+                article.title
+              )}
             </DrawerTitle>
             <DrawerDescription asChild>
               <div>
@@ -117,7 +121,12 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
-            <Button>기사 링크로 이동</Button>
+            <Button
+              onClick={() => window.open(article.articleSource)}
+              disabled={isPending}
+            >
+              기사 링크로 이동
+            </Button>
             <DrawerClose asChild>
               <Button className="bg-white text-black hover:bg-black/5">
                 닫기

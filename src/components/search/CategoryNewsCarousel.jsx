@@ -6,47 +6,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/shadcn/carousel";
 import { useEffect, useState } from "react";
-import favicon from "/favicon.png";
-import NewsDrawer from "@/components/news/NewsDetail";
-
-const newsArray = [
-  {
-    title: `“최악의 기후재앙”…브라질 남부 폭우에 사망·실종 220명 넘어서`,
-    content: "부상자 361명, 15만5천명 대피",
-    publisher: "한겨래",
-    date: "2024.10.15",
-    image:
-      "https://filmphotographyproject.com/wp-content/uploads/2024/06/Newspaper_HeroMod_770x_.jpg",
-  },
-  {
-    title: "Tech Update",
-    content: "New gadget released this week.",
-    publisher: "한겨래",
-    date: "2024.10.15",
-    image: favicon,
-  },
-  {
-    title: "Sports Highlight",
-    content: "Amazing play in yesterday's game!",
-    publisher: "한겨래",
-    date: "2024.10.15",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-  {
-    title: "Entertainment",
-    content: "Celebrity announces new project.",
-    publisher: "한겨래",
-    date: "2024.10.15",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-  {
-    title: "Science Discovery",
-    content: "Researchers make breakthrough in quantum computing.",
-    publisher: "한겨래",
-    date: "2024.10.15",
-    image: "/placeholder.svg?height=400&width=600",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import NewsDetail from "@/components/news/NewsDetail";
+import { getArticleSearch } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
 
 export default function CategoryNewsCarousel({ category }) {
   const [selectedNews, setSelectedNews] = useState(null);
@@ -54,13 +17,27 @@ export default function CategoryNewsCarousel({ category }) {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
 
+  const {
+    data: recentArticles = [],
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["recentArticles", category],
+    queryFn: () =>
+      getArticleSearch({
+        keyword: category,
+        size: 5,
+      }),
+    select: (data) => data.result,
+  });
+
   const handleOpenChange = (open) => {
     setIsOpen(open);
     if (!open) setSelectedNews(() => null);
   };
 
   const handleNewsClick = (news) => {
-    setSelectedNews(() => news);
+    setSelectedNews(news.ararticleId);
     setIsOpen(true);
   };
 
@@ -69,6 +46,20 @@ export default function CategoryNewsCarousel({ category }) {
 
     api.on("select", () => setCurrent(api.selectedScrollSnap()));
   }, [api]);
+
+  if (isPending) {
+    return (
+      <div className="mx-6 mb-6">
+        <div className="text-[15px] font-bold mb-6 sm:text-[17px] ">
+          <span className="text-my-green mr-2">{category}</span>
+          <span>카테고리 최신 뉴스</span>
+        </div>
+        <div className="relative aspect-[363/128] min-h-[128px]">
+          <div className="absolute inset-0 w-fullanimate-pulse bg-gray-200 rounded-lg "></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-6 mb-6">
@@ -85,7 +76,7 @@ export default function CategoryNewsCarousel({ category }) {
         setApi={setApi}
       >
         <CarouselContent>
-          {newsArray.map((news, index) => (
+          {recentArticles.map((news, index) => (
             <CarouselItem key={index}>
               <div
                 className="relative aspect-[363/128] min-h-[128px] overflow-hidden rounded-lg hover:cursor-pointer"
@@ -94,7 +85,7 @@ export default function CategoryNewsCarousel({ category }) {
                 }}
               >
                 <img
-                  src={news.image}
+                  src={news.thumbnail}
                   alt={news.title}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -104,9 +95,9 @@ export default function CategoryNewsCarousel({ category }) {
                       {news.title}
                     </h2>
                     <div className="flex w-full gap-6 items-center font-bold text-white text-xs sm:text-sm">
-                      <span>{news.publisher}</span>
+                      <span>{news.press}</span>
                       <span className="text-lg">·</span>
-                      <span>{news.date}</span>
+                      <span>{formatDate(news.publishDate)}</span>
                     </div>
                     <div className="h-2"></div>
                   </div>
@@ -116,7 +107,7 @@ export default function CategoryNewsCarousel({ category }) {
           ))}
         </CarouselContent>
         <div className="absolute bottom-4 flex gap-4 justify-center h-2 w-full">
-          {Array.from({ length: newsArray.length }).map((_, idx) =>
+          {Array.from({ length: recentArticles.length }).map((_, idx) =>
             idx === current ? (
               <div
                 key={idx}
@@ -134,9 +125,9 @@ export default function CategoryNewsCarousel({ category }) {
           <CarouselNext className="relative right-0 shadow-md bg-white/80 hover:bg-white transition-colors duration-200" />
         </div>
       </Carousel>
-      <NewsDrawer
+      <NewsDetail
         isOpen={isOpen}
-        selectedNews={selectedNews}
+        articleId={selectedNews}
         handleOpenChange={handleOpenChange}
       />
     </div>
