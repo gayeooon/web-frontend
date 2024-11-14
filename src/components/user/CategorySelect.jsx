@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthProvider";
 import { Button } from "@/components/ui/shadcn/button";
-import { getCategories } from "@/lib/api";
 import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
 
 const CategorySelect = ({ onNext, buttonText }) => {
-  const {
-    data: initialData,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: getCategories,
-    select: (data) => data.result.preferredCategories,
-  });
-
-  const [selectedTopics, setSelectedTopics] = useState([]);
-
-  useEffect(() => {
-    if (initialData) {
-      setSelectedTopics(initialData);
-    }
-  }, [initialData]);
+  const { categories } = useAuth();
+  const [selectedTopics, setSelectedTopics] = useState(categories);
 
   const toggleTopic = (topicId) => {
     setSelectedTopics((prev) =>
@@ -32,25 +16,6 @@ const CategorySelect = ({ onNext, buttonText }) => {
   };
 
   const isSelected = (topicId) => selectedTopics.includes(topicId);
-
-  // 로딩 상태 처리
-  if (isPending) {
-    return (
-      <div className="flex flex-wrap gap-[3%] justify-center">
-        {TOPICS.map((topic) => (
-          <div
-            key={topic.id}
-            className="animate-pulse bg-gray-200 rounded-2xl p-4 w-[31%] h-32 flex-shrink-0 mb-[3%]"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  // 에러 상태 처리
-  if (isError) {
-    return <div>카테고리를 불러오는데 실패했습니다.</div>;
-  }
 
   return (
     <>

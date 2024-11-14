@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { STEPS, STEP_TITLES } from "@/lib/constants";
 import BasicInformation from "@/components/user/BasicInformation";
 import CategorySelect from "@/components/user/CategorySelect";
 import DetailInformation from "@/components/user/DetailInformation";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import SignUpComplete from "@/components/user/SignUpComplete";
 import Header from "@/components/ui/custom/Header";
-import { STEPS, STEP_TITLES } from "@/lib/constants";
 import PageLayout from "@/components/ui/custom/PageLayout";
 
 const SignUp = () => {
@@ -49,13 +49,7 @@ const SignUp = () => {
       case STEPS.BASIC_INFO:
         return <BasicInformation onNext={handleNext} buttonText="계속하기" />;
       case STEPS.USER_DETAILS:
-        return (
-          <DetailInformation
-            onNext={handleNext}
-            initialData={formData.memberInfo}
-            buttonText="계속하기"
-          />
-        );
+        return <DetailInformation onNext={handleNext} buttonText="계속하기" />;
       case STEPS.CATEGORY:
         return <CategorySelect onNext={handleNext} buttonText="계속하기" />;
       case STEPS.PUBLISHER:
