@@ -10,10 +10,6 @@ import Header from "@/components/ui/custom/Header";
 import PageLayout from "@/components/ui/custom/PageLayout";
 
 const SignUp = () => {
-  const [step, setStep] = useState(STEPS.BASIC_INFO);
-
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     memberInfo: {
       name: "",
@@ -25,14 +21,16 @@ const SignUp = () => {
     categories: [],
     publishers: [],
   });
+  const [step, setStep] = useState(STEPS.BASIC_INFO);
+  const navigate = useNavigate();
 
   const handleNext = (data) => {
     setFormData((prev) => {
       switch (step) {
         case STEPS.BASIC_INFO:
-          return { ...prev, memberInfo: data };
+          return { ...prev, memberInfo: { ...prev.memberInfo, ...data } };
         case STEPS.USER_DETAILS:
-          return { ...prev, memberInfo: data };
+          return { ...prev, memberInfo: { ...prev.memberInfo, ...data } };
         case STEPS.CATEGORY:
           return { ...prev, categories: data };
         case STEPS.PUBLISHER:

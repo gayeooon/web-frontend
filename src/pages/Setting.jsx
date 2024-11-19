@@ -1,41 +1,35 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
 import BasicInformation from "@/components/user/BasicInformation";
 import CategorySelect from "@/components/user/CategorySelect";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import AccountDelete from "@/components/user/AccountDelete";
 import Header from "@/components/ui/custom/Header";
-import {
-  updateMemberInfo,
-  updatePublishers,
-  updateCategories,
-} from "@/lib/api";
 import PageLayout from "@/components/ui/custom/PageLayout";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const Setting = ({ variant }) => {
   const navigate = useNavigate();
+  const { updateUserProfile, updateUserCategories, updateUserPublishers } =
+    useAuth();
 
   const variantConfig = {
-    info: { title: "회원정보 수정", fetchFunction: updateMemberInfo },
-    category: { title: "선호 주제 변경", fetchFunction: updateCategories },
-    publisher: { title: "뉴스 구독 관리", fetchFunction: updatePublishers },
+    info: { title: "회원정보 수정", fetchFunction: updateUserProfile },
+    category: { title: "선호 주제 변경", fetchFunction: updateUserCategories },
+    publisher: { title: "뉴스 구독 관리", fetchFunction: updateUserPublishers },
     delete: { title: "회원 탈퇴" },
   };
 
-  const mutation = useMutation({
-    mutationFn: variantConfig[variant].fetchFunction,
-    onSuccess: () => {
-      alert("저장되었습니다.");
-      navigate("/user");
-    },
-    onError: (error) => {
-      console.error("Error:", error);
-      alert("저장 중 오류가 발생했습니다.");
-    },
-  });
-
   const handleNext = (data) => {
-    mutation.mutate(data);
+    variantConfig[variant].fetchFunction.mutate(data, {
+      onSuccess: () => {
+        alert("저장되었습니다.");
+        navigate("/user");
+      },
+      onError: (error) => {
+        console.error("Error:", error);
+        alert("저장 중 오류가 발생했습니다.");
+      },
+    });
   };
 
   const handleBack = () => {

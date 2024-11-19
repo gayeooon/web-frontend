@@ -48,6 +48,7 @@ export async function updateMemberInfo(newInfo) {
   const response = await fetch(`${BASE_URL}/member/info`, {
     method: "PUT",
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${kakaoToken}`,
     },
     body: JSON.stringify(newInfo),
@@ -79,6 +80,7 @@ export async function updatePublishers(newPublishers) {
 }
 
 export async function updateCategories(newCategories) {
+  console.log(newCategories);
   const response = await fetch(`${BASE_URL}/member/categories`, {
     method: "PUT",
     headers: {

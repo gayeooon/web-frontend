@@ -9,6 +9,8 @@ const BasicInformation = ({ onNext, buttonText }) => {
     name: userProfile.name,
     email: userProfile.email,
     phone: userProfile.phone,
+    birth: userProfile.birth.replace(/-/g, "/"),
+    gender: userProfile.gender,
   });
 
   const [errors, setErrors] = useState({

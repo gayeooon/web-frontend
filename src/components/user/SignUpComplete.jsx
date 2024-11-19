@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import {
-  updateMemberInfo,
-  updatePublishers,
-  updateCategories,
-} from "@/lib/api";
 import { Button } from "@/components/ui/shadcn/button";
 import successmark from "@/assets/successmark.svg";
+import { useAuth } from "@/contexts/AuthProvider";
+import { useState } from "react";
 
 const SignUpComplete = ({ formData }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  console.log(formData);
+  const { updateUserProfile, updateUserCategories, updateUserPublishers } =
+    useAuth();
 
   if (
     !formData ||
@@ -23,28 +20,19 @@ const SignUpComplete = ({ formData }) => {
     return <div>잘못된 데이터입니다.</div>;
   }
 
-  const fetchFormData = () => {
+  const onClickStart = async () => {
+    setIsLoading(true);
     try {
-      updateMemberInfo(formData.memberInfo);
-      updateCategories(formData.categories);
-      updatePublishers(formData.publishers);
+      await updateUserProfile.mutateAsync(formData.memberInfo);
+      await updateUserCategories.mutateAsync(formData.categories);
+      await updateUserPublishers.mutateAsync(formData.publishers);
+
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error("Update failed:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const mutation = useMutation({
-    mutationFn: fetchFormData,
-    onSuccess: () => {
-      navigate("/user");
-    },
-    onError: (error) => {
-      console.error("Error:", error);
-    },
-  });
-
-  const onClickStart = () => {
-    mutation.mutate();
   };
 
   return (
@@ -60,8 +48,19 @@ const SignUpComplete = ({ formData }) => {
         <br />
         지금 바로 맞춤 뉴스를 읽어보세요.
       </span>
-      <Button className="absolute bottom-0" onClick={onClickStart}>
-        시작하기
+      <Button
+        className="absolute bottom-0"
+        onClick={onClickStart}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <>
+            <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full mr-2" />
+            준비중...
+          </>
+        ) : (
+          "시작하기"
+        )}
       </Button>
     </div>
   );

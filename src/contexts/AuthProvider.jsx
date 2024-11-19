@@ -1,11 +1,24 @@
 import { createContext, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getMemberInfo, getCategories, getPublishers } from "@/lib/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getMemberInfo,
+  getCategories,
+  getPublishers,
+  updateMemberInfo,
+  updatePublishers,
+  updateCategories,
+} from "@/lib/api";
 
 const AuthContext = createContext({
-  userProfile: null,
-  categories: null,
-  publishers: null,
+  userProfile: {
+    name: "",
+    email: "",
+    phone: "",
+    birth: "",
+    gender: "",
+  },
+  categories: [],
+  publishers: [],
   login: () => {},
   logout: () => {},
   updateUserProfile: () => {},
@@ -14,6 +27,7 @@ const AuthContext = createContext({
 });
 
 export function AuthProvider({ children }) {
+  const queryClient = useQueryClient();
   const { data: userProfile = {}, isLoading: isLoadingProfile } = useQuery({
     queryKey: ["userProfile"],
     queryFn: getMemberInfo,
@@ -21,7 +35,7 @@ export function AuthProvider({ children }) {
       name: result?.nickname ?? "",
       email: result?.email ?? "",
       phone: result?.phone ?? "",
-      birth: result?.birth.split("T")[0] ?? "",
+      birth: result?.birth?.split("T")[0] ?? "",
       gender: result?.gender ?? "",
     }),
   });
@@ -38,15 +52,59 @@ export function AuthProvider({ children }) {
     select: (data) => data.result.preferredPress,
   });
 
+  const updateUserProfile = useMutation({
+    mutationFn: updateMemberInfo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
+  const updateUserCategories = useMutation({
+    mutationFn: updateCategories,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
+  const updateUserPublishers = useMutation({
+    mutationFn: updatePublishers,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["publishers"] });
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
+  /**
+   * @TODO 로딩 컴포넌트 구현
+   */
   if (isLoadingProfile || isLoadingCategories || isLoadingPublishers) {
-    /**
-     * @TODO 로딩 컴포넌트 구현
-     */
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div>Loading...</div>
+        <div>{children}</div>
+      </>
+    );
   }
 
   return (
-    <AuthContext.Provider value={{ userProfile, categories, publishers }}>
+    <AuthContext.Provider
+      value={{
+        userProfile,
+        categories,
+        publishers,
+        updateUserProfile,
+        updateUserCategories,
+        updateUserPublishers,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
