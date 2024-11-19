@@ -1,17 +1,17 @@
 name: Deploy to Production
- 
+
 on:
   push:
     branches:
       - main
- 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@master
- 
+
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -20,33 +20,36 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
- 
+
       - name: Install Dependencies
         run: npm install
- 
+
       - name: Build
         env:
-          CI: ''
+          CI: ""
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
           VITE_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
           VITE_NAVER_CLIENT_ID: ${{ secrets.VITE_NAVER_CLIENT_ID }}
           VITE_KAKAO_TOKEN: ${{ secrets.VITE_KAKAO_TOKEN }}
+          VITE_GOOGLE_REDIRECT_URI: "https://newsfit.site/member/oauth/google"
+          VITE_KAKAO_REDIRECT_URI: "https://newsfit.site/member/oauth/kakao"
+          VITE_NAVER_REDIRECT_URI: "https://newsfit.site/member/oauth/naver"
         run: npm run build
-        
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
- 
+
       - name: Upload to S3
         run: |
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
             dist s3://newsfit.site
-            
+
       - name: Invalidate files
         run: |
           aws cloudfront create-invalidation \
