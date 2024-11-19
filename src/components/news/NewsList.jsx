@@ -65,9 +65,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
 
   useEffect(() => {
     handleArticlesLoad();
-  }, [category]);
 
-  useEffect(() => {
     const handleScroll = async () => {
       if (nextCursorRef < 0 || isLoadingRef.current) return;
       isLoadingRef.current = true;
@@ -83,7 +81,7 @@ export default function NewsList({ search = "", category = "allCategory" }) {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [category, search]);
 
   const handleOpenChange = (open) => {
     setIsOpen(open);

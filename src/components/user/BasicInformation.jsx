@@ -1,36 +1,17 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
-import { getMemberInfo } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const BasicInformation = ({ onNext, buttonText }) => {
-  const {
-    data: initialData,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["memberInfo"],
-    queryFn: getMemberInfo,
-    select: ({ result }) => ({
-      name: result?.nickname ?? "",
-      email: result?.email ?? "",
-      phone: result?.phone ?? "",
-      birth: result?.birth.split("T")[0] ?? "",
-      gender: result?.gender ?? "",
-    }),
-  });
+  const { userProfile } = useAuth();
 
   const [data, setData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: userProfile.name,
+    email: userProfile.email,
+    phone: userProfile.phone,
+    birth: userProfile.birth.replace(/-/g, "/"),
+    gender: userProfile.gender,
   });
-
-  useEffect(() => {
-    if (initialData) {
-      setData(initialData);
-    }
-  }, [initialData]);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -90,29 +71,6 @@ const BasicInformation = ({ onNext, buttonText }) => {
       !errors.email && !errors.phone && data.name && data.email && data.phone
     );
   };
-
-  if (isPending) {
-    return (
-      <>
-        <div className="input">
-          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[20%] h-[50%] ml-5"></div>
-          <input onChange={handleChange} value="" />
-        </div>
-        <div className="input">
-          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[50%] h-[50%] ml-5"></div>
-          <input onChange={handleChange} value="" />
-        </div>
-        <div className="input">
-          <div className="absolute animate-pulse bg-gray-200 rounded-xl w-[30%] h-[50%] ml-5"></div>
-          <input onChange={handleChange} value="" />
-        </div>
-      </>
-    );
-  }
-
-  if (isError) {
-    return <div>유저 데이터를 불러오는데 실패했습니다.</div>;
-  }
 
   return (
     <>

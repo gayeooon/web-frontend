@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/shadcn/radio-group";
+import { useAuth } from "@/contexts/AuthProvider";
 
-const DetailInformation = ({ onNext, initialData }) => {
-  const [data, setData] = useState(initialData);
+const DetailInformation = ({ onNext, buttonText }) => {
+  const { userProfile } = useAuth();
+  const [data, setData] = useState({
+    birth: userProfile.birth,
+    gender: userProfile.gender,
+  });
 
   const handleChange = (name, value) => {
     setData((prev) => ({
@@ -56,7 +61,7 @@ const DetailInformation = ({ onNext, initialData }) => {
         }
         disabled={!(data.gender && data.birth)}
       >
-        계속하기
+        {buttonText}
       </Button>
     </>
   );

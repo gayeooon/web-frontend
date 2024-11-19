@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getPublishers } from "@/lib/api";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthProvider";
 import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
 import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
 import { Button } from "@/components/ui/shadcn/button";
 
 const PublisherSelect = ({ onNext, buttonText }) => {
-  const {
-    data: initialData,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["publishers"],
-    queryFn: getPublishers,
-    select: (data) => data.result.preferredPress,
-  });
+  const { publishers } = useAuth();
 
-  const [subscribedPublisher, setSubscribedPublisher] = useState([]);
-
-  useEffect(() => {
-    if (initialData) {
-      setSubscribedPublisher(initialData);
-    }
-  }, [initialData]);
+  const [subscribedPublisher, setSubscribedPublisher] = useState(publishers);
 
   const toggleSubscribe = (publisher) => {
     setSubscribedPublisher((prev) =>
@@ -33,29 +18,6 @@ const PublisherSelect = ({ onNext, buttonText }) => {
   };
 
   const isSelected = (publisher) => subscribedPublisher.includes(publisher);
-
-  // 로딩 상태 처리
-  if (isPending) {
-    return (
-      <ScrollArea className="min-h-[350px] mb-20">
-        {Array(5)
-          .fill(0)
-          .map((_, i) => (
-            <div key={i} className="animate-pulse">
-              <div className="bg-gray-200 h-12 mb-4 rounded-md" />
-              <div className="bg-gray-100 h-8 mb-2 rounded" />
-              <div className="bg-gray-100 h-8 mb-2 rounded" />
-              <div className="bg-gray-100 h-8 mb-2 rounded" />
-            </div>
-          ))}
-      </ScrollArea>
-    );
-  }
-
-  // 에러 상태 처리
-  if (isError) {
-    return <div>언론사 목록을 불러오는데 실패했습니다.</div>;
-  }
 
   return (
     <>

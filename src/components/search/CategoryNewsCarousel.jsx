@@ -94,7 +94,7 @@ export default function CategoryNewsCarousel({ category }) {
                     <h2 className="font-bold text-white mb-2 text-[15px] sm:text-xl">
                       {news.title}
                     </h2>
-                    <div className="flex w-full gap-6 items-center font-bold text-white text-xs sm:text-sm">
+                    <div className="flex w-full gap-3 items-center font-bold text-white text-xs sm:text-sm sm:gap-6">
                       <span>{news.press}</span>
                       <span className="text-lg">·</span>
                       <span>{formatDate(news.publishDate)}</span>

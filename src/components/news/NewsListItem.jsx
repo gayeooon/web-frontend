@@ -4,7 +4,7 @@ export default function NewsListItem({ news }) {
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
       {news.thumbnail && (
-        <div className="w-1/4 h-28 min-w-28 ">
+        <div className="w-1/4 h-24 min-w-24 sm:h-28">
           <img
             className="w-full h-full object-cover rounded-lg"
             src={news.thumbnail}

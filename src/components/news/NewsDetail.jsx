@@ -101,7 +101,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   return (
     <Drawer open={isOpen} onOpenChange={handleOpenChange}>
       <DrawerContent className="bg-gradient-to-t from-white to-background w-full">
-        <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] overflow-y-auto">
+        <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] max-h-[95dvh] overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle className="bg-white text-xl font-bold my-4 p-4 rounded-lg border-[1px] sm:text-2xl">
               {isPending ? (
