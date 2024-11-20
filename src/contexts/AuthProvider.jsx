@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { authKakaoLogin } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
 
@@ -7,15 +7,13 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
-  // localStorage.setItem("accessToken", import.meta.env.VITE_KAKAO_TOKEN);
 
   const login = useMutation({
     mutationFn: authKakaoLogin,
     onSuccess: (response) => {
-      console.log(response);
       localStorage.setItem("accessToken", response.result.accessToken);
       localStorage.setItem("refreshToken", response.result.refreshToken);
-      if (response.statusCode === 200) navigate("/user", { replace: true });
+      if (response.statusCode === 200) navigate("/", { replace: true });
       else if (response.statusCode === 201)
         navigate("/signup", { replace: true });
     },

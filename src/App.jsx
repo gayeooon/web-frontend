@@ -14,7 +14,13 @@ import { KakaoLogin } from "@/components/login/KakaoLogin";
 import { GoogleLogin } from "@/components/login/GoogleLogin";
 import { NaverLogin } from "@/components/login/NaverLogin";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

@@ -1,22 +1,30 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  getMemberInfo,
-  getCategories,
-  getPublishers,
-  updateMemberInfo,
-  updateCategories,
-  updatePublishers,
-} from "@/lib/api";
+import { useLocation } from "react-router-dom";
+import axios from "@/lib/axios";
 
 const UserContext = createContext(null);
+const EXCLUDED_PATHS = [
+  "/login",
+  "/member/oauth/kakao",
+  "/member/oauth/google",
+  "/member/oauth/naver",
+];
 
 export function UserProvider({ children }) {
   const queryClient = useQueryClient();
+  const { pathname } = useLocation();
+  const [isEnabled, setIsEnabled] = useState(
+    !EXCLUDED_PATHS.includes(pathname)
+  );
+
+  useEffect(() => {
+    setIsEnabled(!EXCLUDED_PATHS.includes(pathname));
+  }, [pathname]);
 
   const { data: userProfile = {}, isLoading: isLoadingProfile } = useQuery({
     queryKey: ["userProfile"],
-    queryFn: getMemberInfo,
+    queryFn: () => axios.get("/member/info"),
     select: ({ result }) => ({
       name: result?.nickname ?? "",
       email: result?.email ?? "",
@@ -24,36 +32,45 @@ export function UserProvider({ children }) {
       birth: result?.birth?.split("T")[0] ?? "",
       gender: result?.gender ?? "",
     }),
+    enabled: isEnabled,
   });
 
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
     queryKey: ["categories"],
-    queryFn: getCategories,
+    queryFn: () => axios.get("/member/categories"),
     select: (data) => data.result.preferredCategories,
+    enabled: isEnabled,
   });
 
   const { data: publishers = [], isLoading: isLoadingPublishers } = useQuery({
     queryKey: ["publishers"],
-    queryFn: getPublishers,
+    queryFn: () => axios.get("/member/press"),
     select: (data) => data.result.preferredPress,
+    enabled: isEnabled,
   });
 
   const updateUserProfile = useMutation({
-    mutationFn: updateMemberInfo,
+    mutationFn: (data) => axios.put("/member/info", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
     },
   });
 
   const updateUserCategories = useMutation({
-    mutationFn: updateCategories,
+    mutationFn: (data) =>
+      axios.put("/member/categories", {
+        preferredCategories: data,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });
 
   const updateUserPublishers = useMutation({
-    mutationFn: updatePublishers,
+    mutationFn: (data) =>
+      axios.put("/member/press", {
+        preferredPress: data,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["publishers"] });
     },
