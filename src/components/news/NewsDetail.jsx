@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/shadcn/button";
 
 export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   const [isDesktop, setIsDesktop] = useState(false);
-
   const {
     data: article = {},
     isPending,

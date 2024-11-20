@@ -37,7 +37,7 @@ export default function CategoryNewsCarousel({ category }) {
   };
 
   const handleNewsClick = (news) => {
-    setSelectedNews(news.ararticleId);
+    setSelectedNews(news.articleId);
     setIsOpen(true);
   };
 

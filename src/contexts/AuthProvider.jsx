@@ -14,8 +14,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("accessToken", response.result.accessToken);
       localStorage.setItem("refreshToken", response.result.refreshToken);
       if (response.statusCode === 200) navigate("/", { replace: true });
-      else if (response.statusCode === 201)
-        navigate("/signup", { replace: true });
+      else if (response.statusCode === 201) window.location.replace("/signup");
     },
     onError: (error) => {
       console.log("Login error:", error);

@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSignupClick = () => {
-    navigate("/signup");
+    window.location.replace("/signup");
   };
 
   return (
@@ -67,7 +67,7 @@ const Login = () => {
           <Button
             className="bg-white border-[1px] border-border"
             variant="kakao"
-            onClick={handleSignupClick}
+            onClick={handleKakaoClick}
           >
             <img className="h-[40%]" src={kakao} alt="kakao_icon" />
           </Button>
