@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/AuthProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import {
   Drawer,
@@ -9,13 +10,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/shadcn/drawer";
-import { useNavigate } from "react-router-dom";
 
 const AccountDelete = () => {
-  const navigate = useNavigate();
+  const { deleteUser } = useAuth();
 
   const handleDelete = () => {
-    navigate("/");
+    deleteUser.mutate();
   };
   return (
     <>

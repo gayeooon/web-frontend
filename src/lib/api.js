@@ -123,23 +123,3 @@ export async function deleteComment(articleId, commentId) {
   const body = await response.json();
   return body;
 }
-
-// 로그인 API
-export const authKakaoLogin = async (code) => {
-  const response = await fetch(
-    `${BASE_URL}/member/oauth/kakao?code=${code}&redirect_uri=${REDIRECT_URI}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw new Error("Login failed");
-  }
-
-  const data = await response.json();
-  return data;
-};

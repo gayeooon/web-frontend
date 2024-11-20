@@ -1,58 +1,46 @@
+import { useAuth } from "@/contexts/AuthProvider";
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import google from "@/assets/google_logo.svg";
+import { Button } from "@/components/ui/shadcn/button";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
 const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email%20profile`;
 
-export const handleGoogleClick = () => {
-  window.location.href = GOOGLE_AUTH_URL;
-};
+export const GoogleLoginButton = () => (
+  <div className="h-14 w-full">
+    <Button
+      variant="google"
+      onClick={() => (window.location.href = GOOGLE_AUTH_URL)}
+    >
+      <img className="h-2/6" src={google} alt="google_icon" />
+      <span>구글 계정으로 로그인</span>
+    </Button>
+  </div>
+);
 
-const authGoogleLogin = async (code) => {
-  const response = await fetch(
-    `https://www.newsfit.shop/member/oauth/google?code=${code}&scope=email+profile&redirect_uri=${REDIRECT_URI}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw new Error("Login failed");
-  }
-
-  const data = response.json();
-  return data;
-};
+export const GoogleSignupButton = () => (
+  <Button
+    className="bg-white border-[1px] border-border"
+    variant="google"
+    onClick={() => (window.location.href = GOOGLE_AUTH_URL)}
+  >
+    <img className="h-[40%]" src={google} alt="google_icon" />
+  </Button>
+);
 
 export const GoogleLogin = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { login } = useAuth();
 
   useEffect(() => {
     const code = searchParams.get("code");
+    if (!code) return;
+    const GOOGLE_FETCH_URL = `/member/oauth/google?code=${code}&scope=email+profile&redirect_uri=${REDIRECT_URI}`;
 
-    const processLogin = async () => {
-      try {
-        const response = await authGoogleLogin(code);
-        if (response.statusCode === 200) navigate("/user", { replace: true });
-        else if (response.statusCode === 201)
-          navigate("/signup", { replace: true });
-
-        console.log(response);
-      } catch (error) {
-        console.log("Login error:", error);
-        navigate("/login", { replace: true });
-      }
-    };
-
-    if (code) {
-      processLogin();
-    }
+    login.mutate(GOOGLE_FETCH_URL);
   }, []);
 
-  return <div>로그인 중...</div>;
+  return <div>구글 로그인 처리중...</div>;
 };

@@ -4,7 +4,7 @@ import search_default from "@/assets/search_default.svg";
 import search_green from "@/assets/search_green.svg";
 import my_default from "@/assets/my_default.svg";
 import my_green from "@/assets/my_green.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NavigationBar() {
   const { pathname } = useLocation();
@@ -15,7 +15,7 @@ export default function NavigationBar() {
       <button
         className="flex flex-col justify-center items-center w-6 gap-1"
         onClick={() =>
-          pathname === "/" ? window.location.replace("/") : navigate("/")
+          pathname === "/" ? window.location.reload() : navigate("/")
         }
       >
         <img
@@ -32,7 +32,11 @@ export default function NavigationBar() {
 
       <button
         className="flex flex-col justify-center items-center w-6 gap-1"
-        onClick={() => window.location.replace("/search")}
+        onClick={() =>
+          pathname === "/search"
+            ? window.location.reload()
+            : navigate("/search")
+        }
       >
         <img
           className="w-full h-full"
@@ -48,22 +52,25 @@ export default function NavigationBar() {
         </div>
       </button>
 
-      <Link to="/user">
-        <div className="flex flex-col justify-center items-center w-6 gap-1">
-          <img
-            className="w-full h-full"
-            src={pathname === "/user" ? my_green : my_default}
-            alt="my-icon"
-          />
-          <div
-            className={`text-xs ${
-              pathname === "/user" || "text-txt-placeholder"
-            }`}
-          >
-            마이
-          </div>
+      <button
+        className="flex flex-col justify-center items-center w-6 gap-1"
+        onClick={() =>
+          pathname === "/user" ? window.location.reload() : navigate("/user")
+        }
+      >
+        <img
+          className="w-full h-full"
+          src={pathname === "/user" ? my_green : my_default}
+          alt="my-icon"
+        />
+        <div
+          className={`text-xs ${
+            pathname === "/user" || "text-txt-placeholder"
+          }`}
+        >
+          마이
         </div>
-      </Link>
+      </button>
     </div>
   );
 }
