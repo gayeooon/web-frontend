@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
 
 const CategorySelect = ({ onNext, buttonText }) => {
-  const { categories } = useAuth();
+  const { categories } = useUser();
   const [selectedTopics, setSelectedTopics] = useState(categories);
 
   const toggleTopic = (topicId) => {

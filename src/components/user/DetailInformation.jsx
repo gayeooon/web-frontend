@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/shadcn/radio-group";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 
 const DetailInformation = ({ onNext, buttonText }) => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUser();
   const [data, setData] = useState({
     birth: userProfile.birth,
     gender: userProfile.gender,

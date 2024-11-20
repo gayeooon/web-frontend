@@ -1,5 +1,9 @@
 const BASE_URL = "https://www.newsfit.shop";
+const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+
 const kakaoToken = import.meta.env.VITE_KAKAO_TOKEN;
+const getToken = () => localStorage.getItem("accessToken");
+// 인증안됨: 401에러
 
 // 유저 관련 API
 export async function getMemberInfo() {
@@ -49,7 +53,7 @@ export async function updateMemberInfo(newInfo) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${kakaoToken}`,
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(newInfo),
   });
@@ -219,3 +223,23 @@ export async function deleteComment(articleId, commentId) {
   const body = await response.json();
   return body;
 }
+
+// 로그인 API
+export const authKakaoLogin = async (code) => {
+  const response = await fetch(
+    `${BASE_URL}/member/oauth/kakao?code=${code}&redirect_uri=${REDIRECT_URI}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Login failed");
+  }
+
+  const data = await response.json();
+  return data;
+};

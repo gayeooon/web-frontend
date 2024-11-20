@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 
 const BasicInformation = ({ onNext, buttonText }) => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUser();
 
   const [data, setData] = useState({
     name: userProfile.name,
