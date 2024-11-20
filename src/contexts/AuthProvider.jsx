@@ -1,108 +1,39 @@
 import { createContext, useContext } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  getMemberInfo,
-  getCategories,
-  getPublishers,
-  updateMemberInfo,
-  updatePublishers,
-  updateCategories,
-} from "@/lib/api";
+import { useMutation } from "@tanstack/react-query";
+import { authKakaoLogin } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext({
-  userProfile: {
-    name: "",
-    email: "",
-    phone: "",
-    birth: "",
-    gender: "",
-  },
-  categories: [],
-  publishers: [],
-  login: () => {},
-  logout: () => {},
-  updateUserProfile: () => {},
-  updateUserCategories: () => {},
-  updateUserPublishers: () => {},
-});
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const queryClient = useQueryClient();
-  const { data: userProfile = {}, isLoading: isLoadingProfile } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: getMemberInfo,
-    select: ({ result }) => ({
-      name: result?.nickname ?? "",
-      email: result?.email ?? "",
-      phone: result?.phone ?? "",
-      birth: result?.birth?.split("T")[0] ?? "",
-      gender: result?.gender ?? "",
-    }),
-  });
+  const navigate = useNavigate();
 
-  const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
-    queryKey: ["categories"],
-    queryFn: getCategories,
-    select: (data) => data.result.preferredCategories,
-  });
-
-  const { data: publishers = [], isLoading: isLoadingPublishers } = useQuery({
-    queryKey: ["publishers"],
-    queryFn: getPublishers,
-    select: (data) => data.result.preferredPress,
-  });
-
-  const updateUserProfile = useMutation({
-    mutationFn: updateMemberInfo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+  const login = useMutation({
+    mutationFn: authKakaoLogin,
+    onSuccess: (response) => {
+      localStorage.setItem("accessToken", response.result.accessToken);
+      localStorage.setItem("refreshToken", response.result.refreshToken);
+      if (response.statusCode === 200) navigate("/", { replace: true });
+      else if (response.statusCode === 201)
+        navigate("/signup", { replace: true });
     },
     onError: (error) => {
-      console.error("Error:", error);
+      console.log("Login error:", error);
+      navigate("/login", { replace: true });
     },
   });
 
-  const updateUserCategories = useMutation({
-    mutationFn: updateCategories,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-    onError: (error) => {
-      console.error("Error:", error);
-    },
-  });
-
-  const updateUserPublishers = useMutation({
-    mutationFn: updatePublishers,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["publishers"] });
-    },
-    onError: (error) => {
-      console.error("Error:", error);
-    },
-  });
-
-  /**
-   * @TODO 로딩 컴포넌트 구현
-   */
-  if (isLoadingProfile || isLoadingCategories || isLoadingPublishers) {
-    return (
-      <>
-        <div>Loading...</div>
-        <div>{children}</div>
-      </>
-    );
-  }
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    navigate("/login", { replace: true });
+  };
 
   return (
     <AuthContext.Provider
       value={{
-        userProfile,
-        categories,
-        publishers,
-        updateUserProfile,
-        updateUserCategories,
-        updateUserPublishers,
+        login,
+        logout,
       }}
     >
       {children}

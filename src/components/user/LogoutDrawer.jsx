@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Drawer,
   DrawerClose,
@@ -10,13 +9,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/shadcn/drawer";
 import { Button } from "@/components/ui/shadcn/button";
+import { useAuth } from "@/contexts/AuthProvider";
 
 export default function LogoutDrawer() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/");
-  };
+  const { logout } = useAuth();
 
   return (
     <Drawer>
@@ -35,11 +31,7 @@ export default function LogoutDrawer() {
           </DrawerHeader>
           <DrawerFooter>
             <div className="flex gap-6">
-              <Button
-                onClick={handleLogout}
-                variant="destructive"
-                className="w-1/2"
-              >
+              <Button onClick={logout} variant="destructive" className="w-1/2">
                 로그아웃
               </Button>
               <DrawerClose className="w-1/2" asChild>

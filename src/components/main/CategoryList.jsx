@@ -1,11 +1,11 @@
 import { TOPICS } from "@/lib/constants";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 
 export default function CategoryList({
   selectedCategory,
   setSelectedCategory,
 }) {
-  const { categories } = useAuth();
+  const { categories } = useUser();
 
   const handleCategorySelect = (category) => {
     if (selectedCategory === category) return;

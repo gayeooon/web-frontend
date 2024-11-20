@@ -5,12 +5,12 @@ import PublisherSelect from "@/components/user/PublisherSelect";
 import AccountDelete from "@/components/user/AccountDelete";
 import Header from "@/components/ui/custom/Header";
 import PageLayout from "@/components/ui/custom/PageLayout";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 
 const Setting = ({ variant }) => {
   const navigate = useNavigate();
   const { updateUserProfile, updateUserCategories, updateUserPublishers } =
-    useAuth();
+    useUser();
 
   const variantConfig = {
     info: { title: "회원정보 수정", fetchFunction: updateUserProfile },

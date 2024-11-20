@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
 import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
 import { Button } from "@/components/ui/shadcn/button";
 
 const PublisherSelect = ({ onNext, buttonText }) => {
-  const { publishers } = useAuth();
+  const { publishers } = useUser();
 
   const [subscribedPublisher, setSubscribedPublisher] = useState(publishers);
 

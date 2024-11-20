@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/shadcn/button";
 import successmark from "@/assets/successmark.svg";
-import { useAuth } from "@/contexts/AuthProvider";
+import { useUser } from "@/contexts/UserProvider";
 import { useState } from "react";
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { updateUserProfile, updateUserCategories, updateUserPublishers } =
-    useAuth();
+    useUser();
 
   if (
     !formData ||
