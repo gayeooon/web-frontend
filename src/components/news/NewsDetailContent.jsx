@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addLike, deleteLike } from "@/lib/api";
 import NewsComment from "./NewsComment";
 import ai_default from "@/assets/ai_default.svg";
 import ai_white from "@/assets/ai_white.svg";
@@ -8,38 +7,45 @@ import comment_default from "@/assets/comment_default.svg";
 import comment_white from "@/assets/comment_white.svg";
 import like_default from "@/assets/like_default.svg";
 import like_green from "@/assets/like_green.svg";
+import axios from "@/lib/axios";
+import { useToaster } from "@/contexts/ToasterProvider";
 
 const NewsDetailContent = ({ isPending, article, articleId }) => {
   const [contentType, setContentType] = useState("ai");
   const queryClient = useQueryClient();
+  const toast = useToaster();
 
   useEffect(() => {
     setContentType("ai");
   }, [articleId]);
 
   const addLikeMutation = useMutation({
-    mutationFn: () => addLike(articleId),
+    mutationFn: (articleId) => axios.post(`/articles/${articleId}/likes`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
+      toast("info", "좋아요를 눌렀습니다.");
     },
     onError: (error) => {
       console.error("Error:", error);
+      toast("error", "네트워크 오류가 발생했습니다.");
     },
   });
 
   const deleteLikeMutation = useMutation({
-    mutationFn: () => deleteLike(articleId),
+    mutationFn: (articleId) => axios.delete(`/articles/${articleId}/likes`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
+      toast("info", "좋아요가 취소되었습니다");
     },
     onError: (error) => {
       console.error("Error:", error);
+      toast("error", "네트워크 오류가 발생했습니다.");
     },
   });
 
   const toggleLike = () => {
-    if (article.likedArticle) deleteLikeMutation.mutate();
-    else addLikeMutation.mutate();
+    if (article.likedArticle) deleteLikeMutation.mutate(articleId);
+    else addLikeMutation.mutate(articleId);
   };
 
   const handleContentChange = (type) => {

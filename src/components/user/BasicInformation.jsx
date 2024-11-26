@@ -112,7 +112,7 @@ const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
         disabled={!isFormComplete() || buttonDisabled}
       >
         {buttonDisabled ? (
-          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full mr-2" />
+          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full" />
         ) : (
           buttonText
         )}

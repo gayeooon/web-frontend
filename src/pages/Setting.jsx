@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/contexts/UserProvider";
+import { useToaster } from "@/contexts/ToasterProvider";
 import BasicInformation from "@/components/user/BasicInformation";
 import CategorySelect from "@/components/user/CategorySelect";
 import PublisherSelect from "@/components/user/PublisherSelect";
 import AccountDelete from "@/components/user/AccountDelete";
 import Header from "@/components/ui/custom/Header";
 import PageLayout from "@/components/ui/custom/PageLayout";
-import { useUser } from "@/contexts/UserProvider";
-import { useToaster } from "@/contexts/ToasterProvider";
 
 const Setting = ({ variant }) => {
   const navigate = useNavigate();

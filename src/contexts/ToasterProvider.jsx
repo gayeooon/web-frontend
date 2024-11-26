@@ -1,6 +1,6 @@
+import { useState, createContext, useContext } from "react";
 import useIsMounted from "@/hooks/useIsMounted";
 import { BadgeAlert, BadgeCheck } from "lucide-react";
-import { useState, createContext, useContext } from "react";
 
 function Toast({ type, message, onClick }) {
   const isMounted = useIsMounted(100);
@@ -56,7 +56,7 @@ function ToasterProvider({ children }) {
   return (
     <ToasterContext.Provider value={{ toaster }}>
       {children}
-      <div className="fixed flex flex-col-reverse gap-3 z-50 top-12 left-1/2 -translate-x-1/2 transition-[height] duration-500 ease-in-out">
+      <div className="fixed flex flex-col-reverse gap-3 z-[100] top-12 left-1/2 -translate-x-1/2 transition-[height] duration-500 ease-in-out">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}

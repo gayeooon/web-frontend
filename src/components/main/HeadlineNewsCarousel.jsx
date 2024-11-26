@@ -9,8 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/shadcn/carousel";
-import { getHeadlines } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
+import axios from "@/lib/axios";
 
 const HeadlineNewsCarousel = () => {
   const [selectedNews, setSelectedNews] = useState(null);
@@ -23,7 +23,7 @@ const HeadlineNewsCarousel = () => {
     isError,
   } = useQuery({
     queryKey: ["headlines"],
-    queryFn: getHeadlines,
+    queryFn: () => axios.get("/articles/headLine"),
     select: (data) => data.result,
   });
 
@@ -41,7 +41,19 @@ const HeadlineNewsCarousel = () => {
     return (
       <div className="w-full bg-background/30 rounded-lg border-[1px] border-background">
         <div className="m-6 aspect-[16/9] relative overflow-hidden rounded-lg hover:cursor-pointer">
-          <div className="absolute inset-0 w-full animate-pulse bg-gray-200 "></div>
+          <div className="absolute inset-0 w-full animate-pulse bg-gray-300 "></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full bg-background/30 rounded-lg border-[1px] border-background">
+        <div className="m-6 aspect-[16/9] relative overflow-hidden rounded-lg hover:cursor-pointer">
+          <div className="absolute inset-0 w-full bg-white">
+            데이터를 불러올 수 없습니다.
+          </div>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getArticle } from "@/lib/api";
 import NewsDetailContent from "./NewsDetailContent";
+import axios from "@/lib/axios";
 import {
   Drawer,
   DrawerClose,
@@ -29,7 +29,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
     isError,
   } = useQuery({
     queryKey: ["article", articleId],
-    queryFn: () => getArticle(articleId),
+    queryFn: () => axios.get(`/articles/${articleId}`),
     enabled: Boolean(articleId),
     select: (data) => data.result,
   });
@@ -43,13 +43,6 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   }, []);
 
   if (isError) {
-    /**
-     * @TODO
-     * 에러 toast
-     * isOpen=false 설정
-     * articleId=null
-     */
-
     return <></>;
   }
 
