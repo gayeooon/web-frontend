@@ -6,9 +6,11 @@ import AccountDelete from "@/components/user/AccountDelete";
 import Header from "@/components/ui/custom/Header";
 import PageLayout from "@/components/ui/custom/PageLayout";
 import { useUser } from "@/contexts/UserProvider";
+import { useToaster } from "@/contexts/ToasterProvider";
 
 const Setting = ({ variant }) => {
   const navigate = useNavigate();
+  const toast = useToaster();
   const { updateUserProfile, updateUserCategories, updateUserPublishers } =
     useUser();
 
@@ -22,28 +24,42 @@ const Setting = ({ variant }) => {
   const handleNext = (data) => {
     variantConfig[variant].fetchFunction.mutate(data, {
       onSuccess: () => {
-        alert("저장되었습니다.");
+        toast("info", "저장되었습니다.");
         navigate("/user");
       },
       onError: (error) => {
         console.error("Error:", error);
-        alert("저장 중 오류가 발생했습니다.");
+        toast("error", "저장 중 오류가 발생했습니다.");
       },
     });
-  };
-
-  const handleBack = () => {
-    navigate("/user");
   };
 
   const renderComponent = () => {
     switch (variant) {
       case "info":
-        return <BasicInformation onNext={handleNext} buttonText="저장" />;
+        return (
+          <BasicInformation
+            onNext={handleNext}
+            buttonText="저장"
+            buttonDisabled={updateUserProfile.isPending}
+          />
+        );
       case "category":
-        return <CategorySelect onNext={handleNext} buttonText="저장" />;
+        return (
+          <CategorySelect
+            onNext={handleNext}
+            buttonText="저장"
+            buttonDisabled={updateUserCategories.isPending}
+          />
+        );
       case "publisher":
-        return <PublisherSelect onNext={handleNext} buttonText="저장" />;
+        return (
+          <PublisherSelect
+            onNext={handleNext}
+            buttonText="저장"
+            buttonDisabled={updateUserPublishers.isPending}
+          />
+        );
       case "delete":
         return <AccountDelete />;
       default:
@@ -53,7 +69,10 @@ const Setting = ({ variant }) => {
 
   return (
     <PageLayout page="setting">
-      <Header title={variantConfig[variant].title} handleBack={handleBack} />
+      <Header
+        title={variantConfig[variant].title}
+        handleBack={() => navigate("/user")}
+      />
       <div className="flex justify-center pt-6 h-5/6">
         <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
           {renderComponent()}

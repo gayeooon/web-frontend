@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
 import { useUser } from "@/contexts/UserProvider";
 
-const BasicInformation = ({ onNext, buttonText }) => {
+const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
   const { userProfile } = useUser();
 
   const [data, setData] = useState({
@@ -109,9 +109,13 @@ const BasicInformation = ({ onNext, buttonText }) => {
       <Button
         className="absolute bottom-0"
         onClick={() => onNext(data)}
-        disabled={!isFormComplete()}
+        disabled={!isFormComplete() || buttonDisabled}
       >
-        {buttonText}
+        {buttonDisabled ? (
+          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full mr-2" />
+        ) : (
+          buttonText
+        )}
       </Button>
     </>
   );

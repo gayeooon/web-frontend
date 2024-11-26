@@ -13,7 +13,8 @@ export function AuthProvider({ children }) {
     onSuccess: (response) => {
       localStorage.setItem("accessToken", response.result.accessToken);
       localStorage.setItem("refreshToken", response.result.refreshToken);
-      if (response.statusCode === 200) navigate("/", { replace: true });
+      if (response.statusCode === 200)
+        window.location.replace("/", { replace: true });
       else if (response.statusCode === 201) window.location.replace("/signup");
     },
     onError: (error) => {

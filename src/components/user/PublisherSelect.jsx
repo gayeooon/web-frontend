@@ -4,7 +4,7 @@ import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
 import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
 import { Button } from "@/components/ui/shadcn/button";
 
-const PublisherSelect = ({ onNext, buttonText }) => {
+const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
   const { publishers } = useUser();
 
   const [subscribedPublisher, setSubscribedPublisher] = useState(publishers);
@@ -55,9 +55,15 @@ const PublisherSelect = ({ onNext, buttonText }) => {
       <Button
         className="absolute bottom-0"
         onClick={() => onNext(subscribedPublisher)}
-        disabled={subscribedPublisher.length < MIN_SUBSCRIPTIONS}
+        disabled={
+          subscribedPublisher.length < MIN_SUBSCRIPTIONS || buttonDisabled
+        }
       >
-        {buttonText}
+        {buttonDisabled ? (
+          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full mr-2" />
+        ) : (
+          buttonText
+        )}
       </Button>
     </>
   );
