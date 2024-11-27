@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/shadcn/button";
 import successmark from "@/assets/successmark.svg";
 import { useUser } from "@/contexts/UserProvider";
 import { useState } from "react";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +54,7 @@ const SignUpComplete = ({ formData }) => {
       >
         {isLoading ? (
           <>
-            <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full" />
+            <SpinnerIcon />
           </>
         ) : (
           "시작하기"

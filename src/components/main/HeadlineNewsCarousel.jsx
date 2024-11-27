@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/shadcn/carousel";
 import { formatDate } from "@/lib/utils";
 import axios from "@/lib/axios";
+import { CarouselSkeleton } from "../ui/custom/Loading";
 
 const HeadlineNewsCarousel = () => {
   const [selectedNews, setSelectedNews] = useState(null);
@@ -41,7 +42,7 @@ const HeadlineNewsCarousel = () => {
     return (
       <div className="w-full bg-background/30 rounded-lg border-[1px] border-background">
         <div className="m-6 aspect-[16/9] relative overflow-hidden rounded-lg hover:cursor-pointer">
-          <div className="absolute inset-0 w-full animate-pulse bg-gray-300 "></div>
+          <CarouselSkeleton />
         </div>
       </div>
     );

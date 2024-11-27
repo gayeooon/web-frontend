@@ -8,11 +8,13 @@ import PageLayout from "@/components/ui/custom/PageLayout";
 import { useUser } from "@/contexts/UserProvider";
 import { MIN_SELECTIONS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
+import { useToaster } from "@/contexts/ToasterProvider";
 
 const Main = () => {
   const [category, setCategory] = useState("allCategory");
   const navigate = useNavigate();
   const { categories, publishers } = useUser();
+  const toast = useToaster();
 
   useEffect(() => {
     if (categories && publishers) {
@@ -21,7 +23,7 @@ const Main = () => {
         publishers.length < MIN_SUBSCRIPTIONS
       ) {
         navigate("/signup");
-        alert("회원가입이 완료되지 않았습니다. 회원가입 페이지로 이동합니다.");
+        toast("error", "회원가입을 완료해주세요.");
       }
     }
   }, [categories, publishers, navigate]);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUser } from "@/contexts/UserProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
 const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
   const { categories } = useUser();
@@ -50,11 +51,7 @@ const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
         onClick={() => onNext(selectedTopics)}
         disabled={selectedTopics.length < MIN_SELECTIONS || buttonDisabled}
       >
-        {buttonDisabled ? (
-          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full" />
-        ) : (
-          buttonText
-        )}
+        {buttonDisabled ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

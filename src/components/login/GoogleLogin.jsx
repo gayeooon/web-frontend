@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import google from "@/assets/google_logo.svg";
 import { Button } from "@/components/ui/shadcn/button";
+import { PageSpinner } from "@/components/ui/custom/Loading";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
@@ -42,5 +43,5 @@ export const GoogleLogin = () => {
     login.mutate(GOOGLE_FETCH_URL);
   }, []);
 
-  return <div>구글 로그인 처리중...</div>;
+  return <PageSpinner />;
 };

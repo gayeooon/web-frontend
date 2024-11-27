@@ -5,6 +5,7 @@ import { formatDate } from "@/lib/utils";
 import axios from "@/lib/axios";
 import send from "@/assets/send.svg";
 import deleteIcon from "@/assets/delete.svg";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
 export default function NewsComment({ commentList, articleId }) {
   const [comment, setComment] = useState("");
@@ -74,7 +75,7 @@ export default function NewsComment({ commentList, articleId }) {
           disabled={addCommentMutation.isPending}
         >
           {addCommentMutation.isPending ? (
-            <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full" />
+            <SpinnerIcon />
           ) : (
             <img className="w-6" src={send} alt="send" />
           )}

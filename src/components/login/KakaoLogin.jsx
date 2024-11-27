@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/shadcn/button";
 import kakao from "@/assets/kakao_logo.svg";
+import { PageSpinner } from "@/components/ui/custom/Loading";
 
 const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
@@ -45,5 +46,5 @@ export const KakaoLogin = () => {
     login.mutate(KAKAO_FETCH_URL);
   }, []);
 
-  return <div>카카오 로그인 처리중...</div>;
+  return <PageSpinner />;
 };

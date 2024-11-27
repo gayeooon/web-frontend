@@ -3,6 +3,7 @@ import { useUser } from "@/contexts/UserProvider";
 import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
 import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
 import { Button } from "@/components/ui/shadcn/button";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
 const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
   const { publishers } = useUser();
@@ -59,11 +60,7 @@ const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
           subscribedPublisher.length < MIN_SUBSCRIPTIONS || buttonDisabled
         }
       >
-        {buttonDisabled ? (
-          <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full" />
-        ) : (
-          buttonText
-        )}
+        {buttonDisabled ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

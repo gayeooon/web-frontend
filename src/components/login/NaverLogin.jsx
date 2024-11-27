@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import naver_white from "@/assets/naver_logo_white.svg";
 import naver_green from "@/assets/naver_logo_green.svg";
+import { PageSpinner } from "@/components/ui/custom/Loading";
 
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_NAVER_REDIRECT_URI;
@@ -44,5 +45,5 @@ export const NaverLogin = () => {
     login.mutate(NAVER_FETCH_URL);
   }, []);
 
-  return <div>네이버 로그인 처리중...</div>;
+  return <PageSpinner />;
 };

@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import axios from "@/lib/axios";
+import { PageSpinner } from "@/components/ui/custom/Loading";
 
 const UserContext = createContext(null);
 const EXCLUDED_PATHS = [
@@ -77,12 +78,7 @@ export function UserProvider({ children }) {
   });
 
   if (isLoadingProfile || isLoadingCategories || isLoadingPublishers) {
-    return (
-      <>
-        <div>Loading...</div>
-        {/* <div>{children}</div> */}
-      </>
-    );
+    return <PageSpinner />;
   }
 
   return (
