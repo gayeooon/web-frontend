@@ -19,7 +19,6 @@ export default function NewsList({ search = "", category = "allCategory" }) {
   } = useNewsQuery(category, search);
 
   useEffect(() => {
-    console.log(hasNextPage);
     if (!hasNextPage) return;
     const handleScroll = async () => {
       if (isLoadingRef.current) return;

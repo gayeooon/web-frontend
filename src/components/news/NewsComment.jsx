@@ -23,7 +23,7 @@ export default function NewsComment({ commentList, articleId }) {
     },
     onError: (error) => {
       console.error("Error:", error);
-      toast("error", "네트워크 오류가 발생했습니다");
+      toast("error", "네트워크 오류가 발생했습니다.");
     },
   });
 

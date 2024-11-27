@@ -24,6 +24,9 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
       toast("info", "좋아요를 눌렀습니다.");
+      axios.post(`/articles/${articleId}/rate`, {
+        preference: 2,
+      });
     },
     onError: (error) => {
       console.error("Error:", error);
@@ -36,6 +39,9 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["article", articleId] });
       toast("info", "좋아요가 취소되었습니다");
+      axios.post(`/articles/${articleId}/rate`, {
+        preference: 0,
+      });
     },
     onError: (error) => {
       console.error("Error:", error);

@@ -42,6 +42,13 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLinkClick = () => {
+    window.open(article.articleSource);
+    axios.post(`/articles/${articleId}/rate`, {
+      preference: 1,
+    });
+  };
+
   if (isError) {
     return <></>;
   }
@@ -71,10 +78,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
                 </SheetDescription>
               </SheetHeader>
               <div className="absolute -bottom-3 flex flex-col mt-10 gap-2 w-full">
-                <Button
-                  onClick={() => window.open(article.articleSource)}
-                  disabled={isPending}
-                >
+                <Button onClick={handleLinkClick} disabled={isPending}>
                   기사 링크로 이동
                 </Button>
                 <SheetClose asChild>
