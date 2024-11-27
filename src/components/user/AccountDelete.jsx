@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/AuthProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import {
   Drawer,
@@ -9,23 +10,26 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/shadcn/drawer";
-import { useNavigate } from "react-router-dom";
 
 const AccountDelete = () => {
-  const navigate = useNavigate();
+  const { deleteUser } = useAuth();
 
   const handleDelete = () => {
-    navigate("/");
+    deleteUser.mutate();
   };
   return (
     <>
       <h2 className="text-3xl font-extrabold mt-7">회원 탈퇴시 주의사항</h2>
-      <ul>
+      <ul className="flex flex-col gap-4 font-bold ">
         <li>
-          <span>회원 탈퇴는 취소할 수 없습니다.</span>
+          <span>
+            그동안 설정하신 관심 키워드와 뉴스 구독 설정이 모두 삭제됩니다.
+          </span>
         </li>
         <li>
-          <span>회원 탈퇴는 취소할 수 없습니다.</span>
+          <span>
+            탈퇴 후에는 맞춤형 뉴스 추천 서비스를 더 이상 이용할 수 없습니다.
+          </span>
         </li>
       </ul>
       <Drawer>

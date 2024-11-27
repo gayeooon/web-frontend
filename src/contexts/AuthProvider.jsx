@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { authKakaoLogin } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
+import axios from "@/lib/axios";
 
 const AuthContext = createContext(null);
 
@@ -9,11 +9,12 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const login = useMutation({
-    mutationFn: authKakaoLogin,
+    mutationFn: (fetchURL) => axios.get(fetchURL),
     onSuccess: (response) => {
       localStorage.setItem("accessToken", response.result.accessToken);
       localStorage.setItem("refreshToken", response.result.refreshToken);
-      if (response.statusCode === 200) navigate("/", { replace: true });
+      if (response.statusCode === 200)
+        window.location.replace("/", { replace: true });
       else if (response.statusCode === 201) window.location.replace("/signup");
     },
     onError: (error) => {
@@ -28,11 +29,21 @@ export function AuthProvider({ children }) {
     navigate("/login", { replace: true });
   };
 
+  const deleteUser = useMutation({
+    mutationFn: () => axios.delete("/member/delete"),
+    onSuccess: () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      navigate("/login", { replace: true });
+    },
+  });
+
   return (
     <AuthContext.Provider
       value={{
         login,
         logout,
+        deleteUser,
       }}
     >
       {children}

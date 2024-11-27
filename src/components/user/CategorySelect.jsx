@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useUser } from "@/contexts/UserProvider";
 import { Button } from "@/components/ui/shadcn/button";
 import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
-const CategorySelect = ({ onNext, buttonText }) => {
+const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
   const { categories } = useUser();
   const [selectedTopics, setSelectedTopics] = useState(categories);
 
@@ -48,9 +49,9 @@ const CategorySelect = ({ onNext, buttonText }) => {
       <Button
         className="absolute bottom-0"
         onClick={() => onNext(selectedTopics)}
-        disabled={selectedTopics.length < MIN_SELECTIONS}
+        disabled={selectedTopics.length < MIN_SELECTIONS || buttonDisabled}
       >
-        {buttonText}
+        {buttonDisabled ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

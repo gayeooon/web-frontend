@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getArticle } from "@/lib/api";
 import NewsDetailContent from "./NewsDetailContent";
+import axios from "@/lib/axios";
 import {
   Drawer,
   DrawerClose,
@@ -29,7 +29,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
     isError,
   } = useQuery({
     queryKey: ["article", articleId],
-    queryFn: () => getArticle(articleId),
+    queryFn: () => axios.get(`/articles/${articleId}`),
     enabled: Boolean(articleId),
     select: (data) => data.result,
   });
@@ -42,14 +42,14 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (isError) {
-    /**
-     * @TODO
-     * 에러 toast
-     * isOpen=false 설정
-     * articleId=null
-     */
+  const handleLinkClick = () => {
+    window.open(article.articleSource);
+    axios.post(`/articles/${articleId}/rate`, {
+      preference: 1,
+    });
+  };
 
+  if (isError) {
     return <></>;
   }
 
@@ -78,10 +78,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
                 </SheetDescription>
               </SheetHeader>
               <div className="absolute -bottom-3 flex flex-col mt-10 gap-2 w-full">
-                <Button
-                  onClick={() => window.open(article.articleSource)}
-                  disabled={isPending}
-                >
+                <Button onClick={handleLinkClick} disabled={isPending}>
                   기사 링크로 이동
                 </Button>
                 <SheetClose asChild>

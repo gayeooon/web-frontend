@@ -1,12 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/shadcn/button";
 import successmark from "@/assets/successmark.svg";
 import { useUser } from "@/contexts/UserProvider";
 import { useState } from "react";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const { updateUserProfile, updateUserCategories, updateUserPublishers } =
     useUser();
 
@@ -27,7 +26,7 @@ const SignUpComplete = ({ formData }) => {
       await updateUserCategories.mutateAsync(formData.categories);
       await updateUserPublishers.mutateAsync(formData.publishers);
 
-      navigate("/");
+      window.location.replace("/");
     } catch (error) {
       console.error("Update failed:", error);
     } finally {
@@ -55,8 +54,7 @@ const SignUpComplete = ({ formData }) => {
       >
         {isLoading ? (
           <>
-            <div className="animate-spin h-5 w-5 border-4 border-gray-300 border-t-white rounded-full mr-2" />
-            준비중...
+            <SpinnerIcon />
           </>
         ) : (
           "시작하기"

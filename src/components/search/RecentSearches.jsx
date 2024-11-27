@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import deleteIcon from "@/assets/delete.svg";
+import { useUser } from "@/contexts/UserProvider";
 
-const STORAGE_KEY = "search-history";
 const MAX_HISTORY = 5;
 
 export default function RecentSearches({ search, onClickRecents }) {
+  const { userProfile } = useUser();
+  const userKey = btoa(userProfile.email).slice(0, 10);
+  const STORAGE_KEY = `search-history-${userKey}`;
+
   const [history, setHistory] = useState(
     () => JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
   );

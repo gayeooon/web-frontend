@@ -8,8 +8,9 @@ import {
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import NewsDetail from "@/components/news/NewsDetail";
-import { getArticleSearch } from "@/lib/api";
+import axios from "@/lib/axios";
 import { formatDate } from "@/lib/utils";
+import { CarouselSkeleton } from "../ui/custom/Loading";
 
 export default function CategoryNewsCarousel({ category }) {
   const [selectedNews, setSelectedNews] = useState(null);
@@ -23,11 +24,7 @@ export default function CategoryNewsCarousel({ category }) {
     isError,
   } = useQuery({
     queryKey: ["recentArticles", category],
-    queryFn: () =>
-      getArticleSearch({
-        keyword: category,
-        size: 5,
-      }),
+    queryFn: () => axios.get(`/articles/search?keyword=${category}&size=5`),
     select: (data) => data.result,
   });
 
@@ -55,7 +52,7 @@ export default function CategoryNewsCarousel({ category }) {
           <span>카테고리 최신 뉴스</span>
         </div>
         <div className="relative aspect-[363/128] min-h-[128px]">
-          <div className="absolute inset-0 w-fullanimate-pulse bg-gray-200 rounded-lg "></div>
+          <CarouselSkeleton />
         </div>
       </div>
     );

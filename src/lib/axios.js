@@ -6,9 +6,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
-
   if (accessToken) {
     config.headers = {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     };
   }
@@ -35,6 +35,7 @@ instance.interceptors.response.use(
 
         // 토큰 재발급
         localStorage.removeItem("accessToken");
+
         const response = await axios.get(
           `${instance.defaults.baseURL}/member/reissue`,
           {
@@ -47,14 +48,12 @@ instance.interceptors.response.use(
         const newAccessToken = response.data.result;
         localStorage.setItem("accessToken", newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
         return instance(originalRequest);
       }
 
       throw error;
     } catch (refreshError) {
       // 토큰 재발급 과정에서 에러가 발생한 경우
-
       return Promise.reject(refreshError);
     }
   }

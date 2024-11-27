@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/shadcn/button";
 import { useUser } from "@/contexts/UserProvider";
+import { SpinnerIcon } from "@/components/ui/custom/Loading";
 
-const BasicInformation = ({ onNext, buttonText }) => {
+const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
   const { userProfile } = useUser();
 
   const [data, setData] = useState({
@@ -109,9 +110,9 @@ const BasicInformation = ({ onNext, buttonText }) => {
       <Button
         className="absolute bottom-0"
         onClick={() => onNext(data)}
-        disabled={!isFormComplete()}
+        disabled={!isFormComplete() || buttonDisabled}
       >
-        {buttonText}
+        {buttonDisabled ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

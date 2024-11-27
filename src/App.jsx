@@ -13,6 +13,7 @@ import Search from "@/pages/Search";
 import { KakaoLogin } from "@/components/login/KakaoLogin";
 import { GoogleLogin } from "@/components/login/GoogleLogin";
 import { NaverLogin } from "@/components/login/NaverLogin";
+import ToasterProvider from "./contexts/ToasterProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,27 +27,32 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <UserProvider>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/member/oauth">
-            <Route path="kakao" element={<KakaoLogin />} />
-            <Route path="google" element={<GoogleLogin />} />
-            <Route path="naver" element={<NaverLogin />} />
-          </Route>
-          <Route path="/user">
-            <Route index element={<User />} />
-            <Route path="info" element={<Setting variant="info" />} />
-            <Route path="category" element={<Setting variant="category" />} />
-            <Route path="publisher" element={<Setting variant="publisher" />} />
-            <Route path="delete" element={<Setting variant="delete" />} />
-          </Route>
-          <Route path="*" element={<h3>없는 페이지</h3>} />
-        </Routes>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ToasterProvider>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/member/oauth">
+              <Route path="kakao" element={<KakaoLogin />} />
+              <Route path="google" element={<GoogleLogin />} />
+              <Route path="naver" element={<NaverLogin />} />
+            </Route>
+            <Route path="/user">
+              <Route index element={<User />} />
+              <Route path="info" element={<Setting variant="info" />} />
+              <Route path="category" element={<Setting variant="category" />} />
+              <Route
+                path="publisher"
+                element={<Setting variant="publisher" />}
+              />
+              <Route path="delete" element={<Setting variant="delete" />} />
+            </Route>
+            <Route path="*" element={<h3>없는 페이지</h3>} />
+          </Routes>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ToasterProvider>
       </UserProvider>
     </AuthProvider>
   </QueryClientProvider>
