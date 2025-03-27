@@ -1,12 +1,12 @@
-import { useAuth } from "@/contexts/AuthProvider";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import google from "@/assets/google_logo.svg";
-import { Button } from "@/components/ui/shadcn/button";
-import { PageSpinner } from "@/components/ui/custom/Loading";
+import { useAuth } from '@/contexts/AuthProvider';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import google from '@/assets/google_logo.svg';
+import { Button } from '@/components/ui/shadcn/button';
+import { PageSpinner } from '@/components/ui/custom/Loading';
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
 const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email%20profile`;
 
 export const GoogleLoginButton = () => (
@@ -36,7 +36,7 @@ export const GoogleLogin = () => {
   const { login } = useAuth();
 
   useEffect(() => {
-    const code = searchParams.get("code");
+    const code = searchParams.get('code');
     if (!code) return;
     const GOOGLE_FETCH_URL = `/member/oauth/google?code=${code}&scope=email+profile&redirect_uri=${REDIRECT_URI}`;
 
