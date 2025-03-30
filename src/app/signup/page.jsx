@@ -1,22 +1,24 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { STEPS, STEP_TITLES } from "@/lib/constants";
-import BasicInformation from "@/components/user/BasicInformation";
-import CategorySelect from "@/components/user/CategorySelect";
-import DetailInformation from "@/components/user/DetailInformation";
-import PublisherSelect from "@/components/user/PublisherSelect";
-import SignUpComplete from "@/components/user/SignUpComplete";
-import Header from "@/components/ui/custom/Header";
-import PageLayout from "@/components/ui/custom/PageLayout";
+'use client';
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { STEPS, STEP_TITLES } from '@/lib/constants';
+import BasicInformation from '@/components/user/BasicInformation';
+import CategorySelect from '@/components/user/CategorySelect';
+import DetailInformation from '@/components/user/DetailInformation';
+import PublisherSelect from '@/components/user/PublisherSelect';
+import SignUpComplete from '@/components/user/SignUpComplete';
+import Header from '@/components/ui/custom/Header';
+import PageLayout from '@/components/ui/custom/PageLayout';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     memberInfo: {
-      name: "",
-      email: "",
-      phone: "",
-      gender: "",
-      birth: "",
+      name: '',
+      email: '',
+      phone: '',
+      gender: '',
+      birth: '',
     },
     categories: [],
     publishers: [],
@@ -55,7 +57,7 @@ const SignUp = () => {
       case STEPS.COMPLETE:
         return <SignUpComplete formData={formData} />;
       default:
-        navigate("/login");
+        navigate('/login');
         return;
     }
   };

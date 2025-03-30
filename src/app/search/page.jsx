@@ -1,15 +1,17 @@
-import NavigationBar from "@/components/ui/custom/NavigationBar";
-import NewsList from "@/components/news/NewsList";
-import CategoryNewsCarousel from "@/components/search/CategoryNewsCarousel";
-import RecentSearches from "@/components/search/RecentSearches";
-import SearchInput from "@/components/search/SearchInput";
-import { useState } from "react";
-import PageLayout from "@/components/ui/custom/PageLayout";
+'use client';
 
-const categoryList = ["경제", "사회", "연예"];
+import NavigationBar from '@/components/ui/custom/NavigationBar';
+import NewsList from '@/components/news/NewsList';
+import CategoryNewsCarousel from '@/components/search/CategoryNewsCarousel';
+import RecentSearches from '@/components/search/RecentSearches';
+import SearchInput from '@/components/search/SearchInput';
+import { useState } from 'react';
+import PageLayout from '@/components/ui/custom/PageLayout';
+
+const categoryList = ['경제', '사회', '연예'];
 
 const Search = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const onClickRecents = (recent) => {
     setSearch(recent);

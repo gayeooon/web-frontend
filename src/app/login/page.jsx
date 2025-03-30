@@ -1,17 +1,19 @@
+'use client';
+
 import {
   KakaoLoginButton,
   KakaoSignupButton,
-} from '@/components/login/KakaoLogin';
+} from '@/app/member/oauth/kakao/page';
 import {
   NaverLoginButton,
   NaverSignupButton,
-} from '@/components/login/NaverLogin';
+} from '@/app/member/oauth/naver/page';
 import {
   GoogleLoginButton,
   GoogleSignupButton,
-} from '@/components/login/GoogleLogin';
+} from '@/app/member/oauth/google/page';
 import PageLayout from '@/components/ui/custom/PageLayout';
-import favicon from '../../public/favicon.png';
+import favicon from '../../../public/favicon.png';
 import logo from '@/assets/NewsFit.svg';
 
 const Login = () => {
