@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@/contexts/AuthProvider';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -11,11 +13,8 @@ const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=
 
 export const GoogleLoginButton = () => (
   <div className="h-14 w-full">
-    <Button
-      variant="google"
-      onClick={() => (window.location.href = GOOGLE_AUTH_URL)}
-    >
-      <img className="h-2/6" src={google} alt="google_icon" />
+    <Button variant="google" onClick={() => (window.location.href = '/')}>
+      <img className="h-2/6" src={google.src} alt="google_icon" />
       <span>구글 계정으로 로그인</span>
     </Button>
   </div>
@@ -25,9 +24,9 @@ export const GoogleSignupButton = () => (
   <Button
     className="bg-white border-[1px] border-border"
     variant="google"
-    onClick={() => (window.location.href = GOOGLE_AUTH_URL)}
+    onClick={() => (window.location.href = '/signup')}
   >
-    <img className="h-[40%]" src={google} alt="google_icon" />
+    <img className="h-[40%]" src={google.src} alt="google_icon" />
   </Button>
 );
 

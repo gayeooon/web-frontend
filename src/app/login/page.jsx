@@ -1,5 +1,3 @@
-'use client';
-
 import {
   KakaoLoginButton,
   KakaoSignupButton,
@@ -26,7 +24,7 @@ const Login = () => {
           alt="favicon"
         />
         <div className="mt-7 w-60 h-20">
-          <img className="w-full h-full" src={logo} alt="NewsFit" />
+          <img className="w-full h-full" src={logo.src} alt="NewsFit" />
         </div>
       </div>
       <div className="absolute top-[50%] flex flex-col w-full gap-4">

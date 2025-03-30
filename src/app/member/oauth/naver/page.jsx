@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthProvider';
@@ -13,11 +15,8 @@ const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${NAV
 
 export const NaverLoginButton = () => (
   <div className="h-14 w-full">
-    <Button
-      variant="naver"
-      onClick={() => (window.location.href = NAVER_AUTH_URL)}
-    >
-      <img className="h-2/6" src={naver_white} alt="naver_icon" />
+    <Button variant="naver" onClick={() => (window.location.href = '/')}>
+      <img className="h-2/6" src={naver_white.src} alt="naver_icon" />
       <span>네이버 로그인</span>
     </Button>
   </div>
@@ -27,9 +26,9 @@ export const NaverSignupButton = () => (
   <Button
     className="bg-white border-[1px] border-border"
     variant="naver"
-    onClick={() => (window.location.href = NAVER_AUTH_URL)}
+    onClick={() => (window.location.href = '/signup')}
   >
-    <img className="h-[40%]" src={naver_green} alt="naver_icon" />
+    <img className="h-[40%]" src={naver_green.src} alt="naver_icon" />
   </Button>
 );
 
