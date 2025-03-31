@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/shadcn/button";
-import { useUser } from "@/contexts/UserProvider";
-import { SpinnerIcon } from "@/components/ui/custom/Loading";
+import { useState } from 'react';
+import { Button } from '@/components/ui/shadcn/button';
+import { useUser } from '@/contexts/UserProvider';
+import { SpinnerIcon } from '@/components/ui/custom/Loading';
 
 const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
   const { userProfile } = useUser();
@@ -10,29 +10,29 @@ const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
     name: userProfile.name,
     email: userProfile.email,
     phone: userProfile.phone,
-    birth: userProfile.birth.replace(/-/g, "/"),
+    birth: userProfile.birth,
     gender: userProfile.gender,
   });
 
   const [errors, setErrors] = useState({
-    email: "",
-    phone: "",
+    email: '',
+    phone: '',
   });
 
   const validateField = (name, value) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phonePattern = /^010-\d{4}-\d{4}$/;
 
-    let error = "";
+    let error = '';
 
     switch (name) {
-      case "email":
+      case 'email':
         if (!emailPattern.test(value))
-          error = "이메일 형식이 올바르지 않습니다.";
+          error = '이메일 형식이 올바르지 않습니다.';
         break;
-      case "phone":
+      case 'phone':
         if (!phonePattern.test(value))
-          error = "전화번호 형식이 올바르지 않습니다.";
+          error = '전화번호 형식이 올바르지 않습니다.';
         break;
       default:
         break;
@@ -46,7 +46,7 @@ const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "phone" ? formatPhone(value) : value;
+    const newValue = name === 'phone' ? formatPhone(value) : value;
 
     setData((prev) => ({
       ...prev,
@@ -57,14 +57,14 @@ const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
   };
 
   const formatPhone = (phone) => {
-    const numbers = phone.replace(/\D/g, "");
+    const numbers = phone.replace(/\D/g, '');
     const parts = [
       numbers.slice(0, 3),
       numbers.slice(3, 7),
       numbers.slice(7, 11),
     ].filter(Boolean);
 
-    return parts.join("-");
+    return parts.join('-');
   };
 
   const isFormComplete = () => {

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/shadcn/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/shadcn/radio-group";
-import { useUser } from "@/contexts/UserProvider";
+import { useState } from 'react';
+import { Button } from '@/components/ui/shadcn/button';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/shadcn/radio-group';
+import { useUser } from '@/contexts/UserProvider';
 
 const DetailInformation = ({ onNext, buttonText }) => {
   const { userProfile } = useUser();
@@ -17,7 +17,7 @@ const DetailInformation = ({ onNext, buttonText }) => {
     }));
   };
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
   return (
     <>
       <div className="border-2 border-border rounded-xl flex relative m-1 p-4">
@@ -26,7 +26,7 @@ const DetailInformation = ({ onNext, buttonText }) => {
           className="m-4"
           value={data.gender}
           onValueChange={(value) => {
-            handleChange("gender", value);
+            handleChange('gender', value);
           }}
         >
           <div className="flex items-center space-x-4 mb-4">
@@ -45,7 +45,7 @@ const DetailInformation = ({ onNext, buttonText }) => {
           type="date"
           name="birth"
           value={data.birth}
-          onChange={(e) => handleChange("birth", e.target.value)}
+          onChange={(e) => handleChange('birth', e.target.value)}
           min="1900-01-01"
           max={today}
         />
@@ -56,7 +56,7 @@ const DetailInformation = ({ onNext, buttonText }) => {
         onClick={() =>
           onNext({
             ...data,
-            birth: data.birth.replace(/-/g, "/"),
+            birth: data.birth,
           })
         }
         disabled={!(data.gender && data.birth)}

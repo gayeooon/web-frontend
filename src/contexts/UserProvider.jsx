@@ -31,7 +31,7 @@ export function UserProvider({ children }) {
       name: result?.name ?? '',
       email: result?.email ?? '',
       phone: result?.phone ?? '',
-      birth: result?.birth?.split('T')[0] ?? '',
+      birth: result?.birth ?? '',
       gender: result?.gender ?? '',
     }),
     enabled: isEnabled,
