@@ -1,5 +1,3 @@
-'use client';
-
 import { useAuth } from '@/contexts/AuthProvider';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
