@@ -25,7 +25,7 @@ instance.interceptors.response.use(
 
       // refreshToken이 없는 경우
       if (!refreshToken) {
-        window.location.replace('/login');
+        // window.location.replace('/login');
         return Promise.reject(error);
       }
 

@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { STEPS, STEP_TITLES } from '@/lib/constants';
@@ -10,7 +8,6 @@ import PublisherSelect from '@/components/user/PublisherSelect';
 import SignUpComplete from '@/components/user/SignUpComplete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
-import { UserProvider } from '@/contexts/UserProvider';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -65,21 +62,19 @@ const SignUp = () => {
 
   return (
     <PageLayout page="signup">
-      <UserProvider>
-        <Header handleBack={() => setStep(step - 1)} step={step} />
-        <div className="flex justify-center pt-6 h-5/6">
-          {step !== STEPS.COMPLETE ? (
-            <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-              <h2 className="text-3xl font-extrabold mb-3 break-keep whitespace-pre-line leading-normal">
-                {STEP_TITLES[step]}
-              </h2>
-              {renderStepContent()}
-            </div>
-          ) : (
-            <>{renderStepContent()}</>
-          )}
-        </div>
-      </UserProvider>
+      <Header handleBack={() => setStep(step - 1)} step={step} />
+      <div className="flex justify-center pt-6 h-5/6">
+        {step !== STEPS.COMPLETE ? (
+          <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
+            <h2 className="text-3xl font-extrabold mb-3 break-keep whitespace-pre-line leading-normal">
+              {STEP_TITLES[step]}
+            </h2>
+            {renderStepContent()}
+          </div>
+        ) : (
+          <>{renderStepContent()}</>
+        )}
+      </div>
     </PageLayout>
   );
 };
