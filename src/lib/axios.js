@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: "https://www.newsfit.shop",
+  baseURL: process.env.NEXT_PUBLIC_BASE_PATH,
 });
 
 instance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
   if (accessToken) {
     config.headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     };
   }
@@ -21,11 +21,11 @@ instance.interceptors.response.use(
   async (error) => {
     try {
       const originalRequest = error.config;
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = localStorage.getItem('refreshToken');
 
       // refreshToken이 없는 경우
       if (!refreshToken) {
-        window.location.replace("/login");
+        // window.location.replace('/login');
         return Promise.reject(error);
       }
 
@@ -34,7 +34,7 @@ instance.interceptors.response.use(
         originalRequest._retry = true;
 
         // 토큰 재발급
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem('accessToken');
 
         const response = await axios.get(
           `${instance.defaults.baseURL}/member/reissue`,
@@ -46,7 +46,7 @@ instance.interceptors.response.use(
         );
 
         const newAccessToken = response.data.result;
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem('accessToken', newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return instance(originalRequest);
       }

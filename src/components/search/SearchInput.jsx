@@ -1,13 +1,13 @@
-import searchIcon from "@/assets/search_input.svg";
-import { useState } from "react";
+import searchIcon from '@/assets/search_input.svg';
+import { useState } from 'react';
 
 export default function SearchInput({ setSearch }) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const handleSearch = () => {
     if (!inputValue.trim()) return;
     setSearch(inputValue.trim());
-    setInputValue("");
+    setInputValue('');
   };
 
   const handleSubmit = (e) => {
@@ -26,7 +26,7 @@ export default function SearchInput({ setSearch }) {
             onChange={(e) => setInputValue(e.target.value)}
           />
           <div className="hover:cursor-pointer" onClick={handleSearch}>
-            <img src={searchIcon} alt="검색" />
+            <img src={searchIcon.src} alt="검색" />
           </div>
         </div>
       </form>

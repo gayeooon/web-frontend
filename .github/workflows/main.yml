@@ -26,14 +26,14 @@ jobs:
 
       - name: Build
         env:
-          CI: ""
-          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
-          VITE_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
-          VITE_NAVER_CLIENT_ID: ${{ secrets.VITE_NAVER_CLIENT_ID }}
-          VITE_KAKAO_TOKEN: ${{ secrets.VITE_KAKAO_TOKEN }}
-          VITE_GOOGLE_REDIRECT_URI: "https://newsfit.site/member/oauth/google"
-          VITE_KAKAO_REDIRECT_URI: "https://newsfit.site/member/oauth/kakao"
-          VITE_NAVER_REDIRECT_URI: "https://newsfit.site/member/oauth/naver"
+          CI: ''
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+          NEXT_PUBLIC_KAKAO_CLIENT_ID: ${{ secrets.VITE_KAKAO_CLIENT_ID }}
+          NEXT_PUBLIC_NAVER_CLIENT_ID: ${{ secrets.VITE_NAVER_CLIENT_ID }}
+          NEXT_PUBLIC_KAKAO_TOKEN: ${{ secrets.VITE_KAKAO_TOKEN }}
+          NEXT_PUBLIC_GOOGLE_REDIRECT_URI: 'https://newsfit.site/member/oauth/google'
+          NEXT_PUBLIC_KAKAO_REDIRECT_URI: 'https://newsfit.site/member/oauth/kakao'
+          NEXT_PUBLIC_NAVER_REDIRECT_URI: 'https://newsfit.site/member/oauth/naver'
         run: npm run build
 
       - name: Configure AWS credentials
