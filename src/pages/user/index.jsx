@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import LogoutDrawer from "@/components/user/LogoutDrawer";
-import NavigationBar from "@/components/ui/custom/NavigationBar";
-import PageLayout from "@/components/ui/custom/PageLayout";
+import Link from 'next/link';
+import LogoutDrawer from '@/components/user/LogoutDrawer';
+import NavigationBar from '@/components/ui/custom/NavigationBar';
+import PageLayout from '@/components/ui/custom/PageLayout';
 
 const User = () => {
   return (
@@ -11,7 +11,7 @@ const User = () => {
       </div>
       <div className="border-b w-full ">
         <Link
-          to="/user/info"
+          href="/user/info"
           className="flex py-5 w-full font-bold hover:underline"
         >
           회원정보 수정
@@ -19,7 +19,7 @@ const User = () => {
       </div>
       <div className="border-b w-full ">
         <Link
-          to="/user/category"
+          href="/user/category"
           className="flex py-5 w-full font-bold hover:underline"
         >
           선호 주제 변경
@@ -27,7 +27,7 @@ const User = () => {
       </div>
       <div className="border-b w-full ">
         <Link
-          to="/user/publisher"
+          href="/user/publisher"
           className="flex py-5 w-full font-bold hover:underline"
         >
           뉴스 구독 관리
@@ -38,7 +38,7 @@ const User = () => {
       </div>
       <div className="border-b w-full ">
         <Link
-          to="/user/delete"
+          href="/user/delete"
           className="flex py-5 w-full font-bold hover:underline"
         >
           회원 탈퇴

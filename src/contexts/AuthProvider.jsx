@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import axios from '@/lib/axios';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const login = useMutation({
     mutationFn: (fetchURL) => axios.get(fetchURL),
@@ -19,14 +19,14 @@ export function AuthProvider({ children }) {
     },
     onError: (error) => {
       console.log('Login error:', error);
-      navigate('/login', { replace: true });
+      router.push('/login', { replace: true });
     },
   });
 
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    navigate('/login', { replace: true });
+    router.push('/login', { replace: true });
   };
 
   const deleteUser = useMutation({
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
     onSuccess: () => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/login', { replace: true });
+      router.push('/login', { replace: true });
     },
   });
 

@@ -16,14 +16,14 @@ const queryClient = new QueryClient({
 
 const App = ({ Component, pageProps }) => (
   <QueryClientProvider client={queryClient}>
-    {/* <AuthProvider>*/}
-    <UserProvider>
-      <ToasterProvider>
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </ToasterProvider>
-    </UserProvider>
-    {/* </AuthProvider> */}
+    <AuthProvider>
+      <UserProvider>
+        <ToasterProvider>
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ToasterProvider>
+      </UserProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import deleteIcon from "@/assets/delete.svg";
-import { useUser } from "@/contexts/UserProvider";
+import { useEffect, useState } from 'react';
+import deleteIcon from '@/assets/delete.svg';
+import { useUser } from '@/contexts/UserProvider';
 
 const MAX_HISTORY = 5;
 
@@ -72,7 +72,11 @@ export default function RecentSearches({ search, onClickRecents }) {
                 className="my-2 mr-4 w-2 hover:cursor-pointer"
                 onClick={() => onClickDelete(it)}
               >
-                <img className="w-full h-full" src={deleteIcon} alt="삭제" />
+                <img
+                  className="w-full h-full"
+                  src={deleteIcon.src}
+                  alt="삭제"
+                />
               </div>
             </div>
           ))

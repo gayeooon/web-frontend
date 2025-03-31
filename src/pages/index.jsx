@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import Header from '@/components/main/Header';
 import CategoryList from '@/components/main/CategoryList';
@@ -9,12 +7,12 @@ import NavigationBar from '@/components/ui/custom/NavigationBar';
 import PageLayout from '@/components/ui/custom/PageLayout';
 import { useUser } from '@/contexts/UserProvider';
 import { MIN_SELECTIONS, MIN_SUBSCRIPTIONS } from '@/lib/constants';
-import { useNavigate } from 'react-router-dom';
+
 import { useToaster } from '@/contexts/ToasterProvider';
 
 const Main = () => {
   const [category, setCategory] = useState('allCategory');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { categories, publishers } = useUser();
   const toast = useToaster();
 
@@ -24,11 +22,11 @@ const Main = () => {
         categories.length < MIN_SELECTIONS ||
         publishers.length < MIN_SUBSCRIPTIONS
       ) {
-        navigate('/signup');
+        // navigate('/signup');
         toast('error', '회원가입을 완료해주세요.');
       }
     }
-  }, [categories, publishers, navigate]);
+  }, [categories, publishers]);
 
   return (
     <PageLayout page="main">

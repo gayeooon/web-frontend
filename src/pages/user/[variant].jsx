@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { useUser } from '@/contexts/UserProvider';
 import { useToaster } from '@/contexts/ToasterProvider';
 import BasicInformation from '@/components/user/BasicInformation';
@@ -8,8 +8,8 @@ import AccountDelete from '@/components/user/AccountDelete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
 
-const Setting = ({ variant }) => {
-  const navigate = useNavigate();
+const Setting = () => {
+  const router = useRouter();
   const toast = useToaster();
   const { updateUserProfile, updateUserCategories, updateUserPublishers } =
     useUser();
@@ -22,20 +22,22 @@ const Setting = ({ variant }) => {
   };
 
   const handleNext = (data) => {
-    variantConfig[variant].fetchFunction.mutate(data, {
-      onSuccess: () => {
-        toast('info', '저장되었습니다.');
-        navigate('/user');
-      },
-      onError: (error) => {
-        console.error('Error:', error);
-        toast('error', '저장 중 오류가 발생했습니다.');
-      },
-    });
+    // variantConfig[router.query.variant].fetchFunction.mutate(data, {
+    //   onSuccess: () => {
+    //     toast('info', '저장되었습니다.');
+    //     router.push('/user');
+    //   },
+    //   onError: (error) => {
+    //     console.error('Error:', error);
+    //     toast('error', '저장 중 오류가 발생했습니다.');
+    //   },
+    // });
+    toast('info', '저장되었습니다.');
+    router.push('/user');
   };
 
   const renderComponent = () => {
-    switch (variant) {
+    switch (router.query.variant) {
       case 'info':
         return (
           <BasicInformation
@@ -70,8 +72,8 @@ const Setting = ({ variant }) => {
   return (
     <PageLayout page="setting">
       <Header
-        title={variantConfig[variant].title}
-        handleBack={() => navigate('/user')}
+        title={variantConfig[router.query.variant].title}
+        handleBack={() => router.push('/user')}
       />
       <div className="flex justify-center pt-6 h-5/6">
         <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
