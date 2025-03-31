@@ -26,18 +26,9 @@ export function UserProvider({ children }) {
 
   const { data: userProfile = {}, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['userProfile'],
-    // queryFn: () => axios.get('/member/info'),
-    queryFn: () => ({
-      result: {
-        nickname: '',
-        email: '',
-        phone: '',
-        birth: '',
-        gender: '',
-      },
-    }),
+    queryFn: () => axios.get('/member/info'),
     select: ({ result }) => ({
-      name: result?.nickname ?? '',
+      name: result?.name ?? '',
       email: result?.email ?? '',
       phone: result?.phone ?? '',
       birth: result?.birth?.split('T')[0] ?? '',
@@ -49,14 +40,14 @@ export function UserProvider({ children }) {
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
     queryKey: ['categories'],
     queryFn: () => axios.get('/member/categories'),
-    select: (data) => data.result.preferredCategories,
+    select: (data) => data.result,
     enabled: isEnabled,
   });
 
   const { data: publishers = [], isLoading: isLoadingPublishers } = useQuery({
     queryKey: ['publishers'],
     queryFn: () => axios.get('/member/press'),
-    select: (data) => data.result.preferredPress,
+    select: (data) => data.result,
     enabled: isEnabled,
   });
 
@@ -68,20 +59,14 @@ export function UserProvider({ children }) {
   });
 
   const updateUserCategories = useMutation({
-    mutationFn: (data) =>
-      axios.put('/member/categories', {
-        preferredCategories: data,
-      }),
+    mutationFn: (data) => axios.put('/member/categories', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
   });
 
   const updateUserPublishers = useMutation({
-    mutationFn: (data) =>
-      axios.put('/member/press', {
-        preferredPress: data,
-      }),
+    mutationFn: (data) => axios.put('/member/press', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['publishers'] });
     },
