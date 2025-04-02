@@ -4,7 +4,7 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     const { page, pageSize } = req.query;
 
-    const paredSize = pageSize ? parseInt(pageSize) : 5;
+    const paredSize = pageSize ? parseInt(pageSize) : 10;
     const parsedPage = page ? page : 0;
 
     const articles = Array.from({ length: paredSize }).map((_, index) => ({

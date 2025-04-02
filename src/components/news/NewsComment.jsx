@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToaster } from "@/contexts/ToasterProvider";
-import { formatDate } from "@/lib/utils";
-import axios from "@/lib/axios";
-import send from "@/assets/send.svg";
-import deleteIcon from "@/assets/delete.svg";
-import { SpinnerIcon } from "@/components/ui/custom/Loading";
+import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToaster } from '@/contexts/ToasterProvider';
+import { formatDate } from '@/lib/utils';
+import axios from '@/lib/axios';
+import send from '@/assets/send.svg';
+import deleteIcon from '@/assets/delete.svg';
+import { SpinnerIcon } from '@/components/ui/custom/Loading';
 
 export default function NewsComment({ commentList, articleId }) {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const queryClient = useQueryClient();
   const toast = useToaster();
 
@@ -18,12 +18,12 @@ export default function NewsComment({ commentList, articleId }) {
         comment: data,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["article", articleId] });
-      toast("info", "댓글이 등록되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
+      toast('info', '댓글이 등록되었습니다.');
     },
     onError: (error) => {
-      console.error("Error:", error);
-      toast("error", "네트워크 오류가 발생했습니다.");
+      console.error('Error:', error);
+      toast('error', '네트워크 오류가 발생했습니다.');
     },
   });
 
@@ -31,19 +31,19 @@ export default function NewsComment({ commentList, articleId }) {
     mutationFn: (commentId) =>
       axios.delete(`/articles/${articleId}/comments/${commentId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["article", articleId] });
-      toast("info", "댓글을 삭제했습니다.");
+      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
+      toast('info', '댓글을 삭제했습니다.');
     },
     onError: (error) => {
-      console.error("Error:", error);
-      toast("error", "네트워크 오류가 발생했습니다.");
+      console.error('Error:', error);
+      toast('error', '네트워크 오류가 발생했습니다.');
     },
   });
 
   const handleSendClick = () => {
     if (!comment.trim()) return;
     addCommentMutation.mutate(comment);
-    setComment("");
+    setComment('');
   };
 
   const handleSubmit = (e) => {
@@ -77,7 +77,7 @@ export default function NewsComment({ commentList, articleId }) {
           {addCommentMutation.isPending ? (
             <SpinnerIcon />
           ) : (
-            <img className="w-6" src={send} alt="send" />
+            <img className="w-6" src={send.src} alt="send" />
           )}
         </button>
       </form>
@@ -103,7 +103,11 @@ export default function NewsComment({ commentList, articleId }) {
                     deleteCommentMutation.mutate(comment.commentId)
                   }
                 >
-                  <img className="w-2.5 h-full" src={deleteIcon} alt="삭제" />
+                  <img
+                    className="w-2.5 h-full"
+                    src={deleteIcon.src}
+                    alt="삭제"
+                  />
                 </button>
               )}
             </div>
