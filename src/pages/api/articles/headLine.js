@@ -1,16 +1,14 @@
 import { faker } from '@faker-js/faker';
 
+const HEADLINE_SIZE = 5;
+
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    const { page, pageSize } = req.query;
-
-    const paredSize = pageSize ? parseInt(pageSize) : 5;
-    const parsedPage = page ? page : 0;
-
-    const articles = Array.from({ length: paredSize }).map((_, index) => ({
-      articleId: parseInt(parsedPage + index),
-      title: `기사 ${parseInt(parsedPage + index)}`,
+    const articles = Array.from({ length: HEADLINE_SIZE }).map((_, index) => ({
+      articleId: `H${index}`,
+      title: `기사 H${index}`,
       press: 'JOONGANG',
+      headLine: faker.lorem.sentence(),
       thumbnail: faker.image.url(),
       publishDate: faker.date.recent({ days: 7 }),
     }));
@@ -18,7 +16,6 @@ export default function handler(req, res) {
     return res.status(200).json({
       message: '요청에 성공했습니다.',
       result: articles,
-      hasMore: parsedPage < 10,
     });
   }
 

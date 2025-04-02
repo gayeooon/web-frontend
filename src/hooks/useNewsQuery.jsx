@@ -14,20 +14,13 @@ function useNewsQuery(category, search) {
       hasNextPage,
     } = useInfiniteQuery({
       queryKey: ['searchArticles', search],
-      queryFn: ({ pageParam }) => {
-        if (pageParam === -1)
-          return axios.get(
-            `/articles/search?keyword=${search}&size=${PAGE_SIZE}`
-          );
-        return axios.get(
-          `/articles/search?keyword=${search}&size=${PAGE_SIZE}&articleCursor=${pageParam}`
-        );
-      },
-      initialPageParam: -1,
-      getNextPageParam: (lastPage) =>
-        lastPage?.result.length < PAGE_SIZE
-          ? null
-          : lastPage.result[PAGE_SIZE - 1].articleId,
+      queryFn: ({ pageParam }) =>
+        axios.get(
+          `/articles/search?keyword=${search}&page=${pageParam}&pageSize=${PAGE_SIZE}`
+        ),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages, lastPageParam) =>
+        lastPage.hasMore ? lastPageParam + 1 : null,
     });
 
     return {
@@ -51,11 +44,8 @@ function useNewsQuery(category, search) {
     queryFn: ({ pageParam }) =>
       axios.get(`/articles?page=${pageParam}&pageSize=${PAGE_SIZE}`),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-      console.log({ lastPage, allPages, lastPageParam, allPageParams });
-
-      return lastPage.hasMore ? lastPageParam + 1 : null;
-    },
+    getNextPageParam: (lastPage, allPages, lastPageParam) =>
+      lastPage.hasMore ? lastPageParam + 1 : null,
   });
 
   return {
