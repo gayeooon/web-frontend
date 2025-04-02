@@ -22,18 +22,16 @@ const Setting = () => {
   };
 
   const handleNext = (data) => {
-    // variantConfig[router.query.variant].fetchFunction.mutate(data, {
-    //   onSuccess: () => {
-    //     toast('info', '저장되었습니다.');
-    //     router.push('/user');
-    //   },
-    //   onError: (error) => {
-    //     console.error('Error:', error);
-    //     toast('error', '저장 중 오류가 발생했습니다.');
-    //   },
-    // });
-    toast('info', '저장되었습니다.');
-    router.push('/user');
+    variantConfig[router.query.variant].fetchFunction.mutate(data, {
+      onSuccess: () => {
+        toast('info', '저장되었습니다.');
+        router.push('/user');
+      },
+      onError: (error) => {
+        console.error('Error:', error);
+        toast('error', '저장 중 오류가 발생했습니다.');
+      },
+    });
   };
 
   const renderComponent = () => {

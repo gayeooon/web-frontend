@@ -20,20 +20,18 @@ const SignUpComplete = ({ formData }) => {
   }
 
   const onClickStart = async () => {
-    // setIsLoading(true);
-    // try {
-    //   await updateUserProfile.mutateAsync(formData.memberInfo);
-    //   await updateUserCategories.mutateAsync(formData.categories);
-    //   await updateUserPublishers.mutateAsync(formData.publishers);
+    setIsLoading(true);
+    try {
+      await updateUserProfile.mutateAsync(formData.memberInfo);
+      await updateUserCategories.mutateAsync(formData.categories);
+      await updateUserPublishers.mutateAsync(formData.publishers);
 
-    //   window.location.replace('/');
-    // } catch (error) {
-    //   console.error('Update failed:', error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
-
-    window.location.replace('/');
+      window.location.replace('/');
+    } catch (error) {
+      console.error('Update failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
