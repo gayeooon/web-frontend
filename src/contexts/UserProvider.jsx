@@ -1,35 +1,12 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { createContext, useContext } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import axios from '@/lib/axios';
-import { PageSpinner } from '@/components/ui/custom/Loading';
 
 const UserContext = createContext(null);
-const EXCLUDED_PATHS = [
-  '/login',
-  '/member/oauth/kakao',
-  '/member/oauth/google',
-  '/member/oauth/naver',
-];
 
 export function UserProvider({ children }) {
   const queryClient = useQueryClient();
-  const router = useRouter();
-  const pathname = router.pathname;
-  const [isEnabled, setIsEnabled] = useState(
-    !EXCLUDED_PATHS.includes(pathname)
-  );
-
-  useEffect(() => {
-    setIsEnabled(!EXCLUDED_PATHS.includes(pathname));
-  }, [pathname]);
-
-  const { data: publishers = [], isLoading: isLoadingPublishers } = useQuery({
-    queryKey: ['publishers'],
-    queryFn: () => axios.get('/member/press'),
-    select: (data) => data.result,
-    enabled: isEnabled,
-  });
 
   const updateUserProfile = useMutation({
     mutationFn: (data) => axios.put('/member/info', data),
@@ -52,14 +29,9 @@ export function UserProvider({ children }) {
     },
   });
 
-  if (isLoadingPublishers) {
-    return <PageSpinner />;
-  }
-
   return (
     <UserContext.Provider
       value={{
-        publishers,
         updateUserProfile,
         updateUserCategories,
         updateUserPublishers,

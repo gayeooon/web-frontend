@@ -1,28 +1,31 @@
-import { useState } from "react";
-import { useUser } from "@/contexts/UserProvider";
-import { PUBLISHERS, MIN_SUBSCRIPTIONS } from "@/lib/constants";
-import { ScrollArea, ScrollBar } from "@/components/ui/shadcn/scroll-area";
-import { Button } from "@/components/ui/shadcn/button";
-import { SpinnerIcon } from "@/components/ui/custom/Loading";
+import { useEffect, useState } from 'react';
+import { PUBLISHERS, MIN_SUBSCRIPTIONS } from '@/lib/constants';
+import { ScrollArea, ScrollBar } from '@/components/ui/shadcn/scroll-area';
+import { Button } from '@/components/ui/shadcn/button';
+import { SpinnerIcon } from '@/components/ui/custom/Loading';
+import useGetUserPublishers from '@/hooks/queries/useGetUserPublishers';
 
 const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
-  const { publishers } = useUser();
+  const [selectedPublishers, setselectedPublishers] = useState([]);
+  const { data: userPublishers } = useGetUserPublishers();
 
-  const [subscribedPublisher, setSubscribedPublisher] = useState(publishers);
+  useEffect(() => {
+    if (userPublishers) setselectedPublishers(userPublishers);
+  }, [userPublishers]);
 
   const toggleSubscribe = (publisher) => {
-    setSubscribedPublisher((prev) =>
+    setselectedPublishers((prev) =>
       prev.includes(publisher)
         ? prev.filter((id) => id !== publisher)
         : [...prev, publisher]
     );
   };
 
-  const isSelected = (publisher) => subscribedPublisher.includes(publisher);
+  const isSelected = (publisher) => selectedPublishers.includes(publisher);
 
   return (
     <>
-      {subscribedPublisher.length < MIN_SUBSCRIPTIONS && (
+      {selectedPublishers.length < MIN_SUBSCRIPTIONS && (
         <h3 className="mb-2 text-xl font-bold underline underline-offset-8 decoration-1">
           {`최소 ${MIN_SUBSCRIPTIONS}개 언론사를 구독하세요.`}
         </h3>
@@ -40,11 +43,11 @@ const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
                 </div>
                 <button
                   className={`subs_button ${
-                    isSelected(it) ? "bg-my-purple text-white" : ""
+                    isSelected(it) ? 'bg-my-purple text-white' : ''
                   }`}
                   onClick={() => toggleSubscribe(it)}
                 >
-                  {isSelected(it) ? "구독중" : "+ 구독"}
+                  {isSelected(it) ? '구독중' : '+ 구독'}
                 </button>
               </div>
             ))}
@@ -55,9 +58,9 @@ const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
 
       <Button
         className="absolute bottom-0"
-        onClick={() => onNext(subscribedPublisher)}
+        onClick={() => onNext(selectedPublishers)}
         disabled={
-          subscribedPublisher.length < MIN_SUBSCRIPTIONS || buttonDisabled
+          selectedPublishers.length < MIN_SUBSCRIPTIONS || buttonDisabled
         }
       >
         {buttonDisabled ? <SpinnerIcon /> : buttonText}
