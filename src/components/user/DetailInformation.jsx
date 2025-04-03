@@ -9,7 +9,10 @@ const DetailInformation = ({ onNext, buttonText }) => {
 
   useEffect(() => {
     if (userInfo) {
-      setData(userInfo);
+      setData({
+        gender: userInfo.gender,
+        birth: userInfo.birth,
+      });
     }
   }, [userInfo]);
 
