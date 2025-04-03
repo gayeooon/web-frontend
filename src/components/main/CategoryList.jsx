@@ -1,4 +1,4 @@
-import { TOPICS } from '@/lib/constants';
+import { CATEGORIES } from '@/lib/constants';
 import useGetUserCategories from '@/hooks/queries/useGetUserCategories';
 
 export default function CategoryList({
@@ -36,7 +36,7 @@ export default function CategoryList({
           onClick={() => handleCategorySelect(category)}
           className={buttonClass(category)}
         >
-          {TOPICS.find((topic) => topic.id === category).name}
+          {CATEGORIES.find((topic) => topic.id === category).name}
         </button>
       ))}
     </div>
