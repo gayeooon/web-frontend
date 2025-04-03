@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useUser } from '@/contexts/UserProvider';
 import { useToaster } from '@/contexts/ToasterProvider';
 import BasicInformation from '@/components/user/BasicInformation';
 import CategorySelect from '@/components/user/CategorySelect';
@@ -8,21 +7,23 @@ import AccountDelete from '@/components/user/AccountDelete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
 import usePutUserInfo from '@/hooks/queries/usePutUserInfo';
-import usePutUserCategories from '../../hooks/queries/usePutUserCategories';
+import usePutUserCategories from '@/hooks/queries/usePutUserCategories';
+import usePutUserPublishers from '@/hooks/queries/usePutUserPublishers';
 
 const Setting = () => {
   const router = useRouter();
   const toast = useToaster();
-  const { updateUserPublishers } = useUser();
 
   const { mutate: putUserInfo, isPending: isPendingInfo } = usePutUserInfo();
   const { mutate: putUserCategories, isPending: isPendingCategories } =
     usePutUserCategories();
+  const { mutate: putUserPublishers, isPending: isPendingPublishers } =
+    usePutUserPublishers();
 
   const variantConfig = {
     info: { title: '회원정보 수정', fetchFunction: putUserInfo },
     category: { title: '선호 주제 변경', fetchFunction: putUserCategories },
-    publisher: { title: '뉴스 구독 관리', fetchFunction: updateUserPublishers },
+    publisher: { title: '뉴스 구독 관리', fetchFunction: putUserPublishers },
     delete: { title: '회원 탈퇴' },
   };
 
@@ -62,7 +63,7 @@ const Setting = () => {
           <PublisherSelect
             onNext={handleNext}
             buttonText="저장"
-            buttonDisabled={updateUserPublishers.isPending}
+            buttonDisabled={isPendingPublishers}
           />
         );
       case 'delete':
