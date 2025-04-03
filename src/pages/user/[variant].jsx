@@ -8,17 +8,20 @@ import AccountDelete from '@/components/user/AccountDelete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
 import usePutUserInfo from '@/hooks/queries/usePutUserInfo';
+import usePutUserCategories from '../../hooks/queries/usePutUserCategories';
 
 const Setting = () => {
   const router = useRouter();
   const toast = useToaster();
-  const { updateUserCategories, updateUserPublishers } = useUser();
+  const { updateUserPublishers } = useUser();
 
   const { mutate: putUserInfo, isPending: isPendingInfo } = usePutUserInfo();
+  const { mutate: putUserCategories, isPending: isPendingCategories } =
+    usePutUserCategories();
 
   const variantConfig = {
     info: { title: '회원정보 수정', fetchFunction: putUserInfo },
-    category: { title: '선호 주제 변경', fetchFunction: updateUserCategories },
+    category: { title: '선호 주제 변경', fetchFunction: putUserCategories },
     publisher: { title: '뉴스 구독 관리', fetchFunction: updateUserPublishers },
     delete: { title: '회원 탈퇴' },
   };
@@ -51,7 +54,7 @@ const Setting = () => {
           <CategorySelect
             onNext={handleNext}
             buttonText="저장"
-            buttonDisabled={updateUserCategories.isPending}
+            buttonDisabled={isPendingCategories}
           />
         );
       case 'publisher':
