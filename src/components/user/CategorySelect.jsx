@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { useUser } from "@/contexts/UserProvider";
-import { Button } from "@/components/ui/shadcn/button";
-import { TOPICS, MIN_SELECTIONS } from "@/lib/constants";
-import { SpinnerIcon } from "@/components/ui/custom/Loading";
+import { useEffect, useState } from 'react';
+import useGetUserCategories from '@/hooks/queries/useGetUserCategories';
+import { Button } from '@/components/ui/shadcn/button';
+import { TOPICS, MIN_SELECTIONS } from '@/lib/constants';
+import { SpinnerIcon } from '@/components/ui/custom/Loading';
 
 const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
-  const { categories } = useUser();
-  const [selectedTopics, setSelectedTopics] = useState(categories);
+  const [selectedTopics, setSelectedTopics] = useState([]);
+  const { data: userCategories } = useGetUserCategories();
+
+  useEffect(() => {
+    if (userCategories) setSelectedTopics(userCategories);
+  }, [userCategories]);
 
   const toggleTopic = (topicId) => {
     setSelectedTopics((prev) =>
@@ -32,8 +36,8 @@ const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
               key={topic.id}
               className={`cursor-pointer rounded-2xl p-4 border-2 w-[31%] flex-shrink-0 mb-[3%] ${
                 isSelected(topic.id)
-                  ? "bg-background border-my-purple"
-                  : "bg-none border-border"
+                  ? 'bg-background border-my-purple'
+                  : 'bg-none border-border'
               }`}
               onClick={() => toggleTopic(topic.id)}
             >

@@ -24,26 +24,6 @@ export function UserProvider({ children }) {
     setIsEnabled(!EXCLUDED_PATHS.includes(pathname));
   }, [pathname]);
 
-  const { data: userProfile = {}, isLoading: isLoadingProfile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: () => axios.get('/member/info'),
-    select: ({ result }) => ({
-      name: result?.name ?? '',
-      email: result?.email ?? '',
-      phone: result?.phone ?? '',
-      birth: result?.birth ?? '',
-      gender: result?.gender ?? '',
-    }),
-    enabled: isEnabled,
-  });
-
-  const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => axios.get('/member/categories'),
-    select: (data) => data.result,
-    enabled: isEnabled,
-  });
-
   const { data: publishers = [], isLoading: isLoadingPublishers } = useQuery({
     queryKey: ['publishers'],
     queryFn: () => axios.get('/member/press'),
@@ -72,15 +52,13 @@ export function UserProvider({ children }) {
     },
   });
 
-  if (isLoadingProfile || isLoadingCategories || isLoadingPublishers) {
+  if (isLoadingPublishers) {
     return <PageSpinner />;
   }
 
   return (
     <UserContext.Provider
       value={{
-        userProfile,
-        categories,
         publishers,
         updateUserProfile,
         updateUserCategories,
