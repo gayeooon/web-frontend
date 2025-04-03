@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/shadcn/radio-group';
-import { useUser } from '@/contexts/UserProvider';
+import useGetUserInfo from '@/hooks/queries/useGetUserInfo';
 
 const DetailInformation = ({ onNext, buttonText }) => {
-  const { userProfile } = useUser();
-  const [data, setData] = useState({
-    birth: userProfile.birth,
-    gender: userProfile.gender,
-  });
+  const [data, setData] = useState({});
+  const { data: userInfo } = useGetUserInfo();
+
+  useEffect(() => {
+    if (userInfo) {
+      setData(userInfo);
+    }
+  }, [userInfo]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({

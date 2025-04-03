@@ -1,23 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
-import { useUser } from '@/contexts/UserProvider';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
+import useGetUserInfo from '@/hooks/queries/useGetUserInfo';
 
 const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
-  const { userProfile } = useUser();
-
-  const [data, setData] = useState({
-    name: userProfile.name,
-    email: userProfile.email,
-    phone: userProfile.phone,
-    birth: userProfile.birth,
-    gender: userProfile.gender,
-  });
-
+  const [data, setData] = useState({});
   const [errors, setErrors] = useState({
     email: '',
     phone: '',
   });
+  const { data: userInfo } = useGetUserInfo();
+
+  useEffect(() => {
+    if (userInfo) {
+      setData(userInfo);
+    }
+  }, [userInfo]);
 
   const validateField = (name, value) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
