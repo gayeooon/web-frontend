@@ -15,7 +15,7 @@ const useGetArticles = (type, keyword) =>
   useInfiniteQuery({
     queryKey: [`${type}Articles`, keyword],
     queryFn: ({ pageParam }) => getArticles(pageParam, type, keyword),
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.hasMore ? lastPageParam + 1 : null,
   });

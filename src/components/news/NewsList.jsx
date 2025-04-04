@@ -1,28 +1,26 @@
 import { useEffect, useState } from 'react';
 import NewsListItem from './NewsListItem';
 import NewsDetail from './NewsDetail';
-import useNewsQuery from '@/hooks/useGetArticles';
+import useGetArticles from '@/hooks/queries/news/useGetArticles';
 import { NewsSkeleton } from '@/components/ui/custom/Loading';
 
 export default function NewsList({ type, keyword }) {
-  const [selectedNews, setSelectedNews] = useState(null);
+  const [selectedArticleId, setSelectedArticleId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const {
-    data: articlesData,
+    data: articleData,
     isPending,
     isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useNewsQuery(type, keyword);
-
-  console.log(articlesData);
+  } = useGetArticles(type, keyword);
 
   useEffect(() => {
     if (!hasNextPage) return;
 
-    const handleScroll = async () => {
+    const handleScroll = () => {
       const maxScrollTop =
         document.documentElement.offsetHeight - window.innerHeight - 100;
       const currentScrollTop = document.documentElement.scrollTop;
@@ -30,18 +28,18 @@ export default function NewsList({ type, keyword }) {
         fetchNextPage();
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [type, keyword, hasNextPage]);
 
-  const handleOpenChange = (open) => {
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [type, keyword, hasNextPage, fetchNextPage]);
+
+  const handleChangeOpen = (open) => {
     setIsOpen(open);
-    if (!open) setSelectedNews(null);
+    if (!open) setSelectedArticleId(null);
   };
 
-  const handleNewsClick = (news) => {
-    setSelectedNews(news.articleId);
+  const handleNewsClick = (id) => {
+    setSelectedArticleId(id);
     setIsOpen(true);
   };
 
@@ -65,31 +63,31 @@ export default function NewsList({ type, keyword }) {
       </div>
     );
 
+  const allArticles = articleData.pages.flatMap((page) => page.result);
+
   return (
     <div className="w-full mb-2">
       <div className="flex flex-col w-full bg-background/30 rounded-lg border-[1px] px-4 border-background">
-        {articlesData.pages[0].result.length === 0 ? (
+        {allArticles.length === 0 ? (
           <span className="my-8 mx-2 font-bold text-txt-placeholder">
             등록된 기사가 없습니다.
           </span>
         ) : (
-          articlesData.pages.map((page) =>
-            page.result.map((article) => (
-              <div
-                key={article.articleId}
-                onClick={() => handleNewsClick(article)}
-              >
-                <NewsListItem news={article} />
-              </div>
-            ))
-          )
+          allArticles.map((article) => (
+            <div
+              key={article.articleId}
+              onClick={() => handleNewsClick(article.articleId)}
+            >
+              <NewsListItem news={article} />
+            </div>
+          ))
         )}
         {isFetchingNextPage && <NewsSkeleton />}
       </div>
       <NewsDetail
         isOpen={isOpen}
-        articleId={selectedNews}
-        handleOpenChange={handleOpenChange}
+        articleId={selectedArticleId}
+        onOpenChange={handleChangeOpen}
       />
     </div>
   );
