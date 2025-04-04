@@ -1,41 +1,39 @@
-import { useEffect, useRef, useState } from "react";
-import NewsListItem from "./NewsListItem";
-import NewsDetail from "./NewsDetail";
-import useNewsQuery from "@/hooks/useNewsQuery";
-import { NewsSkeleton } from "@/components/ui/custom/Loading";
+import { useEffect, useState } from 'react';
+import NewsListItem from './NewsListItem';
+import NewsDetail from './NewsDetail';
+import useNewsQuery from '@/hooks/useGetArticles';
+import { NewsSkeleton } from '@/components/ui/custom/Loading';
 
-export default function NewsList({ search = "", category = "allCategory" }) {
+export default function NewsList({ type, keyword }) {
   const [selectedNews, setSelectedNews] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const isLoadingRef = useRef(false);
 
   const {
-    articlesData,
+    data: articlesData,
     isPending,
     isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useNewsQuery(category, search);
+  } = useNewsQuery(type, keyword);
+
+  console.log(articlesData);
 
   useEffect(() => {
     if (!hasNextPage) return;
-    const handleScroll = async () => {
-      if (isLoadingRef.current) return;
-      isLoadingRef.current = true;
 
+    const handleScroll = async () => {
       const maxScrollTop =
         document.documentElement.offsetHeight - window.innerHeight - 100;
       const currentScrollTop = document.documentElement.scrollTop;
       if (currentScrollTop >= maxScrollTop) {
         fetchNextPage();
       }
-      isLoadingRef.current = false;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [category, search, hasNextPage]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [type, keyword, hasNextPage]);
 
   const handleOpenChange = (open) => {
     setIsOpen(open);
@@ -66,18 +64,16 @@ export default function NewsList({ search = "", category = "allCategory" }) {
         </div>
       </div>
     );
-  const articlePages = articlesData?.pages ?? [];
 
   return (
     <div className="w-full mb-2">
       <div className="flex flex-col w-full bg-background/30 rounded-lg border-[1px] px-4 border-background">
-        {articlePages.length === 0 ||
-        articlePages[0].message === "No news found." ? (
+        {articlesData.pages[0].result.length === 0 ? (
           <span className="my-8 mx-2 font-bold text-txt-placeholder">
             등록된 기사가 없습니다.
           </span>
         ) : (
-          articlePages.map((page) =>
+          articlesData.pages.map((page) =>
             page.result.map((article) => (
               <div
                 key={article.articleId}

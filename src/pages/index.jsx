@@ -23,7 +23,7 @@ const Main = () => {
       <h2 className="text-xl font-extrabold m-6 mt-10">
         구독한 언론사의 최신 뉴스
       </h2>
-      <NewsList category={category} />
+      <NewsList type="category" keyword={category} />
       <NavigationBar />
     </PageLayout>
   );
