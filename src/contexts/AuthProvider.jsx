@@ -31,11 +31,7 @@ export function AuthProvider({ children }) {
 
   const deleteUser = useMutation({
     mutationFn: () => axios.delete('/member/delete'),
-    onSuccess: () => {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      router.push('/login', { replace: true });
-    },
+    onSuccess: logout,
   });
 
   return (

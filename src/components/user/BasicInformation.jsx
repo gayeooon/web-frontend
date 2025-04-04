@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import useGetUserInfo from '@/hooks/queries/useGetUserInfo';
+import useGetUserInfo from '@/hooks/queries/user/useGetUserInfo';
 
 const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
   const [data, setData] = useState({});

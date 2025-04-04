@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/shadcn/button';
 import successmark from '@/assets/successmark.svg';
 import { useState } from 'react';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import usePutUserInfo from '@/hooks/queries/usePutUserInfo';
-import usePutUserCategories from '@/hooks/queries/usePutUserCategories';
-import usePutUserPublishers from '@/hooks/queries/usePutUserPublishers';
+import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
+import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
+import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);

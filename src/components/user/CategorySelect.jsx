@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useGetUserCategories from '@/hooks/queries/useGetUserCategories';
+import useGetUserCategories from '@/hooks/queries/user/useGetUserCategories';
 import { Button } from '@/components/ui/shadcn/button';
 import { CATEGORIES, MIN_SELECTIONS } from '@/lib/constants';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';

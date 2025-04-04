@@ -1,5 +1,5 @@
 import { CATEGORIES } from '@/lib/constants';
-import useGetUserCategories from '@/hooks/queries/useGetUserCategories';
+import useGetUserCategories from '@/hooks/queries/user/useGetUserCategories';
 
 export default function CategoryList({
   selectedCategory,

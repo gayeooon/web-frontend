@@ -3,7 +3,7 @@ import { PUBLISHERS, MIN_SUBSCRIPTIONS } from '@/lib/constants';
 import { ScrollArea, ScrollBar } from '@/components/ui/shadcn/scroll-area';
 import { Button } from '@/components/ui/shadcn/button';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import useGetUserPublishers from '@/hooks/queries/useGetUserPublishers';
+import useGetUserPublishers from '@/hooks/queries/user/useGetUserPublishers';
 
 const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
   const [selectedPublishers, setselectedPublishers] = useState([]);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/shadcn/radio-group';
-import useGetUserInfo from '@/hooks/queries/useGetUserInfo';
+import useGetUserInfo from '@/hooks/queries/user/useGetUserInfo';
 
 const DetailInformation = ({ onNext, buttonText }) => {
   const [data, setData] = useState({});

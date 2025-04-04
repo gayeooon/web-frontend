@@ -6,9 +6,9 @@ import PublisherSelect from '@/components/user/PublisherSelect';
 import AccountDelete from '@/components/user/AccountDelete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
-import usePutUserInfo from '@/hooks/queries/usePutUserInfo';
-import usePutUserCategories from '@/hooks/queries/usePutUserCategories';
-import usePutUserPublishers from '@/hooks/queries/usePutUserPublishers';
+import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
+import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
+import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
 
 const Setting = () => {
   const router = useRouter();
