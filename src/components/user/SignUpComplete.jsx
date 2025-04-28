@@ -1,13 +1,16 @@
 import { Button } from '@/components/ui/shadcn/button';
 import successmark from '@/assets/successmark.svg';
-import { useUser } from '@/contexts/UserProvider';
 import { useState } from 'react';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
+import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
+import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
+import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { updateUserProfile, updateUserCategories, updateUserPublishers } =
-    useUser();
+  const { mutateAsync: updateUserInfo } = usePutUserInfo();
+  const { mutateAsync: updateUserCategories } = usePutUserCategories();
+  const { mutateAsync: updateUserPublishers } = usePutUserPublishers();
 
   if (
     !formData ||
@@ -22,9 +25,9 @@ const SignUpComplete = ({ formData }) => {
   const onClickStart = async () => {
     setIsLoading(true);
     try {
-      await updateUserProfile.mutateAsync(formData.memberInfo);
-      await updateUserCategories.mutateAsync(formData.categories);
-      await updateUserPublishers.mutateAsync(formData.publishers);
+      await updateUserInfo(formData.memberInfo);
+      await updateUserCategories(formData.categories);
+      await updateUserPublishers(formData.publishers);
 
       window.location.replace('/');
     } catch (error) {

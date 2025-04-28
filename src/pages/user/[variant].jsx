@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useUser } from '@/contexts/UserProvider';
 import { useToaster } from '@/contexts/ToasterProvider';
 import BasicInformation from '@/components/user/BasicInformation';
 import CategorySelect from '@/components/user/CategorySelect';
@@ -7,22 +6,29 @@ import PublisherSelect from '@/components/user/PublisherSelect';
 import AccountDelete from '@/components/user/AccountDelete';
 import Header from '@/components/ui/custom/Header';
 import PageLayout from '@/components/ui/custom/PageLayout';
+import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
+import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
+import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
 
 const Setting = () => {
   const router = useRouter();
   const toast = useToaster();
-  const { updateUserProfile, updateUserCategories, updateUserPublishers } =
-    useUser();
+
+  const { mutate: putUserInfo, isPending: isPendingInfo } = usePutUserInfo();
+  const { mutate: putUserCategories, isPending: isPendingCategories } =
+    usePutUserCategories();
+  const { mutate: putUserPublishers, isPending: isPendingPublishers } =
+    usePutUserPublishers();
 
   const variantConfig = {
-    info: { title: '회원정보 수정', fetchFunction: updateUserProfile },
-    category: { title: '선호 주제 변경', fetchFunction: updateUserCategories },
-    publisher: { title: '뉴스 구독 관리', fetchFunction: updateUserPublishers },
+    info: { title: '회원정보 수정', fetchFunction: putUserInfo },
+    category: { title: '선호 주제 변경', fetchFunction: putUserCategories },
+    publisher: { title: '뉴스 구독 관리', fetchFunction: putUserPublishers },
     delete: { title: '회원 탈퇴' },
   };
 
   const handleNext = (data) => {
-    variantConfig[router.query.variant].fetchFunction.mutate(data, {
+    variantConfig[router.query.variant].fetchFunction(data, {
       onSuccess: () => {
         toast('info', '저장되었습니다.');
         router.push('/user');
@@ -41,7 +47,7 @@ const Setting = () => {
           <BasicInformation
             onNext={handleNext}
             buttonText="저장"
-            buttonDisabled={updateUserProfile.isPending}
+            buttonDisabled={isPendingInfo}
           />
         );
       case 'category':
@@ -49,7 +55,7 @@ const Setting = () => {
           <CategorySelect
             onNext={handleNext}
             buttonText="저장"
-            buttonDisabled={updateUserCategories.isPending}
+            buttonDisabled={isPendingCategories}
           />
         );
       case 'publisher':
@@ -57,7 +63,7 @@ const Setting = () => {
           <PublisherSelect
             onNext={handleNext}
             buttonText="저장"
-            buttonDisabled={updateUserPublishers.isPending}
+            buttonDisabled={isPendingPublishers}
           />
         );
       case 'delete':

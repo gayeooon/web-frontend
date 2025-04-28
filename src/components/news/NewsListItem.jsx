@@ -1,22 +1,23 @@
-import { useState } from "react";
-import { useToaster } from "@/contexts/ToasterProvider";
-import axios from "@/lib/axios";
-import { formatDate } from "@/lib/utils";
-import { PageSpinner } from "@/components/ui/custom/Loading";
+import { useState } from 'react';
+import { useToaster } from '@/contexts/ToasterProvider';
+import axios from '@/lib/axios';
+import { formatDate } from '@/lib/utils';
+import { PageSpinner } from '@/components/ui/custom/Loading';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/shadcn/dropdown-menu";
-import { EllipsisVertical, Ban, Share2 } from "lucide-react";
+} from '@/components/ui/shadcn/dropdown-menu';
+import { EllipsisVertical, Ban, Share2 } from 'lucide-react';
 
 export default function NewsListItem({ news }) {
   const toast = useToaster();
   const [isLoading, setIsLoading] = useState(false);
+
   const handleBanClick = (e) => {
     e.stopPropagation();
-    toast("info", "관심 없음 처리되었습니다.");
+    toast('info', '관심 없음 처리되었습니다.');
     axios.post(`/articles/${news.articleId}/rate`, {
       preference: -1,
     });
@@ -29,10 +30,10 @@ export default function NewsListItem({ news }) {
       const res = await axios.get(`/articles/${news.articleId}`);
       const url = res.result.articleSource;
       navigator.clipboard.writeText(url);
-      toast("info", "기사 링크를 복사했습니다.");
+      toast('info', '기사 링크를 복사했습니다.');
     } catch {
       console.log(error);
-      toast("error", "네트워크 오류가 발생했습니다.");
+      toast('error', '네트워크 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }

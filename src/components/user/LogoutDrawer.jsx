@@ -7,12 +7,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/shadcn/drawer";
-import { Button } from "@/components/ui/shadcn/button";
-import { useAuth } from "@/contexts/AuthProvider";
+} from '@/components/ui/shadcn/drawer';
+import { Button } from '@/components/ui/shadcn/button';
 
 export default function LogoutDrawer() {
-  const { logout } = useAuth();
+  const logout = () => {
+    window.location.replace('/login');
+  };
 
   return (
     <Drawer>

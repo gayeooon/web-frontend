@@ -1,5 +1,3 @@
-'use client';
-
 import NavigationBar from '@/components/ui/custom/NavigationBar';
 import NewsList from '@/components/news/NewsList';
 import CategoryNewsCarousel from '@/components/search/CategoryNewsCarousel';
@@ -31,7 +29,7 @@ const Search = () => {
       ) : (
         <>
           <div className="m-6 mt-0 text-xl font-extrabold">{`"${search}"에 대한 뉴스`}</div>
-          <NewsList search={search} />
+          <NewsList type="search" keyword={search} />
         </>
       )}
 

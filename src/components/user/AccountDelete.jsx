@@ -1,5 +1,5 @@
-import { useAuth } from "@/contexts/AuthProvider";
-import { Button } from "@/components/ui/shadcn/button";
+import useDeleteUser from '@/hooks/queries/auth/useDeleteUser';
+import { Button } from '@/components/ui/shadcn/button';
 import {
   Drawer,
   DrawerClose,
@@ -9,13 +9,14 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/shadcn/drawer";
+} from '@/components/ui/shadcn/drawer';
 
 const AccountDelete = () => {
-  const { deleteUser } = useAuth();
+  const { mutate: deleteUser } = useDeleteUser();
 
   const handleDelete = () => {
-    deleteUser.mutate();
+    deleteUser();
+    window.location.replace('/login');
   };
   return (
     <>

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import NewsDetailContent from "./NewsDetailContent";
-import axios from "@/lib/axios";
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import NewsDetailContent from './NewsDetailContent';
+import axios from '@/lib/axios';
 import {
   Drawer,
   DrawerClose,
@@ -10,7 +10,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/shadcn/drawer";
+} from '@/components/ui/shadcn/drawer';
 import {
   Sheet,
   SheetClose,
@@ -18,17 +18,17 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/shadcn/sheet";
-import { Button } from "@/components/ui/shadcn/button";
+} from '@/components/ui/shadcn/sheet';
+import { Button } from '@/components/ui/shadcn/button';
 
-export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
+export default function NewsDetail({ isOpen, articleId, onOpenChange }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const {
     data: article = {},
     isPending,
     isError,
   } = useQuery({
-    queryKey: ["article", articleId],
+    queryKey: ['article', articleId],
     queryFn: () => axios.get(`/articles/${articleId}`),
     enabled: Boolean(articleId),
     select: (data) => data.result,
@@ -37,9 +37,9 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleLinkClick = () => {
@@ -56,7 +56,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   if (isDesktop) {
     return (
       <>
-        <Sheet open={isOpen} onOpenChange={handleOpenChange}>
+        <Sheet open={isOpen} onOpenChange={onOpenChange}>
           <SheetContent className="bg-gradient-to-t from-white to-background  md:max-w-sm lg:max-w-lg">
             <div className="h-full relative">
               <SheetHeader>
@@ -95,7 +95,7 @@ export default function NewsDetail({ isOpen, articleId, handleOpenChange }) {
   }
 
   return (
-    <Drawer open={isOpen} onOpenChange={handleOpenChange}>
+    <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent className="bg-gradient-to-t from-white to-background w-full">
         <div className="mx-auto px-6 w-full max-w-xl max-h-[95vh] max-h-[95dvh] overflow-y-auto">
           <DrawerHeader>

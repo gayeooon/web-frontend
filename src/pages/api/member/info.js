@@ -30,19 +30,15 @@ export default function handler(req, res) {
     if (!userCookie) {
       return res.status(200).json({
         message: '저장된 정보 없음',
-        result: {
-          name: '',
-          email: '',
-          phone: '',
-          birth: '',
-          gender: '',
-        },
+        result: {},
       });
     }
 
     // 쿠키에서 정보 가져오기
     const userInfo = JSON.parse(decodeURIComponent(userCookie.split('=')[1]));
-    return res.status(200).json({ result: userInfo });
+    return res
+      .status(200)
+      .json({ message: '유저 정보를 읽어왔습니다.', result: userInfo });
   }
   return res.status(405).json({ message: '잘못된 요청입니다.' });
 }

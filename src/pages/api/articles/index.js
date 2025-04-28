@@ -5,11 +5,11 @@ export default function handler(req, res) {
     const { page, pageSize } = req.query;
 
     const paredSize = pageSize ? parseInt(pageSize) : 10;
-    const parsedPage = page ? page : 0;
+    const parsedPage = page ? page : 1;
 
     const articles = Array.from({ length: paredSize }).map((_, index) => ({
       articleId: parseInt(parsedPage + index),
-      title: `기사 ${parseInt(parsedPage + index)}`,
+      title: `기사 ${parsedPage + index}`,
       press: 'JOONGANG',
       thumbnail: faker.image.url(),
       publishDate: faker.date.recent({ days: 7 }),
