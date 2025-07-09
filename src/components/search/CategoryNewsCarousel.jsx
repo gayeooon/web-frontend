@@ -4,13 +4,13 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/shadcn/carousel";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import NewsDetail from "@/components/news/NewsDetail";
-import axios from "@/lib/axios";
-import { formatDate } from "@/lib/utils";
-import { CarouselSkeleton } from "../ui/custom/Loading";
+} from '@/components/ui/shadcn/carousel';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import NewsDetail from '@/components/news/NewsDetail';
+import axios from '@/lib/axios';
+import { formatDate } from '@/lib/utils';
+import { CarouselSkeleton } from '../ui/custom/Loading';
 
 export default function CategoryNewsCarousel({ category }) {
   const [selectedNews, setSelectedNews] = useState(null);
@@ -18,12 +18,8 @@ export default function CategoryNewsCarousel({ category }) {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
 
-  const {
-    data: recentArticles = [],
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["recentArticles", category],
+  const { data: recentArticles = [], isPending } = useQuery({
+    queryKey: ['recentArticles', category],
     queryFn: () => axios.get(`/articles/search?keyword=${category}&size=5`),
     select: (data) => data.result,
   });
@@ -41,7 +37,7 @@ export default function CategoryNewsCarousel({ category }) {
   useEffect(() => {
     if (!api) return;
 
-    api.on("select", () => setCurrent(api.selectedScrollSnap()));
+    api.on('select', () => setCurrent(api.selectedScrollSnap()));
   }, [api]);
 
   if (isPending) {

@@ -2,21 +2,26 @@ import { useEffect, useState } from 'react';
 import deleteIcon from '@/assets/delete.svg';
 
 const MAX_HISTORY = 5;
+const STORAGE_KEY = `search-history`;
 
 export default function RecentSearches({ search, onClickRecents }) {
-  const STORAGE_KEY = `search-history`;
-
-  const [history, setHistory] = useState(
-    () => JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
-  );
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    if (!search) return;
+    if (typeof window === 'undefined') return;
+
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      setHistory(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!search || typeof window === 'undefined') return;
 
     setHistory((prev) => {
       const filteredHistory = prev.filter((it) => it !== search);
       const newHistory = [search, ...filteredHistory].slice(0, MAX_HISTORY);
-
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
       return newHistory;
     });

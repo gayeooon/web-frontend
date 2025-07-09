@@ -27,7 +27,8 @@ export const KakaoSignupButton = () => (
     <img className="h-[40%]" src={kakao.src} alt="kakao_icon" />
   </Button>
 );
-export const KakaoLogin = () => {
+
+const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const { mutate: login } = useLogin();
 
@@ -41,3 +42,5 @@ export const KakaoLogin = () => {
 
   return <PageSpinner />;
 };
+
+export default KakaoLogin;

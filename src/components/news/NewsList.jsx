@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import NewsListItem from './NewsListItem';
 import NewsDetail from './NewsDetail';
-import useGetArticles from '@/hooks/queries/news/useGetArticles';
+import useGetInfiniteArticles from '@/hooks/queries/news/useGetInfiniteArticles';
 import { NewsSkeleton } from '@/components/ui/custom/Loading';
 
 export default function NewsList({ type, keyword }) {
@@ -15,7 +15,7 @@ export default function NewsList({ type, keyword }) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetArticles(type, keyword);
+  } = useGetInfiniteArticles(type, keyword);
 
   useEffect(() => {
     if (!hasNextPage) return;

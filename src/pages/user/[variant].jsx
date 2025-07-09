@@ -27,8 +27,14 @@ const Setting = () => {
     delete: { title: '회원 탈퇴' },
   };
 
+  const variant = router.query.variant;
+
+  if (!variant || typeof variant !== 'string' || !variantConfig[variant]) {
+    return null;
+  }
+
   const handleNext = (data) => {
-    variantConfig[router.query.variant].fetchFunction(data, {
+    variantConfig[variant].fetchFunction(data, {
       onSuccess: () => {
         toast('info', '저장되었습니다.');
         router.push('/user');

@@ -5,9 +5,7 @@ import google from '@/assets/google_logo.svg';
 import { Button } from '@/components/ui/shadcn/button';
 import { PageSpinner } from '@/components/ui/custom/Loading';
 
-// const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
-// const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}.apps.googleusercontent.com&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email%20profile`;
 
 export const GoogleLoginButton = () => (
   <div className="h-14 w-full">

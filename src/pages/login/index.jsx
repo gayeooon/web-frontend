@@ -1,15 +1,9 @@
-import {
-  KakaoLoginButton,
-  KakaoSignupButton,
-} from '@/pages/member/oauth/kakao';
-import {
-  NaverLoginButton,
-  NaverSignupButton,
-} from '@/pages/member/oauth/naver';
+import { KakaoLoginButton, KakaoSignupButton } from '@/components/login/kakao';
+import { NaverLoginButton, NaverSignupButton } from '@/components/login/naver';
 import {
   GoogleLoginButton,
   GoogleSignupButton,
-} from '@/pages/member/oauth/google';
+} from '@/components/login/google';
 import PageLayout from '@/components/ui/custom/PageLayout';
 import favicon from '../../../public/favicon.png';
 import logo from '@/assets/NewsFit.svg';

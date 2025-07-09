@@ -32,7 +32,6 @@ export default function NewsListItem({ news }) {
       navigator.clipboard.writeText(url);
       toast('info', '기사 링크를 복사했습니다.');
     } catch {
-      console.log(error);
       toast('error', '네트워크 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);

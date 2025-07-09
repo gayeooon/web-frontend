@@ -30,7 +30,7 @@ export const NaverSignupButton = () => (
   </Button>
 );
 
-export const NaverLogin = () => {
+const NaverLogin = () => {
   const [searchParams] = useSearchParams();
   const { mutate: login } = useLogin();
 
@@ -44,3 +44,5 @@ export const NaverLogin = () => {
 
   return <PageSpinner />;
 };
+
+export default NaverLogin;
