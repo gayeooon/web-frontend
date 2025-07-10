@@ -3,11 +3,18 @@ import { serialize } from 'cookie';
 export default function handler(req, res) {
   if (req.method === 'DELETE') {
     // 삭제할 쿠키 목록
-    const cookiesToDelete = ['userInfo', 'categories', 'publishers'];
+    const cookiesToDelete = [
+      'auth-token',
+      'userInfo',
+      'categories',
+      'publishers',
+    ];
 
     // 여러 개의 Set-Cookie 헤더 생성
     const cookieHeaders = cookiesToDelete.map((cookieName) =>
       serialize(cookieName, '', {
+        httpOnly: true,
+        sameSite: 'strict',
         maxAge: 0,
         path: '/',
       })

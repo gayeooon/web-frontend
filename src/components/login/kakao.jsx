@@ -1,22 +1,28 @@
-import useLogin from '@/hooks/queries/auth/useLogin';
+import useLogin from '@/hooks/queries/auth/useSignup';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/shadcn/button';
 import kakao from '@/assets/kakao_logo.svg';
 import { PageSpinner } from '@/components/ui/custom/Loading';
+import { useToaster } from '@/contexts/ToasterProvider';
 
-// const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
-// const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-export const KakaoLoginButton = () => (
-  <div className="h-14 w-full">
-    <Button variant="kakao" onClick={() => (window.location.href = '/')}>
-      <img className="h-2/6" src={kakao.src} alt="kakao_icon" />
-      <span>카카오 로그인</span>
-    </Button>
-  </div>
-);
+export const KakaoLoginButton = () => {
+  const toast = useToaster();
+
+  return (
+    <div className="h-14 w-full">
+      <Button
+        variant="kakao"
+        onClick={() => toast('error', '지금은 회원가입만 지원됩니다.')}
+      >
+        <img className="h-2/6" src={kakao.src} alt="kakao_icon" />
+        <span>카카오 로그인</span>
+      </Button>
+    </div>
+  );
+};
 
 export const KakaoSignupButton = () => (
   <Button

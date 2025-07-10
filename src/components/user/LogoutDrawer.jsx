@@ -9,9 +9,13 @@ import {
   DrawerTrigger,
 } from '@/components/ui/shadcn/drawer';
 import { Button } from '@/components/ui/shadcn/button';
+import useDeleteUser from '@/hooks/queries/auth/useDeleteUser';
 
 export default function LogoutDrawer() {
+  const { mutate: deleteUser } = useDeleteUser();
+
   const logout = () => {
+    deleteUser();
     window.location.replace('/login');
   };
 

@@ -2,15 +2,11 @@ import { Button } from '@/components/ui/shadcn/button';
 import successmark from '@/assets/successmark.svg';
 import { useState } from 'react';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
-import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
-import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
+import useSignup from '@/hooks/queries/auth/useSignup';
 
 const SignUpComplete = ({ formData }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { mutateAsync: updateUserInfo } = usePutUserInfo();
-  const { mutateAsync: updateUserCategories } = usePutUserCategories();
-  const { mutateAsync: updateUserPublishers } = usePutUserPublishers();
+  const { mutate: signup } = useSignup();
 
   if (
     !formData ||
@@ -22,14 +18,10 @@ const SignUpComplete = ({ formData }) => {
     return <div>잘못된 데이터입니다.</div>;
   }
 
-  const onClickStart = async () => {
+  const handleSignup = () => {
     setIsLoading(true);
     try {
-      await updateUserInfo(formData.memberInfo);
-      await updateUserCategories(formData.categories);
-      await updateUserPublishers(formData.publishers);
-
-      window.location.replace('/');
+      signup(formData);
     } catch (error) {
       console.error('Update failed:', error);
     } finally {
@@ -52,7 +44,7 @@ const SignUpComplete = ({ formData }) => {
       </span>
       <Button
         className="absolute bottom-0"
-        onClick={onClickStart}
+        onClick={handleSignup}
         disabled={isLoading}
       >
         {isLoading ? (
