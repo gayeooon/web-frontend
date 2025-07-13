@@ -167,3 +167,14 @@ export const PUBLISHERS = [
 ];
 
 export const MIN_SUBSCRIPTIONS = 3;
+
+// Setting
+
+export const SETTING_VARIANTS = ['info', 'category', 'publisher', 'delete'];
+
+export const SETTING_TITLES = {
+  info: '회원정보 수정',
+  category: '선호 주제 변경',
+  publisher: '뉴스 구독 관리',
+  delete: '회원 탈퇴',
+};

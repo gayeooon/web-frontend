@@ -1,9 +1,9 @@
 import { Progress } from '@/components/ui/shadcn/progress';
 import backIcon from '@/assets/back.svg';
 
-const Header = ({ handleBack, step = null, title = null }) => (
+const Header = ({ onClickBack, step = null, title = null }) => (
   <div className="flex justify-between py-10 px-6">
-    <button className="w-4" onClick={handleBack}>
+    <button className="w-4" onClick={onClickBack}>
       <img src={backIcon.src} alt="뒤로가기" />
     </button>
     {title ? (

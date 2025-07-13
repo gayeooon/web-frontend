@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/shadcn/radio-group';
-import useGetUserInfo from '@/hooks/queries/user/useGetUserInfo';
 
-const DetailInformation = ({ onNext, buttonText }) => {
-  const [data, setData] = useState({});
-  const { data: userInfo } = useGetUserInfo();
-
-  useEffect(() => {
-    if (userInfo) {
-      setData({
-        gender: userInfo.gender,
-        birth: userInfo.birth,
-      });
-    }
-  }, [userInfo]);
+const DetailInformation = ({ memberInfo, onSubmit, buttonText }) => {
+  const [data, setData] = useState(memberInfo);
 
   const handleChange = (name, value) => {
     setData((prev) => ({
@@ -60,7 +49,7 @@ const DetailInformation = ({ onNext, buttonText }) => {
       <Button
         className="absolute bottom-0"
         onClick={() =>
-          onNext({
+          onSubmit({
             ...data,
             birth: data.birth,
           })

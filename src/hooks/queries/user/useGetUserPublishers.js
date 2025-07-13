@@ -6,10 +6,11 @@ const getUserPublishers = async () => {
   return response.result;
 };
 
-const useGetUserPublishers = () =>
+const useGetUserPublishers = (enabled) =>
   useQuery({
     queryKey: ['userPublishers'],
     queryFn: getUserPublishers,
+    enabled,
   });
 
 export default useGetUserPublishers;

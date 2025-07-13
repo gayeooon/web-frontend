@@ -9,6 +9,9 @@ import PageLayout from '@/components/ui/custom/PageLayout';
 import usePutUserInfo from '@/hooks/queries/user/usePutUserInfo';
 import usePutUserCategories from '@/hooks/queries/user/usePutUserCategories';
 import usePutUserPublishers from '@/hooks/queries/user/usePutUserPublishers';
+import useUserData from '@/hooks/useUserData';
+import { SETTING_TITLES, SETTING_VARIANTS } from '@/lib/constants';
+import { PageSpinner } from '@/components/ui/custom/Loading';
 
 const Setting = () => {
   const router = useRouter();
@@ -19,22 +22,27 @@ const Setting = () => {
     usePutUserCategories();
   const { mutate: putUserPublishers, isPending: isPendingPublishers } =
     usePutUserPublishers();
-
-  const variantConfig = {
-    info: { title: '회원정보 수정', fetchFunction: putUserInfo },
-    category: { title: '선호 주제 변경', fetchFunction: putUserCategories },
-    publisher: { title: '뉴스 구독 관리', fetchFunction: putUserPublishers },
-    delete: { title: '회원 탈퇴' },
-  };
+  const { userData, isLoading, isError } = useUserData({ page: 'setting' });
 
   const variant = router.query.variant;
 
-  if (!variant || typeof variant !== 'string' || !variantConfig[variant]) {
+  if (
+    isError ||
+    !variant ||
+    typeof variant !== 'string' ||
+    !SETTING_VARIANTS.includes(variant)
+  ) {
+    toast('error', '오류가 발생했습니다.');
+    router.push('/user');
     return null;
   }
 
-  const handleNext = (data) => {
-    variantConfig[variant].fetchFunction(data, {
+  if (isLoading) {
+    return <PageSpinner />;
+  }
+
+  const handleSubmit = (mutateFunction, data) => {
+    mutateFunction(data, {
       onSuccess: () => {
         toast('info', '저장되었습니다.');
         router.push('/user');
@@ -46,48 +54,42 @@ const Setting = () => {
     });
   };
 
-  const renderComponent = () => {
-    switch (router.query.variant) {
-      case 'info':
-        return (
-          <BasicInformation
-            onNext={handleNext}
-            buttonText="저장"
-            buttonDisabled={isPendingInfo}
-          />
-        );
-      case 'category':
-        return (
-          <CategorySelect
-            onNext={handleNext}
-            buttonText="저장"
-            buttonDisabled={isPendingCategories}
-          />
-        );
-      case 'publisher':
-        return (
-          <PublisherSelect
-            onNext={handleNext}
-            buttonText="저장"
-            buttonDisabled={isPendingPublishers}
-          />
-        );
-      case 'delete':
-        return <AccountDelete />;
-      default:
-        return <></>;
-    }
-  };
-
   return (
     <PageLayout page="setting">
       <Header
-        title={variantConfig[router.query.variant].title}
-        handleBack={() => router.push('/user')}
+        title={SETTING_TITLES[variant]}
+        onClickBack={() => router.push('/user')}
       />
       <div className="flex justify-center pt-6 h-5/6">
         <div className="flex flex-col relative gap-6 w-10/12 max-w-2xl h-full">
-          {renderComponent()}
+          {variant === 'info' && (
+            <BasicInformation
+              memberInfo={userData.memberInfo}
+              onSubmit={(data) => handleSubmit(putUserInfo, data)}
+              buttonText="저장"
+              isLoading={isPendingInfo}
+            />
+          )}
+
+          {variant === 'category' && (
+            <CategorySelect
+              userCategories={userData.categories}
+              onSubmit={(data) => handleSubmit(putUserCategories, data)}
+              buttonText="저장"
+              isLoading={isPendingCategories}
+            />
+          )}
+
+          {variant === 'publisher' && (
+            <PublisherSelect
+              userPublishers={userData.publishers}
+              onSubmit={(data) => handleSubmit(putUserPublishers, data)}
+              buttonText="저장"
+              isLoading={isPendingPublishers}
+            />
+          )}
+
+          {variant === 'delete' && <AccountDelete />}
         </div>
       </div>
     </PageLayout>

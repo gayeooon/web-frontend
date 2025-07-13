@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PUBLISHERS, MIN_SUBSCRIPTIONS } from '@/lib/constants';
 import { ScrollArea, ScrollBar } from '@/components/ui/shadcn/scroll-area';
 import { Button } from '@/components/ui/shadcn/button';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import useGetUserPublishers from '@/hooks/queries/user/useGetUserPublishers';
 
-const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
-  const [selectedPublishers, setselectedPublishers] = useState([]);
-  const { data: userPublishers } = useGetUserPublishers();
-
-  useEffect(() => {
-    if (userPublishers) setselectedPublishers(userPublishers);
-  }, [userPublishers]);
+const PublisherSelect = ({
+  userPublishers,
+  onSubmit,
+  buttonText,
+  isLoading,
+}) => {
+  const [selectedPublishers, setselectedPublishers] = useState(userPublishers);
 
   const toggleSubscribe = (publisher) => {
     setselectedPublishers((prev) =>
@@ -58,12 +57,10 @@ const PublisherSelect = ({ onNext, buttonText, buttonDisabled }) => {
 
       <Button
         className="absolute bottom-0"
-        onClick={() => onNext(selectedPublishers)}
-        disabled={
-          selectedPublishers.length < MIN_SUBSCRIPTIONS || buttonDisabled
-        }
+        onClick={() => onSubmit(selectedPublishers)}
+        disabled={selectedPublishers.length < MIN_SUBSCRIPTIONS || isLoading}
       >
-        {buttonDisabled ? <SpinnerIcon /> : buttonText}
+        {isLoading ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

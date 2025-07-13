@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
-import useGetUserInfo from '@/hooks/queries/user/useGetUserInfo';
 
-const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
-  const [data, setData] = useState({});
+const BasicInformation = ({
+  memberInfo,
+  onSubmit,
+  buttonText,
+  isLoading = false,
+}) => {
+  const [data, setData] = useState(memberInfo);
   const [errors, setErrors] = useState({
     email: '',
     phone: '',
   });
-  const { data: userInfo } = useGetUserInfo();
-
-  useEffect(() => {
-    if (userInfo) {
-      setData(userInfo);
-    }
-  }, [userInfo]);
 
   const validateField = (name, value) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,10 +104,10 @@ const BasicInformation = ({ onNext, buttonText, buttonDisabled }) => {
 
       <Button
         className="absolute bottom-0"
-        onClick={() => onNext(data)}
-        disabled={!isFormComplete() || buttonDisabled}
+        onClick={() => onSubmit(data)}
+        disabled={!isFormComplete() || isLoading}
       >
-        {buttonDisabled ? <SpinnerIcon /> : buttonText}
+        {isLoading ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

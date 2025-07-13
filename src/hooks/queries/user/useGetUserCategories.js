@@ -6,10 +6,11 @@ const getUserCategories = async () => {
   return response.result;
 };
 
-const useGetUserCategories = () =>
+const useGetUserCategories = (enabled) =>
   useQuery({
     queryKey: ['userCategories'],
     queryFn: getUserCategories,
+    enabled,
   });
 
 export default useGetUserCategories;

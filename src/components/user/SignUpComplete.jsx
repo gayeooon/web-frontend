@@ -1,33 +1,25 @@
 import { Button } from '@/components/ui/shadcn/button';
 import successmark from '@/assets/successmark.svg';
-import { useState } from 'react';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
 import useSignup from '@/hooks/queries/auth/useSignup';
+import { useRouter } from 'next/router';
+import { useToaster } from '@/contexts/ToasterProvider';
 
-const SignUpComplete = ({ formData }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { mutate: signup } = useSignup();
+const SignUpComplete = ({ userData }) => {
+  const router = useRouter();
+  const toast = useToaster();
+  const { mutate: signup, isPending } = useSignup();
 
   if (
-    !formData ||
-    !formData.memberInfo ||
-    !formData.categories ||
-    !formData.publishers
+    !userData ||
+    !userData.memberInfo ||
+    !userData.categories ||
+    !userData.publishers
   ) {
-    console.error('Invalid formData');
-    return <div>잘못된 데이터입니다.</div>;
+    toast('error', '잘못된 접근입니다.');
+    router.push('/user');
+    return null;
   }
-
-  const handleSignup = () => {
-    setIsLoading(true);
-    try {
-      signup(formData);
-    } catch (error) {
-      console.error('Update failed:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="flex flex-col relative items-center gap-6 w-10/12 max-w-2xl h-full min-h-96">
@@ -44,10 +36,10 @@ const SignUpComplete = ({ formData }) => {
       </span>
       <Button
         className="absolute bottom-0"
-        onClick={handleSignup}
-        disabled={isLoading}
+        onClick={() => signup(userData)}
+        disabled={isPending}
       >
-        {isLoading ? (
+        {isPending ? (
           <>
             <SpinnerIcon />
           </>

@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import useGetUserCategories from '@/hooks/queries/user/useGetUserCategories';
+import { useState } from 'react';
 import { Button } from '@/components/ui/shadcn/button';
 import { CATEGORIES, MIN_SELECTIONS } from '@/lib/constants';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
 
-const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const { data: userCategories } = useGetUserCategories();
-
-  useEffect(() => {
-    if (userCategories) setSelectedCategories(userCategories);
-  }, [userCategories]);
+const CategorySelect = ({
+  userCategories,
+  onSubmit,
+  buttonText,
+  isLoading,
+}) => {
+  const [selectedCategories, setSelectedCategories] = useState(userCategories);
 
   const toggleCategory = (categoryId) => {
     setSelectedCategories((prev) =>
@@ -52,10 +51,10 @@ const CategorySelect = ({ onNext, buttonText, buttonDisabled }) => {
 
       <Button
         className="absolute bottom-0"
-        onClick={() => onNext(selectedCategories)}
-        disabled={selectedCategories.length < MIN_SELECTIONS || buttonDisabled}
+        onClick={() => onSubmit(selectedCategories)}
+        disabled={selectedCategories.length < MIN_SELECTIONS || isLoading}
       >
-        {buttonDisabled ? <SpinnerIcon /> : buttonText}
+        {isLoading ? <SpinnerIcon /> : buttonText}
       </Button>
     </>
   );

@@ -6,7 +6,7 @@ const getUserInfo = async () => {
   return response.result;
 };
 
-const useGetUserInfo = () =>
+const useGetUserInfo = (enabled) =>
   useQuery({
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
@@ -17,6 +17,7 @@ const useGetUserInfo = () =>
       birth: data.birth ?? '',
       gender: data.gender ?? '',
     }),
+    enabled,
   });
 
 export default useGetUserInfo;
