@@ -22,9 +22,15 @@ const Setting = () => {
     usePutUserCategories();
   const { mutate: putUserPublishers, isPending: isPendingPublishers } =
     usePutUserPublishers();
-  const { userData, isLoading, isError } = useUserData({ page: 'setting' });
+  const { userData, isLoading, isError } = useUserData({
+    page: 'setting',
+  });
 
   const variant = router.query.variant;
+
+  if (isLoading || !router.isReady) {
+    return <PageSpinner />;
+  }
 
   if (
     isError ||
@@ -32,13 +38,7 @@ const Setting = () => {
     typeof variant !== 'string' ||
     !SETTING_VARIANTS.includes(variant)
   ) {
-    toast('error', '오류가 발생했습니다.');
-    router.push('/user');
-    return null;
-  }
-
-  if (isLoading) {
-    return <PageSpinner />;
+    return <h1>에러 발생</h1>;
   }
 
   const handleSubmit = (mutateFunction, data) => {

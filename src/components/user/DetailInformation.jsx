@@ -15,7 +15,7 @@ const DetailInformation = ({ memberInfo, onSubmit, buttonText }) => {
   const today = new Date().toISOString().split('T')[0];
   return (
     <>
-      <div className="border-2 border-border rounded-xl flex relative m-1 p-4">
+      <div className="focus-within:border-black border-2 border-border rounded-xl flex relative m-1 p-4">
         <div className="input-label">성별</div>
         <RadioGroup
           className="m-4"
@@ -26,15 +26,29 @@ const DetailInformation = ({ memberInfo, onSubmit, buttonText }) => {
         >
           <div className="flex items-center space-x-4 mb-4">
             <RadioGroupItem value="MALE" id="MALE" />
-            <label htmlFor="MALE">남성</label>
+            <label
+              htmlFor="MALE"
+              className={
+                data.gender === 'MALE' ? 'text-black' : 'text-txt-placeholder'
+              }
+            >
+              남성
+            </label>
           </div>
           <div className="flex items-center space-x-4">
             <RadioGroupItem value="FEMALE" id="FEMALE" />
-            <label htmlFor="FEMALE">여성</label>
+            <label
+              htmlFor="FEMALE"
+              className={
+                data.gender === 'FEMALE' ? 'text-black' : 'text-txt-placeholder'
+              }
+            >
+              여성
+            </label>
           </div>
         </RadioGroup>
       </div>
-      <div className="input">
+      <div className="input focus-within:border-black">
         <div className="input-label">생년월일</div>
         <input
           type="date"
@@ -43,6 +57,7 @@ const DetailInformation = ({ memberInfo, onSubmit, buttonText }) => {
           onChange={(e) => handleChange('birth', e.target.value)}
           min="1900-01-01"
           max={today}
+          className={data.birth ? 'text-black' : 'text-txt-placeholder'}
         />
       </div>
 

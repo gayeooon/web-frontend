@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { useToaster } from '@/contexts/ToasterProvider';
-import axios from '@/lib/axios';
 import { formatDate } from '@/lib/utils';
-import { PageSpinner } from '@/components/ui/custom/Loading';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,41 +7,37 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/shadcn/dropdown-menu';
 import { EllipsisVertical, Ban, Share2 } from 'lucide-react';
+import Image from 'next/image';
 
 export default function NewsListItem({ news }) {
   const toast = useToaster();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleBanClick = (e) => {
     e.stopPropagation();
     toast('info', '관심 없음 처리되었습니다.');
-    axios.post(`/articles/${news.articleId}/rate`, {
-      preference: -1,
-    });
   };
 
   const handleShareClick = async (e) => {
     e.stopPropagation();
-    setIsLoading(true);
     try {
-      const res = await axios.get(`/articles/${news.articleId}`);
-      const url = res.result.articleSource;
-      navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(news.articleSource);
       toast('info', '기사 링크를 복사했습니다.');
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast('error', '네트워크 오류가 발생했습니다.');
-    } finally {
-      setIsLoading(false);
     }
   };
+
   return (
     <div className="flex min-h-32 gap-6 px-4 py-4 border-b border-border hover:cursor-pointer sm:min-h-36">
       {news.thumbnail && (
-        <div className="w-1/4 h-24 min-w-24 sm:h-28">
-          <img
-            className="w-full h-full object-cover rounded-lg"
+        <div className="relative w-1/4 h-24 min-w-24 sm:h-28">
+          <Image
+            className="object-cover rounded-lg"
             src={news.thumbnail}
             alt={news.title}
+            fill
+            sizes="(max-width: 640px) 25vw, 25vw"
           />
         </div>
       )}
@@ -79,7 +72,6 @@ export default function NewsListItem({ news }) {
           </DropdownMenu>
         </div>
       </div>
-      {isLoading && <PageSpinner />}
     </div>
   );
 }
