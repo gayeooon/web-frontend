@@ -1,3 +1,4 @@
+import { PUBLISHER_LIST } from '@/lib/constants';
 import { faker } from '@faker-js/faker';
 
 const HEADLINE_SIZE = 5;
@@ -6,10 +7,10 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     const articles = Array.from({ length: HEADLINE_SIZE }).map((_, index) => ({
       articleId: `H${index}`,
-      title: `기사 H${index}`,
-      press: 'JOONGANG',
+      title: `헤드라인 기사 ${index}`,
+      press: PUBLISHER_LIST[Math.floor(Math.random() * PUBLISHER_LIST.length)],
       headLine: faker.lorem.sentence(),
-      thumbnail: faker.image.url(),
+      thumbnail: faker.image.urlPicsumPhotos(),
       publishDate: faker.date.recent({ days: 7 }),
     }));
 

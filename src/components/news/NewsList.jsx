@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import NewsListItem from './NewsListItem';
 import NewsDetail from './NewsDetail';
 import useGetInfiniteArticles from '@/hooks/queries/news/useGetInfiniteArticles';
 import { NewsSkeleton } from '@/components/ui/custom/Loading';
+import useNewsSelection from '@/hooks/useNewsSelection';
 
 export default function NewsList({ type, keyword }) {
-  const [selectedArticleId, setSelectedArticleId] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-
   const {
     data: articleData,
     isPending,
@@ -16,6 +14,9 @@ export default function NewsList({ type, keyword }) {
     hasNextPage,
     isFetchingNextPage,
   } = useGetInfiniteArticles(type, keyword);
+
+  const { selectedArticleId, isOpen, handleNewsClick, handleOpenChange } =
+    useNewsSelection();
 
   useEffect(() => {
     if (!hasNextPage) return;
@@ -32,16 +33,6 @@ export default function NewsList({ type, keyword }) {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [type, keyword, hasNextPage, fetchNextPage]);
-
-  const handleChangeOpen = (open) => {
-    setIsOpen(open);
-    if (!open) setSelectedArticleId(null);
-  };
-
-  const handleNewsClick = (id) => {
-    setSelectedArticleId(id);
-    setIsOpen(true);
-  };
 
   if (isPending)
     return (
@@ -87,7 +78,7 @@ export default function NewsList({ type, keyword }) {
       <NewsDetail
         isOpen={isOpen}
         articleId={selectedArticleId}
-        onOpenChange={handleChangeOpen}
+        onOpenChange={handleOpenChange}
       />
     </div>
   );

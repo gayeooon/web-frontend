@@ -1,42 +1,23 @@
-import { useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import NewsDetail from "@/components/news/NewsDetail";
-import Autoplay from "embla-carousel-autoplay";
+import { useRef } from 'react';
+import NewsDetail from '@/components/news/NewsDetail';
+import Autoplay from 'embla-carousel-autoplay';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/shadcn/carousel";
-import { formatDate } from "@/lib/utils";
-import axios from "@/lib/axios";
-import { CarouselSkeleton } from "../ui/custom/Loading";
+} from '@/components/ui/shadcn/carousel';
+import { formatDate } from '@/lib/utils';
+import useGetHeadline from '@/hooks/queries/news/useGetHeadline';
+import { CarouselSkeleton } from '../ui/custom/Loading';
+import useNewsSelection from '@/hooks/useNewsSelection';
 
 const HeadlineNewsCarousel = () => {
-  const [selectedNews, setSelectedNews] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
-
-  const {
-    data: headlines = [],
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["headlines"],
-    queryFn: () => axios.get("/articles/headLine"),
-    select: (data) => data.result,
-  });
-
-  const handleOpenChange = (open) => {
-    setIsOpen(open);
-    if (!open) setSelectedNews(null);
-  };
-
-  const handleNewsClick = (article) => {
-    setSelectedNews(article.articleId);
-    setIsOpen(true);
-  };
+  const { data: headlines, isPending, isError } = useGetHeadline();
+  const { selectedArticleId, isOpen, handleNewsClick, handleOpenChange } =
+    useNewsSelection();
 
   if (isPending) {
     return (
@@ -77,7 +58,7 @@ const HeadlineNewsCarousel = () => {
               <div
                 className="m-6 aspect-[16/9] relative overflow-hidden rounded-lg hover:cursor-pointer"
                 onClick={() => {
-                  handleNewsClick(article);
+                  handleNewsClick(article.articleId);
                 }}
               >
                 {article.thumbnail && (
@@ -116,8 +97,8 @@ const HeadlineNewsCarousel = () => {
       </Carousel>
       <NewsDetail
         isOpen={isOpen}
-        articleId={selectedNews}
-        handleOpenChange={handleOpenChange}
+        articleId={selectedArticleId}
+        onOpenChange={handleOpenChange}
       />
     </div>
   );

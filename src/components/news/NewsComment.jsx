@@ -1,60 +1,27 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useToaster } from '@/contexts/ToasterProvider';
 import { formatDate } from '@/lib/utils';
-import axios from '@/lib/axios';
 import send from '@/assets/send.svg';
 import deleteIcon from '@/assets/delete.svg';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
+import usePostComment from '@/hooks/queries/news/usePostComment';
+import useDeleteComment from '@/hooks/queries/news/useDeleteComment';
 
 export default function NewsComment({ commentList, articleId }) {
   const [comment, setComment] = useState('');
-  const queryClient = useQueryClient();
-  const toast = useToaster();
 
-  const addCommentMutation = useMutation({
-    mutationFn: (data) =>
-      axios.post(`/articles/${articleId}/comments`, {
-        comment: data,
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
-      toast('info', '댓글이 등록되었습니다.');
-    },
-    onError: (error) => {
-      console.error('Error:', error);
-      toast('error', '네트워크 오류가 발생했습니다.');
-    },
-  });
-
-  const deleteCommentMutation = useMutation({
-    mutationFn: (commentId) =>
-      axios.delete(`/articles/${articleId}/comments/${commentId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
-      toast('info', '댓글을 삭제했습니다.');
-    },
-    onError: (error) => {
-      console.error('Error:', error);
-      toast('error', '네트워크 오류가 발생했습니다.');
-    },
-  });
+  const { mutate: addComment, isPending: isAddPending } =
+    usePostComment(articleId);
+  const { mutate: deleteComment } = useDeleteComment(articleId);
 
   const handleSendClick = () => {
     if (!comment.trim()) return;
-    addCommentMutation.mutate(comment);
+    addComment({ articleId, comment });
     setComment('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSendClick();
-  };
-
-  const formatCommentTime = (createdDate) => {
-    let date = new Date(createdDate);
-    date.setHours(date.getHours() + 9);
-    return date.toISOString();
   };
 
   return (
@@ -72,9 +39,9 @@ export default function NewsComment({ commentList, articleId }) {
         <button
           className="flex justify-center items-center w-[20%] h-full rounded-[20px] bg-my-purple"
           onClick={handleSendClick}
-          disabled={addCommentMutation.isPending}
+          disabled={isAddPending}
         >
-          {addCommentMutation.isPending ? (
+          {isAddPending ? (
             <SpinnerIcon />
           ) : (
             <img className="w-6" src={send.src} alt="send" />
@@ -93,14 +60,12 @@ export default function NewsComment({ commentList, articleId }) {
                 <span className="mr-3 text-black font-bold">
                   {comment.nickName}
                 </span>
-                <span>
-                  {formatDate(formatCommentTime(comment.createdDate))}
-                </span>
+                <span>{formatDate(comment.createdDate)}</span>
               </div>
               {comment.isMyComment && (
                 <button
                   onClick={() =>
-                    deleteCommentMutation.mutate(comment.commentId)
+                    deleteComment({ articleId, commentId: comment.commentId })
                   }
                 >
                   <img

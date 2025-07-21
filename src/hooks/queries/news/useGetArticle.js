@@ -10,7 +10,7 @@ const useGetArticle = (articleId) =>
   useQuery({
     queryKey: ['article', articleId],
     queryFn: () => getArticle(articleId),
-    enabled: Boolean(articleId),
+    enabled: articleId !== null && articleId !== undefined,
   });
 
 export default useGetArticle;

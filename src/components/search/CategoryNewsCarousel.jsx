@@ -6,33 +6,18 @@ import {
   CarouselPrevious,
 } from '@/components/ui/shadcn/carousel';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import NewsDetail from '@/components/news/NewsDetail';
-import axios from '@/lib/axios';
 import { formatDate } from '@/lib/utils';
 import { CarouselSkeleton } from '../ui/custom/Loading';
+import useGetCategoryNews from '@/hooks/queries/news/useGetCategoryNews';
+import useNewsSelection from '@/hooks/useNewsSelection';
 
 export default function CategoryNewsCarousel({ category }) {
-  const [selectedNews, setSelectedNews] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
-
-  const { data: recentArticles = [], isPending } = useQuery({
-    queryKey: ['recentArticles', category],
-    queryFn: () => axios.get(`/articles/search?keyword=${category}&size=5`),
-    select: (data) => data.result,
-  });
-
-  const handleOpenChange = (open) => {
-    setIsOpen(open);
-    if (!open) setSelectedNews(() => null);
-  };
-
-  const handleNewsClick = (news) => {
-    setSelectedNews(news.articleId);
-    setIsOpen(true);
-  };
+  const { data: recentArticles, isPending } = useGetCategoryNews(category);
+  const { selectedArticleId, isOpen, handleNewsClick, handleOpenChange } =
+    useNewsSelection();
 
   useEffect(() => {
     if (!api) return;
@@ -74,7 +59,7 @@ export default function CategoryNewsCarousel({ category }) {
               <div
                 className="relative aspect-[363/128] min-h-[128px] overflow-hidden rounded-lg hover:cursor-pointer"
                 onClick={() => {
-                  handleNewsClick(news);
+                  handleNewsClick(news.articleId);
                 }}
               >
                 <img
@@ -120,8 +105,8 @@ export default function CategoryNewsCarousel({ category }) {
       </Carousel>
       <NewsDetail
         isOpen={isOpen}
-        articleId={selectedNews}
-        handleOpenChange={handleOpenChange}
+        articleId={selectedArticleId}
+        onOpenChange={handleOpenChange}
       />
     </div>
   );

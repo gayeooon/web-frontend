@@ -24,7 +24,7 @@ export default function handler(req, res) {
         articleId,
         title: `기사 ${parsedPage + index}`,
         press: publishers[index % publishers.length],
-        thumbnail: faker.image.url(),
+        thumbnail: faker.image.personPortrait(),
         publishDate: faker.date.recent({ days: 7 }),
         articleSource: `https://www.example.com/${articleId}`,
       };

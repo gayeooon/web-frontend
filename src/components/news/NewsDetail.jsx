@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import NewsDetailContent from './NewsDetailContent';
-import axios from '@/lib/axios';
 import {
   Drawer,
   DrawerClose,
@@ -20,19 +18,11 @@ import {
   SheetTitle,
 } from '@/components/ui/shadcn/sheet';
 import { Button } from '@/components/ui/shadcn/button';
+import useGetArticle from '@/hooks/queries/news/useGetArticle';
 
 export default function NewsDetail({ isOpen, articleId, onOpenChange }) {
   const [isDesktop, setIsDesktop] = useState(false);
-  const {
-    data: article = {},
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ['article', articleId],
-    queryFn: () => axios.get(`/articles/${articleId}`),
-    enabled: Boolean(articleId),
-    select: (data) => data.result,
-  });
+  const { data: article, isPending, isError } = useGetArticle(articleId);
 
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
@@ -44,9 +34,11 @@ export default function NewsDetail({ isOpen, articleId, onOpenChange }) {
 
   const handleLinkClick = () => {
     window.open(article.articleSource);
-    axios.post(`/articles/${articleId}/rate`, {
-      preference: 1,
-    });
+
+    // 선호도 표시
+    // axios.post(`/articles/${articleId}/rate`, {
+    //   preference: 1,
+    // });
   };
 
   if (isError) {

@@ -7,17 +7,25 @@ export default function handler(req, res) {
     return res.status(200).json({
       message: '요청에 성공했습니다.',
       result: {
-        title: '기사 등록.',
+        title: `기사 ${id}`,
         content: faker.lorem.sentences(),
         articleSource: `https://www.example.com/${id}`,
         comment: [
           {
             commentId: 1,
-            content: '텍스트',
-            nickName: 'nnijgnus',
+            content: 'comment',
+            nickName: 'user1',
             likeCount: 0,
-            createdDate: '2024-10-26T04:48:40.221635',
-            isMyComment: true,
+            createdDate: faker.date.recent({ days: 7 }),
+            isMyComment: false,
+          },
+          {
+            commentId: 2,
+            content: 'comment',
+            nickName: 'user2',
+            likeCount: 0,
+            createdDate: faker.date.recent({ days: 7 }),
+            isMyComment: false,
           },
         ],
         likeCount: faker.number.int({ max: 999 }),

@@ -1,57 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import usePostArticleLike from '@/hooks/queries/news/usePostArticleLike';
+import useDeleteArticleLike from '@/hooks/queries/news/useDeleteArticleLike';
 import NewsComment from './NewsComment';
-import ai_default from '@/assets/ai_default.svg';
-import ai_white from '@/assets/ai_white.svg';
-import comment_default from '@/assets/comment_default.svg';
-import comment_white from '@/assets/comment_white.svg';
-import like_default from '@/assets/like_default.svg';
-import like_green from '@/assets/like_green.svg';
-import axios from '@/lib/axios';
-import { useToaster } from '@/contexts/ToasterProvider';
+import IcLike from '@/assets/IcLike';
+import IcAI from '@/assets/IcAI';
+import IcComment from '@/assets/IcComment';
 
 const NewsDetailContent = ({ isPending, article, articleId }) => {
   const [contentType, setContentType] = useState('ai');
-  const queryClient = useQueryClient();
-  const toast = useToaster();
+  const { mutate: addLike } = usePostArticleLike();
+  const { mutate: deleteLike } = useDeleteArticleLike();
 
-  useEffect(() => {
-    setContentType('ai');
-  }, [articleId]);
-
-  const addLikeMutation = useMutation({
-    mutationFn: (articleId) => axios.post(`/articles/${articleId}/likes`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
-      toast('info', '좋아요를 눌렀습니다.');
-      axios.post(`/articles/${articleId}/rate`, {
-        preference: 2,
-      });
-    },
-    onError: (error) => {
-      console.error('Error:', error);
-      toast('error', '네트워크 오류가 발생했습니다.');
-    },
-  });
-
-  const deleteLikeMutation = useMutation({
-    mutationFn: (articleId) => axios.delete(`/articles/${articleId}/likes`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
-      toast('info', '좋아요가 취소되었습니다');
-      axios.post(`/articles/${articleId}/rate`, {
-        preference: 0,
-      });
-    },
-    onError: (error) => {
-      console.error('Error:', error);
-      toast('error', '네트워크 오류가 발생했습니다.');
-    },
-  });
-
-  const toggleLike = () => {
-    if (article.likedArticle) deleteLikeMutation.mutate(articleId);
-    else addLikeMutation.mutate(articleId);
+  const setButtonClass = (type) => {
+    return `flex gap-2 items-center font-bold py-2 px-3 rounded-full border-[1px] ${
+      type === contentType ? 'bg-my-green text-white' : 'bg-white'
+    }`;
   };
 
   const handleContentChange = (type) => {
@@ -59,10 +22,9 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
     else setContentType(type);
   };
 
-  const setButtonClass = (type) => {
-    return `flex gap-2 items-center font-bold py-2 px-3 rounded-full border-[1px] ${
-      type === contentType ? 'bg-my-green text-white' : 'bg-white'
-    }`;
+  const toggleLike = () => {
+    if (article.likedArticle) deleteLike(articleId);
+    else addLike(articleId);
   };
 
   if (isPending) {
@@ -75,46 +37,43 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
     );
   }
 
+  const buttonItems = [
+    {
+      key: 'ai',
+      label: 'AI 요약',
+      icon: <IcAI active={contentType === 'ai'} />,
+      onClick: () => handleContentChange('ai'),
+      className: setButtonClass('ai'),
+    },
+    {
+      key: 'comment',
+      label: '댓글',
+      icon: <IcComment active={contentType === 'comment'} />,
+      onClick: () => handleContentChange('comment'),
+      className: setButtonClass('comment'),
+    },
+    {
+      key: 'like',
+      label: article.likeCount ?? 0,
+      icon: <IcLike active={article.likedArticle} />,
+      onClick: toggleLike,
+      className: setButtonClass(),
+    },
+  ];
+
   return (
     <>
       <div className="flex justify-between">
-        <button
-          onClick={() => {
-            handleContentChange('ai');
-          }}
-          className={setButtonClass('ai')}
-        >
-          <img
-            className="w-5"
-            src={contentType === 'ai' ? ai_white.src : ai_default.src}
-          />
-          AI 요약
-        </button>
-        <button
-          onClick={() => {
-            handleContentChange('comment');
-          }}
-          className={setButtonClass('comment')}
-        >
-          <img
-            className="w-5"
-            src={
-              contentType === 'comment'
-                ? comment_white.src
-                : comment_default.src
-            }
-          />
-          댓글
-        </button>
-        <button onClick={toggleLike} className={setButtonClass()}>
-          <img
-            className="w-5"
-            src={
-              article.likedArticle ?? false ? like_green.src : like_default.src
-            }
-          />
-          {article.likeCount ?? 0}
-        </button>
+        {buttonItems.map((item) => (
+          <button
+            key={item.key}
+            onClick={item.onClick}
+            className={item.className}
+          >
+            {item.icon}
+            {item.label}
+          </button>
+        ))}
       </div>
       <div>
         {contentType === 'ai' ? (
@@ -122,10 +81,7 @@ const NewsDetailContent = ({ isPending, article, articleId }) => {
             {article.content}
           </div>
         ) : contentType === 'comment' ? (
-          <NewsComment
-            commentList={article.comment.reverse()}
-            articleId={articleId}
-          />
+          <NewsComment commentList={article.comment} articleId={articleId} />
         ) : (
           <></>
         )}

@@ -1,12 +1,9 @@
-import home_default from '@/assets/home_default.svg';
-import home_green from '@/assets/home_green.svg';
-import search_default from '@/assets/search_default.svg';
-import search_green from '@/assets/search_green.svg';
-import my_default from '@/assets/my_default.svg';
-import my_green from '@/assets/my_green.svg';
 import { useRouter } from 'next/router';
+import IcHome from '@/assets/IcHome';
+import IcSearch from '@/assets/IcSearch';
+import IcMyPage from '@/assets/IcMyPage';
 
-export default function NavigationBar() {
+const NavigationBar = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -18,11 +15,7 @@ export default function NavigationBar() {
           pathname === '/' ? window.location.reload() : router.push('/')
         }
       >
-        <img
-          className="w-full h-full"
-          src={pathname === '/' ? home_green.src : home_default.src}
-          alt="home"
-        />
+        <IcHome active={pathname === '/'} />
         <div
           className={`text-xs ${pathname === '/' || 'text-txt-placeholder'}`}
         >
@@ -38,11 +31,7 @@ export default function NavigationBar() {
             : router.push('/search')
         }
       >
-        <img
-          className="w-full h-full"
-          src={pathname === '/search' ? search_green.src : search_default.src}
-          alt="search-icon"
-        />
+        <IcSearch active={pathname === '/search'} />
         <div
           className={`text-xs ${
             pathname === '/search' || 'text-txt-placeholder'
@@ -58,11 +47,7 @@ export default function NavigationBar() {
           pathname === '/user' ? window.location.reload() : router.push('/user')
         }
       >
-        <img
-          className="w-full h-full"
-          src={pathname === '/user' ? my_green.src : my_default.src}
-          alt="my-icon"
-        />
+        <IcMyPage active={pathname === '/user'} />
         <div
           className={`text-xs ${
             pathname === '/user' || 'text-txt-placeholder'
@@ -73,4 +58,6 @@ export default function NavigationBar() {
       </button>
     </div>
   );
-}
+};
+
+export default NavigationBar;

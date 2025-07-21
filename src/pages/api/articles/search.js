@@ -1,3 +1,4 @@
+import { PUBLISHER_LIST } from '@/lib/constants';
 import { faker } from '@faker-js/faker';
 
 export default function handler(req, res) {
@@ -10,8 +11,8 @@ export default function handler(req, res) {
     const articles = Array.from({ length: paredSize }).map((_, index) => ({
       articleId: parseInt(parsedPage + index),
       title: `${keyword} 기사 ${parseInt(parsedPage + index)}`,
-      press: 'JOONGANG',
-      thumbnail: faker.image.url(),
+      press: PUBLISHER_LIST[Math.floor(Math.random() * PUBLISHER_LIST.length)],
+      thumbnail: faker.image.urlPicsumPhotos(),
       publishDate: faker.date.recent({ days: 7 }),
     }));
 
