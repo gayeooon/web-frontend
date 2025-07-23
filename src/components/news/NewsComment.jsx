@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { formatDate } from '@/lib/utils';
-import send from '@/assets/send.svg';
-import deleteIcon from '@/assets/delete.svg';
 import { SpinnerIcon } from '@/components/ui/custom/Loading';
 import usePostComment from '@/hooks/queries/news/usePostComment';
 import useDeleteComment from '@/hooks/queries/news/useDeleteComment';
+import IcDelete from '@/assets/IcDelete';
+import IcSend from '@/assets/IcSend';
 
 export default function NewsComment({ commentList, articleId }) {
   const [comment, setComment] = useState('');
@@ -41,11 +41,7 @@ export default function NewsComment({ commentList, articleId }) {
           onClick={handleSendClick}
           disabled={isAddPending}
         >
-          {isAddPending ? (
-            <SpinnerIcon />
-          ) : (
-            <img className="w-6" src={send.src} alt="send" />
-          )}
+          {isAddPending ? <SpinnerIcon /> : <IcSend />}
         </button>
       </form>
       <div className="h-0 border-[0.5px] border-border my-6"></div>
@@ -68,15 +64,11 @@ export default function NewsComment({ commentList, articleId }) {
                     deleteComment({ articleId, commentId: comment.commentId })
                   }
                 >
-                  <img
-                    className="w-2.5 h-full"
-                    src={deleteIcon.src}
-                    alt="삭제"
-                  />
+                  <IcDelete />
                 </button>
               )}
             </div>
-            <div className="text-black">{comment.content}</div>
+            <p className="text-black text-left">{comment.content}</p>
           </div>
         ))}
       </div>

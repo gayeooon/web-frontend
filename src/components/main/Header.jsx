@@ -1,4 +1,4 @@
-import logo from '@/assets/NewsFit.svg';
+import IcNewsFit from '@/assets/IcNewsFit';
 
 export default function Header() {
   return (
@@ -8,7 +8,7 @@ export default function Header() {
           window.location.reload();
         }}
       >
-        <img src={logo.src} alt="로고" className="w-full h-8" />
+        <IcNewsFit sm />
       </button>
     </div>
   );

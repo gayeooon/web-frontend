@@ -1,4 +1,4 @@
-import searchIcon from '@/assets/search_input.svg';
+import IcSearchInput from '@/assets/IcSearchInput';
 import { useState } from 'react';
 
 export default function SearchInput({ setSearch }) {
@@ -26,7 +26,7 @@ export default function SearchInput({ setSearch }) {
             onChange={(e) => setInputValue(e.target.value)}
           />
           <div className="hover:cursor-pointer" onClick={handleSearch}>
-            <img src={searchIcon.src} alt="검색" />
+            <IcSearchInput />
           </div>
         </div>
       </form>

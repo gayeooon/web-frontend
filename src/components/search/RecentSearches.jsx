@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import deleteIcon from '@/assets/delete.svg';
+import IcDelete from '@/assets/IcDelete';
 
 const MAX_HISTORY = 5;
 const STORAGE_KEY = `search-history`;
@@ -62,7 +62,7 @@ export default function RecentSearches({ search, onClickRecents }) {
           history.map((it) => (
             <div
               key={it}
-              className="flex flex-shrink-0 gap-3 whitespace-nowrap rounded-full border-[1px] border-border bg-white"
+              className="flex items-center flex-shrink-0 gap-3 whitespace-nowrap rounded-full border-[1px] border-border bg-white"
             >
               <div
                 className="my-2 ml-4 font-bold text-xs hover:cursor-pointer"
@@ -74,11 +74,7 @@ export default function RecentSearches({ search, onClickRecents }) {
                 className="my-2 mr-4 w-2 hover:cursor-pointer"
                 onClick={() => onClickDelete(it)}
               >
-                <img
-                  className="w-full h-full"
-                  src={deleteIcon.src}
-                  alt="삭제"
-                />
+                <IcDelete sm />
               </div>
             </div>
           ))

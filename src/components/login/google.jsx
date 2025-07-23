@@ -1,10 +1,10 @@
 import useLogin from '@/hooks/queries/auth/useSignup';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import google from '@/assets/google_logo.svg';
 import { Button } from '@/components/ui/shadcn/button';
 import { PageSpinner } from '@/components/ui/custom/Loading';
 import { useToaster } from '@/contexts/ToasterProvider';
+import IcGoogle from '@/assets/IcGoogle';
 
 const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
 
@@ -17,7 +17,7 @@ export const GoogleLoginButton = () => {
         variant="google"
         onClick={() => toast('error', '지금은 회원가입만 지원됩니다.')}
       >
-        <img className="h-2/6" src={google.src} alt="google_icon" />
+        <IcGoogle width="20" height="20" />
         <span>구글 계정으로 로그인</span>
       </Button>
     </div>
@@ -30,7 +30,7 @@ export const GoogleSignupButton = () => (
     variant="google"
     onClick={() => (window.location.href = '/signup')}
   >
-    <img className="h-[40%]" src={google.src} alt="google_icon" />
+    <IcGoogle width="26" height="26" />
   </Button>
 );
 
