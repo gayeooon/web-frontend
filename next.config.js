@@ -5,7 +5,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'newsfit-image.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },

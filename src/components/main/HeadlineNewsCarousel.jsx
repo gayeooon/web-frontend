@@ -12,6 +12,7 @@ import { formatDate } from '@/lib/utils';
 import useGetHeadline from '@/hooks/queries/news/useGetHeadline';
 import { CarouselSkeleton } from '../ui/custom/Loading';
 import useNewsSelection from '@/hooks/useNewsSelection';
+import Image from 'next/image';
 
 const HeadlineNewsCarousel = () => {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
@@ -62,10 +63,12 @@ const HeadlineNewsCarousel = () => {
                 }}
               >
                 {article.thumbnail && (
-                  <img
+                  <Image
+                    className="object-cover "
                     src={article.thumbnail}
                     alt={article.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 622px"
                   />
                 )}
 

@@ -6,7 +6,7 @@ import {
 } from '@/components/login/google';
 import PageLayout from '@/components/ui/custom/PageLayout';
 import favicon from '../../../public/favicon.png';
-import logo from '@/assets/NewsFit.svg';
+import IcNewsFit from '@/assets/IcNewsFit';
 
 const Login = () => {
   return (
@@ -17,8 +17,8 @@ const Login = () => {
           src={favicon.src}
           alt="favicon"
         />
-        <div className="mt-7 w-60 h-20">
-          <img className="w-full h-full" src={logo.src} alt="NewsFit" />
+        <div className="flex justify-center mt-7 w-60 h-20">
+          <IcNewsFit />
         </div>
       </div>
       <div className="absolute top-[50%] flex flex-col w-full gap-4">

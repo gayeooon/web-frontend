@@ -37,7 +37,7 @@ export default function NewsListItem({ news }) {
             src={news.thumbnail}
             alt={news.title}
             fill
-            sizes="(max-width: 640px) 25vw, 25vw"
+            sizes="(max-width: 768px) 25vw, 145px"
           />
         </div>
       )}

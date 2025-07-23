@@ -11,6 +11,7 @@ import { formatDate } from '@/lib/utils';
 import { CarouselSkeleton } from '../ui/custom/Loading';
 import useGetCategoryNews from '@/hooks/queries/news/useGetCategoryNews';
 import useNewsSelection from '@/hooks/useNewsSelection';
+import Image from 'next/image';
 
 export default function CategoryNewsCarousel({ category }) {
   const [api, setApi] = useState(null);
@@ -62,10 +63,12 @@ export default function CategoryNewsCarousel({ category }) {
                   handleNewsClick(news.articleId);
                 }}
               >
-                <img
+                <Image
                   src={news.thumbnail}
                   alt={news.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 624px"
                 />
                 <div className="absolute inset-0 w-full bg-gradient-to-t from-black/60 to-black/10">
                   <div className="absolute flex flex-col h-full w-full justify-between p-4 sm:p-6">
