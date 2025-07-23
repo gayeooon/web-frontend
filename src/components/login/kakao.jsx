@@ -1,12 +1,8 @@
-import useLogin from '@/hooks/queries/auth/useSignup';
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/shadcn/button';
-import { PageSpinner } from '@/components/ui/custom/Loading';
 import { useToaster } from '@/contexts/ToasterProvider';
 import IcKakao from '@/assets/IcKakao';
 
-const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+// const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 
 export const KakaoLoginButton = () => {
   const toast = useToaster();
@@ -34,19 +30,19 @@ export const KakaoSignupButton = () => (
   </Button>
 );
 
-const KakaoLogin = () => {
-  const [searchParams] = useSearchParams();
-  const { mutate: login } = useLogin();
+// const KakaoLogin = () => {
+//   const [searchParams] = useSearchParams();
+//   const { mutate: login } = useLogin();
 
-  useEffect(() => {
-    const code = searchParams.get('code');
-    if (!code) return;
+//   useEffect(() => {
+//     const code = searchParams.get('code');
+//     if (!code) return;
 
-    const KAKAO_FETCH_URL = `/member/oauth/kakao?code=${code}&redirect_uri=${REDIRECT_URI}`;
-    login(KAKAO_FETCH_URL);
-  }, []);
+//     const KAKAO_FETCH_URL = `/member/oauth/kakao?code=${code}&redirect_uri=${REDIRECT_URI}`;
+//     login(KAKAO_FETCH_URL);
+//   }, []);
 
-  return <PageSpinner />;
-};
+//   return <PageSpinner />;
+// };
 
-export default KakaoLogin;
+// export default KakaoLogin;

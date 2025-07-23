@@ -1,12 +1,8 @@
-import useLogin from '@/hooks/queries/auth/useSignup';
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/shadcn/button';
-import { PageSpinner } from '@/components/ui/custom/Loading';
 import { useToaster } from '@/contexts/ToasterProvider';
 import IcGoogle from '@/assets/IcGoogle';
 
-const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
+// const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
 
 export const GoogleLoginButton = () => {
   const toast = useToaster();
@@ -34,17 +30,17 @@ export const GoogleSignupButton = () => (
   </Button>
 );
 
-export const GoogleLogin = () => {
-  const [searchParams] = useSearchParams();
-  const { mutate: login } = useLogin();
+// export const GoogleLogin = () => {
+//   const [searchParams] = useSearchParams();
+//   const { mutate: login } = useLogin();
 
-  useEffect(() => {
-    const code = searchParams.get('code');
-    if (!code) return;
+//   useEffect(() => {
+//     const code = searchParams.get('code');
+//     if (!code) return;
 
-    const GOOGLE_FETCH_URL = `/member/oauth/google?code=${code}&scope=email+profile&redirect_uri=${REDIRECT_URI}`;
-    login(GOOGLE_FETCH_URL);
-  }, []);
+//     const GOOGLE_FETCH_URL = `/member/oauth/google?code=${code}&scope=email+profile&redirect_uri=${REDIRECT_URI}`;
+//     login(GOOGLE_FETCH_URL);
+//   }, []);
 
-  return <PageSpinner />;
-};
+//   return <PageSpinner />;
+// };

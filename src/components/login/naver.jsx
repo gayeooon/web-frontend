@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import useLogin from '@/hooks/queries/auth/useSignup';
 import { Button } from '@/components/ui/shadcn/button';
-
-import { PageSpinner } from '@/components/ui/custom/Loading';
 import { useToaster } from '@/contexts/ToasterProvider';
 import IcNaver from '@/assets/IcNaver';
 
-const STATE = 'state';
+// const STATE = 'state';
 
 export const NaverLoginButton = () => {
   const toast = useToaster();
@@ -35,19 +30,19 @@ export const NaverSignupButton = () => (
   </Button>
 );
 
-const NaverLogin = () => {
-  const [searchParams] = useSearchParams();
-  const { mutate: login } = useLogin();
+// const NaverLogin = () => {
+//   const [searchParams] = useSearchParams();
+//   const { mutate: login } = useLogin();
 
-  useEffect(() => {
-    const code = searchParams.get('code');
-    if (!code) return;
+//   useEffect(() => {
+//     const code = searchParams.get('code');
+//     if (!code) return;
 
-    const NAVER_FETCH_URL = `/member/oauth/naver?code=${code}&state=${STATE}`;
-    login(NAVER_FETCH_URL);
-  }, []);
+//     const NAVER_FETCH_URL = `/member/oauth/naver?code=${code}&state=${STATE}`;
+//     login(NAVER_FETCH_URL);
+//   }, []);
 
-  return <PageSpinner />;
-};
+//   return <PageSpinner />;
+// };
 
-export default NaverLogin;
+// export default NaverLogin;
