@@ -12,7 +12,7 @@ const usePutUserCategories = () => {
     mutationFn: putUserCategories,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['userCategory'],
+        queryKey: ['userCategories'],
       });
     },
   });

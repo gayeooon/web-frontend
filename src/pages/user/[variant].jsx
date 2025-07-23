@@ -32,13 +32,16 @@ const Setting = () => {
     return <PageSpinner />;
   }
 
+  if (isError) {
+    throw new Error('사용자 데이터를 불러오는 중 오류가 발생했습니다.');
+  }
+
   if (
-    isError ||
     !variant ||
     typeof variant !== 'string' ||
     !SETTING_VARIANTS.includes(variant)
   ) {
-    return <h1>에러 발생</h1>;
+    throw new Error('유효하지 않은 설정 페이지입니다.');
   }
 
   const handleSubmit = (mutateFunction, data) => {

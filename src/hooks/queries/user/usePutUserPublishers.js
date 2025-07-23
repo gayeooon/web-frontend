@@ -12,7 +12,7 @@ const usePutUserPublishers = () => {
     mutationFn: putUserPublishers,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['userPublisher'],
+        queryKey: ['userPublishers'],
       });
     },
   });

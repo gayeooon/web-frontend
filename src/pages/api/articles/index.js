@@ -13,6 +13,13 @@ export default function handler(req, res) {
       .split('; ')
       .find((row) => row.startsWith('publishers='));
 
+    // publishers 쿠키가 없을 때 에러 처리
+    if (!publisherCookie) {
+      return res.status(400).json({
+        message: 'publishers 쿠키가 필요합니다.',
+      });
+    }
+
     const publishers = JSON.parse(
       decodeURIComponent(publisherCookie.split('=')[1])
     );
@@ -20,11 +27,13 @@ export default function handler(req, res) {
     const articles = Array.from({ length: paredSize }).map((_, index) => {
       const articleId = parseInt(parsedPage + index);
 
+      const picNum = Math.floor(Math.random() * 39) + 1;
+
       return {
         articleId,
         title: `기사 ${parsedPage + index}`,
         press: publishers[index % publishers.length],
-        thumbnail: faker.image.personPortrait(),
+        thumbnail: `https://newsfit-image.s3.ap-northeast-2.amazonaws.com/${picNum}pic.jpg`,
         publishDate: faker.date.recent({ days: 7 }),
         articleSource: `https://www.example.com/${articleId}`,
       };

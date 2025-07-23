@@ -18,6 +18,7 @@ const useGetInfiniteArticles = (type, keyword) =>
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.hasMore ? lastPageParam + 1 : null,
+    throwOnError: (error) => error.response?.status === 400,
   });
 
 export default useGetInfiniteArticles;
